@@ -1,5 +1,5 @@
 #include "Application.h"
-
+#include "Log.h"
 namespace Razel {
 
 	Application::Application()
