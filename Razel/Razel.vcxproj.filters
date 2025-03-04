@@ -4,6 +4,9 @@
     <Filter Include="Razel">
       <UniqueIdentifier>{A31E020E-0F33-2ABF-D8B4-CD1E448826F0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Razel\Events">
+      <UniqueIdentifier>{279514E8-13F8-A38C-BC7D-DC42A8BF6F0F}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Razel.h" />
@@ -15,6 +18,18 @@
     </ClInclude>
     <ClInclude Include="src\Razel\EntryPoint.h">
       <Filter>Razel</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Razel\Events\ApplicationEvent.h">
+      <Filter>Razel\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Razel\Events\Event.h">
+      <Filter>Razel\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Razel\Events\KeyEvent.h">
+      <Filter>Razel\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Razel\Events\MouseEvent.h">
+      <Filter>Razel\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Razel\Log.h">
       <Filter>Razel</Filter>

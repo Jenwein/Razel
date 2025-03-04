@@ -37,6 +37,7 @@ workspace "Razel"
 		--指定编译器的包含文件搜索路径
 		includedirs
 		{
+			"%{prj.name}/src",
 			"%{prj.name}/vendor/spdlog/include"
 		}
 

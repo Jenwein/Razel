@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "Core.h"
+#include "Razel/Core.h"
 #include "spdlog/spdlog.h"
 
 namespace Razel
