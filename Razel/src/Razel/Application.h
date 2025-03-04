@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Razel/Core.h"
+#include "Events/Event.h"
 
 namespace Razel {
 

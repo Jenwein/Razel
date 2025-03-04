@@ -1,5 +1,7 @@
 #include "Application.h"
-#include "Log.h"
+#include "Razel/Log.h"
+
+#include "Razel/Events/ApplicationEvent.h"
 namespace Razel {
 
 	Application::Application()
@@ -14,6 +16,15 @@ namespace Razel {
 
 	void Application::Run()
 	{
+		WindowResizeEvent e(1280,780);
+		if (e.IsInCategory(EventCategoryApplication))
+		{
+			RZ_TRACE(e.GetName());
+		}
+		if (e.IsInCategory(EventCategoryInput))
+		{
+			RZ_TRACE(e.GetName());
+		}
 		while (true);
 	}
 
