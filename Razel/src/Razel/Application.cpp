@@ -1,6 +1,8 @@
-#include "Application.h"
-#include "Razel/Log.h"
+#include "rzpch.h"
 
+#include "Application.h"
+
+#include "Razel/Log.h"
 #include "Razel/Events/ApplicationEvent.h"
 namespace Razel {
 

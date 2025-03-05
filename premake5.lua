@@ -27,6 +27,10 @@ workspace "Razel"
 		targetdir ("bin/" .. outputdir .. "/%{prj.name}" )
 		objdir ("bin-int/" .. outputdir .. "/%{prj.name}" )
 
+		
+		pchheader "rzpch.h"					--指定预编译头文件名的#include 形式
+		pchsource "Razel/src/rzpch.cpp"		--指定控制头文件编译的 C/C++ 源代码文件
+
 		--将文件添加到项目中
 		files
 		{

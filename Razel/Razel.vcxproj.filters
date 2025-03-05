@@ -34,6 +34,7 @@
     <ClInclude Include="src\Razel\Log.h">
       <Filter>Razel</Filter>
     </ClInclude>
+    <ClInclude Include="src\rzpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Razel\Application.cpp">
@@ -42,5 +43,6 @@
     <ClCompile Include="src\Razel\Log.cpp">
       <Filter>Razel</Filter>
     </ClCompile>
+    <ClCompile Include="src\rzpch.cpp" />
   </ItemGroup>
 </Project>

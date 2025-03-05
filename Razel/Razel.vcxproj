@@ -76,7 +76,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>rzpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>RZ_PLATFORM_WINDOWS;;RZ_BUILD_DLL;;RZ_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -99,7 +100,8 @@ IF EXIST ..\bin\Debug-windows-x86_64\Razel\Razel.dll\ (xcopy /Q /E /Y /I ..\bin\
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>rzpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>RZ_PLATFORM_WINDOWS;;RZ_BUILD_DLL;;RZ_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -126,7 +128,8 @@ IF EXIST ..\bin\Release-windows-x86_64\Razel\Razel.dll\ (xcopy /Q /E /Y /I ..\bi
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>rzpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>RZ_PLATFORM_WINDOWS;;RZ_BUILD_DLL;;RZ_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -161,10 +164,14 @@ IF EXIST ..\bin\Dist-windows-x86_64\Razel\Razel.dll\ (xcopy /Q /E /Y /I ..\bin\D
     <ClInclude Include="src\Razel\Events\KeyEvent.h" />
     <ClInclude Include="src\Razel\Events\MouseEvent.h" />
     <ClInclude Include="src\Razel\Log.h" />
+    <ClInclude Include="src\rzpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Razel\Application.cpp" />
     <ClCompile Include="src\Razel\Log.cpp" />
+    <ClCompile Include="src\rzpch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

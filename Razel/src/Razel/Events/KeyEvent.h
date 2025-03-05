@@ -2,8 +2,6 @@
 
 #include "Event.h"
 
-#include <sstream>
-
 namespace Razel {
 	// ¼üÅÌÊÂ¼ş
 	class RAZEL_API KeyEvent :public Event
