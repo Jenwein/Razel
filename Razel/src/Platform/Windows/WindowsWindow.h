@@ -24,7 +24,6 @@ namespace Razel
 	private:
 		virtual void Init(const WindowProps& props);
 		virtual void Shutdown();
-
 	private:
 		GLFWwindow* m_Window;
 

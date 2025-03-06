@@ -3,71 +3,70 @@
 
 #include "Razel/Core.h"
 
-
 namespace Razel
 {
 	// Events in Hazel are currently blocking, meaning when an event occurs it 
 	// immediately gets dispatched and must be dealt with right then an there. 
 	// For the future, a better strategy might be to buffer events in an event
 	// bus and process them during the "event" part of the update stage.
-	// ÊÂ¼şÄ¿Ç°ÊÇ×èÈûµÄ£¬ÒâÎ¶×Åµ±ÊÂ¼ş·¢ÉúÊ±£¬Á¢¼´±»·Ö·¢ÇÒ±ØĞëÁ¢¼´±»´¦Àí£¬
-	// ¸üºÃµÄ²ßÂÔ¿ÉÄÜÊÇÔÚÊÂ¼ş×ÜÏßÖĞ»º³åÊÂ¼ş£¬²¢ÔÚ¸üĞÂ½×¶ÎµÄ¡°ÊÂ¼ş¡±²¿·Ö´¦ÀíËüÃÇ 
+	// äº‹ä»¶ç›®å‰æ˜¯é˜»å¡çš„ï¼Œæ„å‘³ç€å½“äº‹ä»¶å‘ç”Ÿæ—¶ï¼Œç«‹å³è¢«åˆ†å‘ä¸”å¿…é¡»ç«‹å³è¢«å¤„ç†ï¼Œ
+	// æ›´å¥½çš„ç­–ç•¥å¯èƒ½æ˜¯åœ¨äº‹ä»¶æ€»çº¿ä¸­ç¼“å†²äº‹ä»¶ï¼Œå¹¶åœ¨æ›´æ–°é˜¶æ®µçš„â€œäº‹ä»¶â€éƒ¨åˆ†å¤„ç†å®ƒä»¬ 
 	
-	// ÊÂ¼şÀàĞÍ
+	// äº‹ä»¶ç±»å‹
 	enum class EventType
 	{
 		None = 0,
-		WindowClose,WindowResize,WindowFocus,WindowLostFocus,WindowMoved,	// ´°¿ÚÊÂ¼ş
-		AppTick,AppUpdate,AppRender,										// Ó¦ÓÃÊÂ¼ş
-		KeyPressed,KeyReleased,												// ¼üÅÌÊÂ¼ş
-		MouseButtonPressed,MouseButtonReleased,MouseMoved,MouseScrolled		// Êó±êÊÂ¼ş
+		WindowClose,WindowResize,WindowFocus,WindowLostFocus,WindowMoved,	// çª—å£äº‹ä»¶
+		AppTick,AppUpdate,AppRender,										// åº”ç”¨äº‹ä»¶
+		KeyPressed,KeyReleased,												// é”®ç›˜äº‹ä»¶
+		MouseButtonPressed,MouseButtonReleased,MouseMoved,MouseScrolled		// é¼ æ ‡äº‹ä»¶
 
 	};
 
-	// ÊÂ¼şÀà±ğ
+	// äº‹ä»¶ç±»åˆ«
 	enum EventCategory
 	{
 		None = 0,
-		EventCategoryApplication	= BIT(0),	//Ó¦ÓÃ³ÌĞòÊÂ¼ş
-		EventCategoryInput			= BIT(1),	//ÊäÈëÊÂ¼ş
-		EventCategoryKeyboard		= BIT(2),	//¼üÅÌÊÂ¼ş
-		EventCategoryMouse			= BIT(3),	//Êó±êÊÂ¼ş
-		EventCategoryMouseButton	= BIT(4)	//Êó±êµã»÷ÊÂ¼ş
+		EventCategoryApplication	= BIT(0),	//åº”ç”¨ç¨‹åºäº‹ä»¶
+		EventCategoryInput			= BIT(1),	//è¾“å…¥äº‹ä»¶
+		EventCategoryKeyboard		= BIT(2),	//é”®ç›˜äº‹ä»¶
+		EventCategoryMouse			= BIT(3),	//é¼ æ ‡äº‹ä»¶
+		EventCategoryMouseButton	= BIT(4)	//é¼ æ ‡ç‚¹å‡»äº‹ä»¶
 	};
 
-// '#'-×Ö·û´®»¯²Ù×÷,'##'-Ô¤´¦ÀíÆ´½Ó×Ö·û
-// GetStaticType ·µ»ØÊÂ¼şÀàĞÍ
-// GetEventType ·µ»Ø¾ßÌåÊµÀıµÄÀàĞÍ
-// GetName »ñÈ¡ÀàĞÍÃû³Æ
+// '#'-å­—ç¬¦ä¸²åŒ–æ“ä½œ,'##'-é¢„å¤„ç†æ‹¼æ¥å­—ç¬¦
+// GetStaticType è¿”å›äº‹ä»¶ç±»å‹
+// GetEventType è¿”å›å…·ä½“å®ä¾‹çš„ç±»å‹
+// GetName è·å–ç±»å‹åç§°
 #define EVENT_CLASS_TYPE(type) static EventType GetStaticType(){return EventType::##type;}\
 							   virtual EventType GetEventType()const override{return GetStaticType();}\
 							   virtual const char* GetName() const override {return #type;}
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags()const override {return category;}
 
-	// ×÷ÎªËùÓĞÊÂ¼şµÄ»ùÀà
+	// ä½œä¸ºæ‰€æœ‰äº‹ä»¶çš„åŸºç±»
 	class RAZEL_API Event 
 	{
-		//friend class EventDispatcher;
+		friend class EventDispatcher;
 	public:
 		
-		virtual EventType GetEventType() const = 0;					// »ñÈ¡ÊÂ¼şÀàĞÍ
-		virtual const char* GetName() const = 0;					// »ñÈ¡ÊÂ¼şÃû³Æ(ÓÃÓÚµ÷ÊÔ)
-		virtual int GetCategoryFlags() const = 0;					// »ñÈ¡ÊÂ¼şÀà±ğ±êÇ©
-		virtual std::string ToString() const { return GetName(); }	// ·µ»ØÊÂ¼şÀàĞÍµÄ×Ö·û´®±íÊ¾(ÓÃÓÚµ÷ÊÔ)
+		virtual EventType GetEventType() const = 0;					// è·å–äº‹ä»¶ç±»å‹
+		virtual const char* GetName() const = 0;					// è·å–äº‹ä»¶åç§°(ç”¨äºè°ƒè¯•)
+		virtual int GetCategoryFlags() const = 0;					// è·å–äº‹ä»¶ç±»åˆ«æ ‡ç­¾
+		virtual std::string ToString() const { return GetName(); }	// è¿”å›äº‹ä»¶ç±»å‹çš„å­—ç¬¦ä¸²è¡¨ç¤º(ç”¨äºè°ƒè¯•)
 
-		// ¼ì²éÊÂ¼şÊÇ·ñÊôÓÚÌØ¶¨Àà±ğ£¨IsHasCategory£¿£©
+		// æ£€æŸ¥äº‹ä»¶æ˜¯å¦å±äºç‰¹å®šç±»åˆ«ï¼ˆIsHasCategoryï¼Ÿï¼‰
 		inline bool IsInCategory(EventCategory category) const
 		{
 			return GetCategoryFlags() & category;
 		}
 
 	private:
-		bool m_Handled = false;		// ÊÂ¼şÊÇ·ñ±»´¦Àí
+		bool m_Handled = false;		// äº‹ä»¶æ˜¯å¦è¢«å¤„ç†
 	};
 
 
-	// ÊÂ¼ş·Ö·¢Æ÷
+	// äº‹ä»¶åˆ†å‘å™¨
 	class EventDispatcher
 	{
 		template<typename T>
@@ -76,13 +75,13 @@ namespace Razel
 		EventDispatcher(Event& event)
 			:m_Event(event){}
 
-		// ·Ö·¢ÊÂ¼ş
+		// åˆ†å‘äº‹ä»¶
 		template<typename T>
 		bool Dispatch(EventFn<T> func)
 		{
 			if (m_Event.GetEventType() == T::GetStaticType())
 			{
-				// Ç¿ÖÆÀàĞÍ×ª»»
+				// å¼ºåˆ¶ç±»å‹è½¬æ¢
 				m_Event.m_Handled = func(*(T*)&m_Event);
 				return true;
 			}
@@ -92,9 +91,14 @@ namespace Razel
 	private:
 		Event& m_Event;
 	};
-	inline std::ostream& operator<<(std::ostream os, const Event& e)
-	{
-		return os << e.ToString();
+
+	//inline std::ostream& operator<<(std::ostream& os, const Event& e)
+	//{
+	//	return os << e.ToString();
+	//}
+	// å½“å‰ç‰ˆæœ¬çš„spdlogæ”¯æŒä¸‹é¢çš„æ–¹æ³•ä»¥ç”¨æ¥æ ¼å¼åŒ–
+	inline std::string format_as(const Event& e) {
+		return e.ToString();
 	}
 
 }
