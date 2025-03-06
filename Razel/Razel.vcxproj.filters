@@ -35,6 +35,8 @@
       <Filter>Razel</Filter>
     </ClInclude>
     <ClInclude Include="src\rzpch.h" />
+    <ClInclude Include="src\Razel\Window.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Razel\Application.cpp">
@@ -44,5 +46,6 @@
       <Filter>Razel</Filter>
     </ClCompile>
     <ClCompile Include="src\rzpch.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
   </ItemGroup>
 </Project>

@@ -158,6 +158,7 @@ IF EXIST ..\bin\Dist-windows-x86_64\Razel\Razel.dll\ (xcopy /Q /E /Y /I ..\bin\D
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Razel.h" />
     <ClInclude Include="src\Razel\Application.h" />
     <ClInclude Include="src\Razel\Core.h" />
@@ -167,9 +168,11 @@ IF EXIST ..\bin\Dist-windows-x86_64\Razel\Razel.dll\ (xcopy /Q /E /Y /I ..\bin\D
     <ClInclude Include="src\Razel\Events\KeyEvent.h" />
     <ClInclude Include="src\Razel\Events\MouseEvent.h" />
     <ClInclude Include="src\Razel\Log.h" />
+    <ClInclude Include="src\Razel\Window.h" />
     <ClInclude Include="src\rzpch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Razel\Application.cpp" />
     <ClCompile Include="src\Razel\Log.cpp" />
     <ClCompile Include="src\rzpch.cpp">

@@ -4,11 +4,13 @@
 
 #include "Razel/Log.h"
 #include "Razel/Events/ApplicationEvent.h"
+
+#include "GLFW/glfw3.h"
 namespace Razel {
 
 	Application::Application()
 	{
-
+		m_Window = std::unique_ptr<Window>(Window::Create());
 	}
 
 	Application::~Application()
@@ -18,16 +20,13 @@ namespace Razel {
 
 	void Application::Run()
 	{
-		WindowResizeEvent e(1280,780);
-		if (e.IsInCategory(EventCategoryApplication))
+
+		while (m_Running)
 		{
-			RZ_TRACE(e.GetName());
+			glClearColor(1, 0, 1, 1);
+			glClear(GL_COLOR_BUFFER_BIT);
+			m_Window->OnUpdate();
 		}
-		if (e.IsInCategory(EventCategoryInput))
-		{
-			RZ_TRACE(e.GetName());
-		}
-		while (true);
 	}
 
 }
