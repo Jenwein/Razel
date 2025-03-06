@@ -1,6 +1,6 @@
 workspace "Razel"
 	architecture "x64"
-
+	startproject "Sandbox"
 	--指定工作区或项目的构建配置集，例如“调试”和“发布”
 	configurations
 	{
@@ -12,11 +12,15 @@ workspace "Razel"
 	--输出位置	eg: build-Windows-x64
 	outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 	
+	-- Include directories relative to root folder (solution directory)
+	IncludeDir = {}
+	IncludeDir["GLFW"] = "Razel/vendor/GLFW/include"
+
 	filter "action:vs*"
         buildoptions { "/utf-8" }
     filter {}
-
-	startproject "Sandbox"
+	
+	include "Razel/vendor/GLFW"
 
 	project "Razel"			--项目名称
 		location"Razel"		--项目目录
@@ -42,7 +46,14 @@ workspace "Razel"
 		includedirs
 		{
 			"%{prj.name}/src",
-			"%{prj.name}/vendor/spdlog/include"
+			"%{prj.name}/vendor/spdlog/include",
+			"%{IncludeDir.GLFW}"
+		}
+
+		links
+		{
+			"GLFW",
+			"opengl32.lib"
 		}
 
 		--限制后续构建设置到特定环境
@@ -103,31 +114,24 @@ workspace "Razel"
 		}
 
 		filter "system:windows"
-		cppdialect "C++17"
-		staticruntime "On"
-		systemversion "latest"
+			cppdialect "C++17"
+			staticruntime "On"
+			systemversion "latest"
 
-		defines
-		{
-			"RZ_PLATFORM_WINDOWS"
-		}
+			defines
+			{
+				"RZ_PLATFORM_WINDOWS"
+			}
 
-	filter "configurations:Debug"
-		defines "RZ_DEBUG"
-		symbols "On"
+		filter "configurations:Debug"
+			defines "RZ_DEBUG"
+			symbols "On"
 
-	filter "configurations:Release"
-		defines "RZ_RELEASE"
-		optimize "On"
+		filter "configurations:Release"
+			defines "RZ_RELEASE"
+			optimize "On"
 
-	filter "configurations:Dist"
-		defines "RZ_DIST"
-		optimize "On"
-
-
-
-
-
-
-
+		filter "configurations:Dist"
+			defines "RZ_DIST"
+			optimize "On"
 
