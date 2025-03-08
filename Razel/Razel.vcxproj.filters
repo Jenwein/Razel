@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows">
+      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Razel">
       <UniqueIdentifier>{A31E020E-0F33-2ABF-D8B4-CD1E448826F0}</UniqueIdentifier>
     </Filter>
@@ -9,6 +15,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\Razel.h" />
     <ClInclude Include="src\Razel\Application.h">
       <Filter>Razel</Filter>
@@ -31,21 +40,36 @@
     <ClInclude Include="src\Razel\Events\MouseEvent.h">
       <Filter>Razel\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Razel\Layer.h">
+      <Filter>Razel</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Razel\LayerStack.h">
+      <Filter>Razel</Filter>
+    </ClInclude>
     <ClInclude Include="src\Razel\Log.h">
       <Filter>Razel</Filter>
     </ClInclude>
+    <ClInclude Include="src\Razel\Window.h">
+      <Filter>Razel</Filter>
+    </ClInclude>
     <ClInclude Include="src\rzpch.h" />
-    <ClInclude Include="src\Razel\Window.h" />
-    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\Razel\Application.cpp">
+      <Filter>Razel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Razel\Layer.cpp">
+      <Filter>Razel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Razel\LayerStack.cpp">
       <Filter>Razel</Filter>
     </ClCompile>
     <ClCompile Include="src\Razel\Log.cpp">
       <Filter>Razel</Filter>
     </ClCompile>
     <ClCompile Include="src\rzpch.cpp" />
-    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
   </ItemGroup>
 </Project>

@@ -84,7 +84,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 /MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -112,7 +112,7 @@ IF EXIST ..\bin\Debug-windows-x86_64\Razel\Razel.dll\ (xcopy /Q /E /Y /I ..\bin\
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 /MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -141,7 +141,7 @@ IF EXIST ..\bin\Release-windows-x86_64\Razel\Razel.dll\ (xcopy /Q /E /Y /I ..\bi
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 /MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -167,6 +167,8 @@ IF EXIST ..\bin\Dist-windows-x86_64\Razel\Razel.dll\ (xcopy /Q /E /Y /I ..\bin\D
     <ClInclude Include="src\Razel\Events\Event.h" />
     <ClInclude Include="src\Razel\Events\KeyEvent.h" />
     <ClInclude Include="src\Razel\Events\MouseEvent.h" />
+    <ClInclude Include="src\Razel\Layer.h" />
+    <ClInclude Include="src\Razel\LayerStack.h" />
     <ClInclude Include="src\Razel\Log.h" />
     <ClInclude Include="src\Razel\Window.h" />
     <ClInclude Include="src\rzpch.h" />
@@ -174,6 +176,8 @@ IF EXIST ..\bin\Dist-windows-x86_64\Razel\Razel.dll\ (xcopy /Q /E /Y /I ..\bin\D
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Razel\Application.cpp" />
+    <ClCompile Include="src\Razel\Layer.cpp" />
+    <ClCompile Include="src\Razel\LayerStack.cpp" />
     <ClCompile Include="src\Razel\Log.cpp" />
     <ClCompile Include="src\rzpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

@@ -60,9 +60,9 @@ namespace Razel
 		{
 			return GetCategoryFlags() & category;
 		}
-
+		bool Handled = false;		// 事件是否被处理
 	private:
-		bool m_Handled = false;		// 事件是否被处理
+		//--
 	};
 
 
@@ -82,7 +82,7 @@ namespace Razel
 			if (m_Event.GetEventType() == T::GetStaticType())
 			{
 				// 强制类型转换
-				m_Event.m_Handled = func(*(T*)&m_Event);
+				m_Event.Handled = func(*(T*)&m_Event);
 				return true;
 			}
 			return false;
@@ -96,7 +96,7 @@ namespace Razel
 	//{
 	//	return os << e.ToString();
 	//}
-	// 当前版本的spdlog支持下面的方法以用来格式化
+	//当前版本的spdlog支持下面的方法以用来格式化
 	inline std::string format_as(const Event& e) {
 		return e.ToString();
 	}

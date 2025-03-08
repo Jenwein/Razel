@@ -2,6 +2,7 @@
 
 // For use by Razel applications
 #include "Razel/Application.h"
+#include "Razel/Layer.h"
 #include "Razel/Log.h"
 
 //--Entry Point--
