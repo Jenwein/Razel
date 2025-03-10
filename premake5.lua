@@ -15,6 +15,9 @@ workspace "Razel"
 	-- Include directories relative to root folder (solution directory)
 	IncludeDir = {}
 	IncludeDir["GLFW"] = "Razel/vendor/GLFW/include"
+	IncludeDir["Glad"] = "Razel/vendor/Glad/include"
+	IncludeDir["ImGui"] = "Razel/vendor/imgui"
+
 
 	filter "action:vs*"
         buildoptions { "/utf-8" }
@@ -22,6 +25,8 @@ workspace "Razel"
 	
 	--查找并执行另一个脚本文件，也就是查找路径下的premake文件并将内容拷贝到此处(如果之前尚未运行过)
 	include "Razel/vendor/GLFW"
+	include "Razel/vendor/Glad"
+	include "Razel/vendor/imgui"
 
 	project "Razel"			--项目名称
 		location"Razel"		--项目目录
@@ -48,12 +53,16 @@ workspace "Razel"
 		{
 			"%{prj.name}/src",
 			"%{prj.name}/vendor/spdlog/include",
-			"%{IncludeDir.GLFW}"
+			"%{IncludeDir.GLFW}",
+			"%{IncludeDir.Glad}",
+			"%{IncludeDir.ImGui}"
 		}
 
 		links
 		{
 			"GLFW",
+			"Glad",
+			"ImGui",
 			"opengl32.lib"
 		}
 
@@ -66,7 +75,8 @@ workspace "Razel"
 			defines
 			{
 				"RZ_PLATFORM_WINDOWS;",
-				"RZ_BUILD_DLL;"
+				"RZ_BUILD_DLL;",
+				"GLFW_INCLUDE_NONE"
 			}
 
 			--指定构建完成后要运行的 shell 命令

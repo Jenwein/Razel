@@ -4,17 +4,24 @@
 
 #include "Razel/Log.h"
 
-
-#include "GLFW/glfw3.h"
+#include "glad/glad.h"
 
 
 namespace Razel {
 	#define  BIND_EVENT_FN(x) std::bind(&x,this,std::placeholders::_1)
-
+	
+	Application* Application::s_Instance = nullptr;
+	
 	Application::Application()
 	{
+		RZ_CORE_ASSERT(!s_Instance, "Application already exists!");
+		s_Instance = this;
+
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
+
+		unsigned int id;
+		glGenVertexArrays(1, &id);
 
 	}
 
@@ -45,11 +52,13 @@ namespace Razel {
 	void Application::PushLayer(Layer* layer)
 	{
 		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
 	}
 
 	void Application::PushOverLayer(Layer* overlayer)
 	{
 		m_LayerStack.PushOverLayer(overlayer);
+		overlayer->OnAttach();
 	}
 
 	void Application::Run()

@@ -26,6 +26,7 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer());
+		PushOverLayer(new Razel::ImGuiLayer());
 	}
 	~Sandbox()
 	{
