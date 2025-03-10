@@ -18,7 +18,7 @@
 	#define RZ_CORE_ASSERT(x,...)
 #endif
 
-
+#define  BIND_EVENT_FN(x) std::bind(&x,this,std::placeholders::_1)
 
 // 将1左移x位得到二进制掩码，以用来分类事件，可以快速用过'|'或'&'进行不同的事件操作
 #define BIT(x) (1 << x)

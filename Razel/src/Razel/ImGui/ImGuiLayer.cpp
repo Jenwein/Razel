@@ -7,10 +7,12 @@
 
 #include "Razel/Application.h"
 
+//TEMPORARY
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 namespace Razel
 {
-	void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 	ImGuiLayer::ImGuiLayer()
 		:Layer("ImGuiLayer")
@@ -30,16 +32,15 @@ namespace Razel
 		ImGuiIO& io = ImGui::GetIO();
 		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;	// 启用鼠标光标支持，使 UI 可以更改鼠标指针形状
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;	// 启用鼠标位置设置，允许 ImGui 代码更改鼠标位置。
+		
+
+
+
 
 		// TEMPORARY: should eventually use Hazel key codes
-		// c将 ImGui 的键值 映射到 GLFW 的键值
 		Application& app = Application::Get();
-		glfwSetKeyCallback((GLFWwindow*)&app.GetWindow(), KeyCallback);
 
-		// 将 ImGui 的键值 映射到 GLFW 的键值
 		ImGui_ImplOpenGL3_Init("#version 410");
-
-
 	}
 
 	void ImGuiLayer::OnDetach()
@@ -49,12 +50,13 @@ namespace Razel
 
 	void ImGuiLayer::OnUpdate()
 	{
+
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::Get();
 		io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
-
-		float time = (float)glfwGetTime();
-		io.DeltaTime = m_Time > 0.0f ? (time - m_Time) : (1.0f, 60.0f);
+			
+		float time = (float)glfwGetTime();								// 当前时间
+		io.DeltaTime = m_Time > 0.0f ? (time - m_Time) : (1.0f / 60.0f);	// 当前帧和上一帧之间的时间间隔
 		m_Time = time;
 
 		ImGui_ImplOpenGL3_NewFrame();
@@ -70,32 +72,107 @@ namespace Razel
 
 	void ImGuiLayer::OnEvent(Event& event)
 	{
-
+		EventDispatcher dispatcher(event);
+		dispatcher.Dispatch<MouseButtonPressedEvent>(BIND_EVENT_FN(ImGuiLayer::OnMouseButtonPressedEvent));
+		dispatcher.Dispatch<MouseButtonReleasedEvent>(BIND_EVENT_FN(ImGuiLayer::OnMouseButtonReleasedEvent));
+		dispatcher.Dispatch<MouseMovedEvent>(BIND_EVENT_FN(ImGuiLayer::OnMouseMovedEvent));
+		dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_FN(ImGuiLayer::OnMouseScrolledEvent));
+		dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(ImGuiLayer::OnKeyPressedEvent));
+		dispatcher.Dispatch<KeyTypedEvent>(BIND_EVENT_FN(ImGuiLayer::OnKeyTypedEvent));
+		dispatcher.Dispatch<KeyReleasedEvent>(BIND_EVENT_FN(ImGuiLayer::OnKeyReleasedEvent));
+		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(ImGuiLayer::OnWindowResizeEvent));
 	}
-	void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+
+	bool ImGuiLayer::OnMouseButtonPressedEvent(MouseButtonPressedEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
-		bool is_pressed = (action != GLFW_RELEASE);  // 按下 = true，释放 = false
-		io.AddKeyEvent(ImGuiKey_Tab, key == GLFW_KEY_TAB && is_pressed);
-		io.AddKeyEvent(ImGuiKey_LeftArrow, key == GLFW_KEY_LEFT && is_pressed);
-		io.AddKeyEvent(ImGuiKey_RightArrow, key == GLFW_KEY_RIGHT && is_pressed);
-		io.AddKeyEvent(ImGuiKey_UpArrow, key == GLFW_KEY_UP && is_pressed);
-		io.AddKeyEvent(ImGuiKey_DownArrow, key == GLFW_KEY_DOWN && is_pressed);
-		io.AddKeyEvent(ImGuiKey_PageUp, key == GLFW_KEY_PAGE_UP && is_pressed);
-		io.AddKeyEvent(ImGuiKey_PageDown, key == GLFW_KEY_PAGE_DOWN && is_pressed);
-		io.AddKeyEvent(ImGuiKey_Home, key == GLFW_KEY_HOME && is_pressed);
-		io.AddKeyEvent(ImGuiKey_End, key == GLFW_KEY_END && is_pressed);
-		io.AddKeyEvent(ImGuiKey_Insert, key == GLFW_KEY_INSERT && is_pressed);
-		io.AddKeyEvent(ImGuiKey_Delete, key == GLFW_KEY_DELETE && is_pressed);
-		io.AddKeyEvent(ImGuiKey_Backspace, key == GLFW_KEY_BACKSPACE && is_pressed);
-		io.AddKeyEvent(ImGuiKey_Space, key == GLFW_KEY_SPACE && is_pressed);
-		io.AddKeyEvent(ImGuiKey_Enter, key == GLFW_KEY_ENTER && is_pressed);
-		io.AddKeyEvent(ImGuiKey_Escape, key == GLFW_KEY_ESCAPE && is_pressed);
-		io.AddKeyEvent(ImGuiKey_A, key == GLFW_KEY_A && is_pressed);
-		io.AddKeyEvent(ImGuiKey_C, key == GLFW_KEY_C && is_pressed);
-		io.AddKeyEvent(ImGuiKey_V, key == GLFW_KEY_V && is_pressed);
-		io.AddKeyEvent(ImGuiKey_X, key == GLFW_KEY_X && is_pressed);
-		io.AddKeyEvent(ImGuiKey_Y, key == GLFW_KEY_Y && is_pressed);
-		io.AddKeyEvent(ImGuiKey_Z, key == GLFW_KEY_Z && is_pressed);
+		// 将 ImGuiIO 中对应鼠标按键的状态设置为 true，告诉 ImGui 该按键已被按下
+		//io.MouseDown[e.GetMouseButton()] = true;
+		io.AddMouseButtonEvent(e.GetMouseButton(), true);
+		
+		// 让事件可以被其他层继续处理
+		return false;
 	}
+
+	bool ImGuiLayer::OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& e)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		//io.MouseDown[e.GetMouseButton()] = false;
+		io.AddMouseButtonEvent(e.GetMouseButton(), false);
+
+		return false;
+	}
+
+	bool ImGuiLayer::OnMouseMovedEvent(MouseMovedEvent& e)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		//io.MousePos = ImVec2(e.GetX(), e.GetY());
+		io.AddMousePosEvent(e.GetX(), e.GetY());
+
+		return false;
+	}
+
+	bool ImGuiLayer::OnMouseScrolledEvent(MouseScrolledEvent& e)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		//io.MouseWheelH += e.GetXOffset();
+		//io.MouseWheel += e.GetYOffset();
+		io.AddMouseWheelEvent(e.GetXOffset(), e.GetYOffset());
+
+		return false;
+	}
+
+	bool ImGuiLayer::OnKeyPressedEvent(KeyPressedEvent& e)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+
+		// 将GLFW键码映射到ImGui键码
+		//ImGuiKey key = ImGui_ImplGlfw_KeyToImGuiKey(e.GetKeyCode());
+
+		// 使用新的 AddKeyEvent 记录按键状态
+		io.AddKeyEvent((ImGuiKey)e.GetKeyCode(), true);
+
+		// 记录修饰键状态（Ctrl, Shift, Alt, Super）
+		io.AddKeyEvent(ImGuiKey_ModCtrl, e.GetKeyCode() == GLFW_KEY_LEFT_CONTROL || e.GetKeyCode() == GLFW_KEY_RIGHT_CONTROL);
+		io.AddKeyEvent(ImGuiKey_ModShift, e.GetKeyCode() == GLFW_KEY_LEFT_SHIFT || e.GetKeyCode() == GLFW_KEY_RIGHT_SHIFT);
+		io.AddKeyEvent(ImGuiKey_ModAlt, e.GetKeyCode() == GLFW_KEY_LEFT_ALT || e.GetKeyCode() == GLFW_KEY_RIGHT_ALT);
+		io.AddKeyEvent(ImGuiKey_ModSuper, e.GetKeyCode() == GLFW_KEY_LEFT_SUPER || e.GetKeyCode() == GLFW_KEY_RIGHT_SUPER);
+
+		return false;
+	}
+
+	bool ImGuiLayer::OnKeyReleasedEvent(KeyReleasedEvent& e)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.AddKeyEvent((ImGuiKey)e.GetKeyCode(), false);
+
+		return false;
+	}
+
+	bool ImGuiLayer::OnKeyTypedEvent(KeyTypedEvent& e)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		int keycode = e.GetKeyCode();
+		if (keycode > 0 && keycode < 0x10000)
+		{
+			io.AddInputCharacter((unsigned short)keycode);
+		}
+
+		return false;
+
+	}
+
+	bool ImGuiLayer::OnWindowResizeEvent(WindowResizeEvent& e)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.DisplaySize = ImVec2(e.GetWidth(), e.GetHeight());
+		io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
+
+		//TEMPRORY
+		glViewport(0, 0, e.GetWidth(), e.GetHeight());
+
+		return false;
+
+	}
+
 }

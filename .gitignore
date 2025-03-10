@@ -2,6 +2,5 @@
 .vs/
 bin/
 bin-int/
-docs/
 # Files
 *.user

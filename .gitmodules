@@ -4,6 +4,8 @@
 [submodule "Razel/vendor/GLFW"]
 	path = Razel/vendor/GLFW
 	url = https://github.com/Jenwein/glfw
+	branch = master
 [submodule "Razel/vendor/imgui"]
 	path = Razel/vendor/imgui
 	url = https://github.com/Jenwein/imgui
+	branch = master

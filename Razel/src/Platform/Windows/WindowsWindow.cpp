@@ -92,7 +92,7 @@ namespace Razel {
 			{
 				case GLFW_PRESS:
 				{
-					KeyPressEvent event(key, 0);
+					KeyPressedEvent event(key, 0);
 					data.EventCallback(event);
 					break;
 				}
@@ -104,13 +104,28 @@ namespace Razel {
 				}
 				case GLFW_REPEAT:
 				{
-					KeyPressEvent event(key, 1);
+					KeyPressedEvent event(key, 1);
 					data.EventCallback(event);
 					break;
 				}
 				default:
 					break;
+
 			}
+			switch (key)
+			{
+
+
+			}
+		});
+		
+		// 监听文本输入
+		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode)
+		{
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+			KeyTypedEvent event(keycode);
+			data.EventCallback(event);
 		});
 
 		// 注册鼠标点击回调
@@ -127,13 +142,14 @@ namespace Razel {
 				}
 				case GLFW_RELEASE:
 				{
-					MouseButtonReleaseEvent event(button);
+					MouseButtonReleasedEvent event(button);
 					data.EventCallback(event);
 					break;
 				}
 				default:
 					break;
 			}
+
 		});
 		// 注册鼠标滚轮回调
 		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
@@ -144,7 +160,7 @@ namespace Razel {
 			data.EventCallback(event);
 		});
 
-		// 注册鼠标位置回电
+		// 注册鼠标位置回调
 		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
 		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);

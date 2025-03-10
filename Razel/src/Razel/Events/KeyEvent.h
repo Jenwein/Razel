@@ -20,10 +20,10 @@ namespace Razel {
 	};
 
 	// 按键按下事件类
-	class RAZEL_API KeyPressEvent : public KeyEvent
+	class RAZEL_API KeyPressedEvent : public KeyEvent
 	{
 	public:
-		KeyPressEvent(int keycode,int repeatCount)
+		KeyPressedEvent(int keycode,int repeatCount)
 			:KeyEvent(keycode),m_RepeatCount(repeatCount){}
 
 		inline int GetRepeatCount()const { return m_RepeatCount; }
@@ -39,8 +39,6 @@ namespace Razel {
 
 	private:
 		int m_RepeatCount;
-
-
 	};
 
 	// 按键释放事件类
@@ -59,5 +57,22 @@ namespace Razel {
 
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
+	
+	// 键盘键入事件
+	class RAZEL_API KeyTypedEvent : public KeyEvent
+	{
+	public:
+		KeyTypedEvent(int keycode)
+			: KeyEvent(keycode) {
+		}
 
+		std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << "KeyTypedEvent: " << m_KeyCode;
+			return ss.str();
+		}
+
+		EVENT_CLASS_TYPE(KeyTyped)
+	};
 }

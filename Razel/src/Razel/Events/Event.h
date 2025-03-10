@@ -18,7 +18,7 @@ namespace Razel
 		None = 0,
 		WindowClose,WindowResize,WindowFocus,WindowLostFocus,WindowMoved,	// 窗口事件
 		AppTick,AppUpdate,AppRender,										// 应用事件
-		KeyPressed,KeyReleased,												// 键盘事件
+		KeyPressed,KeyReleased, KeyTyped,									// 键盘事件
 		MouseButtonPressed,MouseButtonReleased,MouseMoved,MouseScrolled		// 鼠标事件
 
 	};
