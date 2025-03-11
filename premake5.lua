@@ -32,6 +32,7 @@ workspace "Razel"
 		location"Razel"		--项目目录
 		kind "SharedLib"	--设置项目或配置创建的二进制对象的类型，例如控制台或窗口应用程序，或共享或静态库
 		language "C++"		--语言
+		staticruntime "off"
 
 		--设置编译的二进制目标文件的目标目录
 		targetdir ("bin/" .. outputdir .. "/%{prj.name}" )
@@ -69,8 +70,8 @@ workspace "Razel"
 		--限制后续构建设置到特定环境
 		filter "system:windows"
 			cppdialect "C++17"
-			staticruntime "On"
 			systemversion "latest"
+
 			--添加预处理器或编译器符号到项目中
 			defines
 			{
@@ -82,23 +83,22 @@ workspace "Razel"
 			--指定构建完成后要运行的 shell 命令
 			postbuildcommands
 			{
-				("{MKDIR} ../bin/" .. outputdir .. "/Sandbox"),
-				("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+				("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
 			}
 		
 		filter "configurations:Debug"
 			defines "RZ_DEBUG"
-			buildoptions "/MDd"
+			runtime "Debug"
 			symbols "On"
 		
 		filter "configurations:Release"
 			defines "RZ_RELEASE"
-			buildoptions "/MD"
+			runtime "Release"
 			optimize "On"
 
 		filter "configurations:Dist"
 			defines "RZ_DIST"
-			buildoptions "/MD"
+			runtime "Release"
 			optimize "On"
 
 
@@ -106,6 +106,7 @@ workspace "Razel"
 		location "Sandbox"
 		kind "ConsoleApp"
 		language"C++"
+		staticruntime "off"
 
 		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 		objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -129,7 +130,6 @@ workspace "Razel"
 
 		filter "system:windows"
 			cppdialect "C++17"
-			staticruntime "On"
 			systemversion "latest"
 
 			defines
@@ -139,16 +139,16 @@ workspace "Razel"
 
 		filter "configurations:Debug"
 			defines "RZ_DEBUG"
-			buildoptions "/MDd"
+			runtime "Debug"
 			symbols "On"
 
 		filter "configurations:Release"
 			defines "RZ_RELEASE"
-			buildoptions "/MD"
+			runtime "Release"
 			optimize "On"
 
 		filter "configurations:Dist"
 			defines "RZ_DIST"
-			buildoptions "/MD"
+			runtime "Release"
 			optimize "On"
 
