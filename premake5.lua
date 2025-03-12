@@ -17,7 +17,7 @@ workspace "Razel"
 	IncludeDir["GLFW"] = "Razel/vendor/GLFW/include"
 	IncludeDir["Glad"] = "Razel/vendor/Glad/include"
 	IncludeDir["ImGui"] = "Razel/vendor/imgui"
-
+	IncludeDir["glm"] = "Razel/vendor/glm"
 
 	filter "action:vs*"
         buildoptions { "/utf-8" }
@@ -46,7 +46,9 @@ workspace "Razel"
 		files
 		{
 			"%{prj.name}/src/**.h",
-			"%{prj.name}/src/**.cpp"
+			"%{prj.name}/src/**.cpp",
+			"%{prj.name}/vendor/glm/glm/**.hpp",
+			"%{prj.name}/vendor/glm/glm/**.inl",
 		}
 		
 		--指定编译器的包含文件搜索路径
@@ -56,7 +58,9 @@ workspace "Razel"
 			"%{prj.name}/vendor/spdlog/include",
 			"%{IncludeDir.GLFW}",
 			"%{IncludeDir.Glad}",
-			"%{IncludeDir.ImGui}"
+			"%{IncludeDir.ImGui}",
+			"%{IncludeDir.glm}"
+
 		}
 
 		links
@@ -120,7 +124,8 @@ workspace "Razel"
 		includedirs
 		{
 			"Razel/vendor/spdlog/include",
-			"Razel/src"
+			"Razel/src",
+			"%{IncludeDir.glm}"
 		}
 
 		links
