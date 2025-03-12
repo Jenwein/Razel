@@ -34,6 +34,8 @@ namespace Razel
 		virtual unsigned int GetWidth() const = 0;
 		virtual unsigned int GetHeight() const = 0;
 
+		virtual void* GetNativeWindow() const = 0;
+		
 		// 设置事件回调
 		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 		

@@ -167,11 +167,15 @@
     <ClInclude Include="src\Razel\Events\KeyEvent.h" />
     <ClInclude Include="src\Razel\Events\MouseEvent.h" />
     <ClInclude Include="src\Razel\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Razel\Input.h" />
+    <ClInclude Include="src\Razel\KeyCodes.h" />
     <ClInclude Include="src\Razel\Layer.h" />
     <ClInclude Include="src\Razel\LayerStack.h" />
     <ClInclude Include="src\Razel\Log.h" />
+    <ClInclude Include="src\Razel\MouseButtonCodes.h" />
     <ClInclude Include="src\Razel\Window.h" />
     <ClInclude Include="src\rzpch.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
@@ -184,6 +188,7 @@
     <ClCompile Include="src\rzpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">

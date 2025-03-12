@@ -21,13 +21,13 @@ namespace Razel
 
 }
 
-// Core log macros
+// Core log macros 引擎内部代码的日志记录
 #define RZ_CORE_TRACE(...) ::Razel::Log::GetCoreLogger()->trace(__VA_ARGS__)
 #define RZ_CORE_INFO(...) ::Razel::Log::GetCoreLogger()->info(__VA_ARGS__)
 #define RZ_CORE_WARN(...) ::Razel::Log::GetCoreLogger()->warn(__VA_ARGS__)
 #define RZ_CORE_ERROR(...) ::Razel::Log::GetCoreLogger()->error(__VA_ARGS__)
 #define RZ_CORE_CRITICAL(...) ::Razel::Log::GetCoreLogger()->critical(__VA_ARGS__)
-// Client log macros
+// Client log macros 用于应用程序代码的日志记录
 #define RZ_TRACE(...) ::Razel::Log::GetClientLogger()->trace(__VA_ARGS__)
 #define RZ_INFO(...) ::Razel::Log::GetClientLogger()->info(__VA_ARGS__)
 #define RZ_WARN(...) ::Razel::Log::GetClientLogger()->warn(__VA_ARGS__)

@@ -68,6 +68,10 @@
       <Filter>Razel</Filter>
     </ClInclude>
     <ClInclude Include="src\rzpch.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
+    <ClInclude Include="src\Razel\Input.h" />
+    <ClInclude Include="src\Razel\KeyCodes.h" />
+    <ClInclude Include="src\Razel\MouseButtonCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
@@ -92,5 +96,6 @@
       <Filter>Razel</Filter>
     </ClCompile>
     <ClCompile Include="src\rzpch.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
   </ItemGroup>
 </Project>

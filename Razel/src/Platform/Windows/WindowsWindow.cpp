@@ -112,11 +112,6 @@ namespace Razel {
 					break;
 
 			}
-			switch (key)
-			{
-
-
-			}
 		});
 		
 		// ¼àÌıÎÄ±¾ÊäÈë
