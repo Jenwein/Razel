@@ -8,7 +8,7 @@
 [submodule "Razel/vendor/imgui"]
 	path = Razel/vendor/imgui
 	url = https://github.com/Jenwein/imgui
-	branch = master
+	branch = docking
 [submodule "Razel/vendor/glm"]
 	path = Razel/vendor/glm
 	url = https://github.com/g-truc/glm
