@@ -5,7 +5,6 @@ namespace Razel
 {
 	LayerStack::LayerStack()
 	{
-		m_LayerInsert = m_Layers.begin();
 	}
 
 	LayerStack::~LayerStack()
@@ -19,7 +18,8 @@ namespace Razel
 	void LayerStack::PushLayer(Layer* layer)
 	{
 		// 将layer添加在m_LayerInsert位置，并更新m_LayerInsert 
-		m_LayerInsert = m_Layers.emplace(m_LayerInsert, layer);
+		m_Layers.emplace(m_Layers.begin() + m_LayerInsertIndex, layer);
+		m_LayerInsertIndex++;
 	}
 
 	void LayerStack::PushOverLayer(Layer* overlayer)
@@ -35,7 +35,7 @@ namespace Razel
 		if (it != m_Layers.end())
 		{
 			m_Layers.erase(it);
-			m_LayerInsert--;
+			m_LayerInsertIndex--;
 		}
 	}
 

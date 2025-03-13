@@ -1,6 +1,6 @@
 
 #include <Razel.h>
-
+#include "imgui/imgui.h"
 class ExampleLayer :public Razel::Layer
 {
 public:
@@ -28,6 +28,12 @@ public:
             RZ_TRACE("{0}", (char)e.GetKeyCode());
         }
     }
+	void OnImGuiRender()override
+	{
+		//ImGui::Begin("Test");
+		//ImGui::Text("Hello World");
+		//ImGui::End();
+	}
 	
 };
 
@@ -37,7 +43,6 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer());
-		PushOverLayer(new Razel::ImGuiLayer());
 	}
 	~Sandbox()
 	{

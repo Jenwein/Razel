@@ -125,7 +125,9 @@ workspace "Razel"
 		{
 			"Razel/vendor/spdlog/include",
 			"Razel/src",
-			"%{IncludeDir.glm}"
+			"%{IncludeDir.glm}",
+			"Razel/vendor"
+
 		}
 
 		links
@@ -156,4 +158,3 @@ workspace "Razel"
 			defines "RZ_DIST"
 			runtime "Release"
 			optimize "On"
-

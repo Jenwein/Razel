@@ -23,8 +23,8 @@ namespace Razel
 
 	private:
 		std::vector<Layer*> m_Layers;					// 存储层栈的所有层指针
-		std::vector<Layer*>::iterator m_LayerInsert;	// 指向当前栈中应该插入新层的位置（普通层和叠加层的分界线）
-
+		//std::vector<Layer*>::iterator m_LayerInsert;	// 指向当前栈中应该插入新层的位置（普通层和叠加层的分界线）--迭代器失效
+		unsigned int m_LayerInsertIndex = 0;			// 指向当前栈中应该插入新层的位置（普通层和叠加层的分界线）
 	};
 }
 

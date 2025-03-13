@@ -4,6 +4,9 @@
 #include "Razel/Core.h"
 #include "Events/Event.h"
 #include "Window.h"
+
+#include "Razel/ImGui/ImGuiLayer.h"
+
 namespace Razel {
 
 	class RAZEL_API Application
@@ -27,6 +30,7 @@ namespace Razel {
 
 	private:
 		std::unique_ptr<Window>m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 		static Application* s_Instance;

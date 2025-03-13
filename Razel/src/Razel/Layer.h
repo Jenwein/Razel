@@ -16,7 +16,7 @@ namespace Razel
 		virtual void OnDetach() {}				// 层被从层栈移除时调用
 		virtual void OnUpdate() {}				// 每帧更新
 		virtual void OnEvent(Event& event) {}	// 事件处理
-
+		virtual void OnImGuiRender(){}			// ImGui渲染
 		inline const std::string& GetName()const { return m_DebugName; }
 
 	private:
