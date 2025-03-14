@@ -1,4 +1,4 @@
-#include "rzpch.h"
+ï»¿#include "rzpch.h"
 
 #include "Application.h"
 
@@ -34,11 +34,11 @@ namespace Razel {
 	
 		RZ_CORE_TRACE("{0}", e);
 
-		// ÊÂ¼þ´¦Àí×Ô¶¥ÏòÏÂ±éÀú
+		// äº‹ä»¶å¤„ç†è‡ªé¡¶å‘ä¸‹éåŽ†
 		for (auto it = m_LayerStack.end();it !=m_LayerStack.begin();)
 		{
 			(*--it)->OnEvent(e);
-			// Èç¹ûÊÂ¼þ±»µ±Ç°²ã´¦ÀíÔòÍ£Ö¹¼ÌÐø´«µÝ
+			// å¦‚æžœäº‹ä»¶è¢«å½“å‰å±‚å¤„ç†åˆ™åœæ­¢ç»§ç»­ä¼ é€’
 			if (e.Handled)
 			{
 				break;

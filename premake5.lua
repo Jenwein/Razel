@@ -30,9 +30,10 @@ workspace "Razel"
 
 	project "Razel"			--项目名称
 		location"Razel"		--项目目录
-		kind "SharedLib"	--设置项目或配置创建的二进制对象的类型，例如控制台或窗口应用程序，或共享或静态库
+		kind "StaticLib"	--设置项目或配置创建的二进制对象的类型，例如控制台或窗口应用程序，或共享或静态库
 		language "C++"		--语言
-		staticruntime "off"
+		cppdialect "C++17"
+		staticruntime "on"
 
 		--设置编译的二进制目标文件的目标目录
 		targetdir ("bin/" .. outputdir .. "/%{prj.name}" )
@@ -51,6 +52,10 @@ workspace "Razel"
 			"%{prj.name}/vendor/glm/glm/**.inl",
 		}
 		
+		defines
+		{
+			"_CRT_SECURE_NO_WARNINGS"
+		}
 		--指定编译器的包含文件搜索路径
 		includedirs
 		{
@@ -73,7 +78,6 @@ workspace "Razel"
 
 		--限制后续构建设置到特定环境
 		filter "system:windows"
-			cppdialect "C++17"
 			systemversion "latest"
 
 			--添加预处理器或编译器符号到项目中
@@ -83,34 +87,29 @@ workspace "Razel"
 				"RZ_BUILD_DLL;",
 				"GLFW_INCLUDE_NONE"
 			}
-
-			--指定构建完成后要运行的 shell 命令
-			postbuildcommands
-			{
-				("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
-			}
 		
 		filter "configurations:Debug"
 			defines "RZ_DEBUG"
 			runtime "Debug"
-			symbols "On"
+			symbols "on"
 		
 		filter "configurations:Release"
 			defines "RZ_RELEASE"
 			runtime "Release"
-			optimize "On"
+			optimize "on"
 
 		filter "configurations:Dist"
 			defines "RZ_DIST"
 			runtime "Release"
-			optimize "On"
+			optimize "on"
 
 
 	project "Sandbox"
 		location "Sandbox"
 		kind "ConsoleApp"
 		language"C++"
-		staticruntime "off"
+		cppdialect "C++17"
+		staticruntime "on"
 
 		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 		objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -136,7 +135,6 @@ workspace "Razel"
 		}
 
 		filter "system:windows"
-			cppdialect "C++17"
 			systemversion "latest"
 
 			defines
@@ -147,14 +145,14 @@ workspace "Razel"
 		filter "configurations:Debug"
 			defines "RZ_DEBUG"
 			runtime "Debug"
-			symbols "On"
+			symbols "on"
 
 		filter "configurations:Release"
 			defines "RZ_RELEASE"
 			runtime "Release"
-			optimize "On"
+			optimize "on"
 
 		filter "configurations:Dist"
 			defines "RZ_DIST"
 			runtime "Release"
-			optimize "On"
+			optimize "on"

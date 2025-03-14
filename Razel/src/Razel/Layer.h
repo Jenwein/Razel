@@ -1,5 +1,4 @@
-#pragma once
-
+ï»¿#pragma once
 #include "Razel/Core.h"
 #include "Razel/Events/Event.h"
 
@@ -12,11 +11,11 @@ namespace Razel
 		Layer(const std::string& name = "Layer");
 		virtual ~Layer();
 
-		virtual void OnAttach() {}				// ²ã±»Ìí¼Óµ½²ãÕ»Ê±µ÷ÓÃ
-		virtual void OnDetach() {}				// ²ã±»´Ó²ãÕ»ÒÆ³ıÊ±µ÷ÓÃ
-		virtual void OnUpdate() {}				// Ã¿Ö¡¸üĞÂ
-		virtual void OnEvent(Event& event) {}	// ÊÂ¼ş´¦Àí
-		virtual void OnImGuiRender(){}			// ImGuiäÖÈ¾
+		virtual void OnAttach() {}				// å±‚è¢«æ·»åŠ åˆ°å±‚æ ˆæ—¶è°ƒç”¨
+		virtual void OnDetach() {}				// å±‚è¢«ä»å±‚æ ˆç§»é™¤æ—¶è°ƒç”¨
+		virtual void OnUpdate() {}				// æ¯å¸§æ›´æ–°
+		virtual void OnEvent(Event& event) {}	// äº‹ä»¶å¤„ç†
+		virtual void OnImGuiRender(){}			// ImGuiæ¸²æŸ“
 		inline const std::string& GetName()const { return m_DebugName; }
 
 	private:

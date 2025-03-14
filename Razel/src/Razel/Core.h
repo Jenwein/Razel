@@ -1,11 +1,15 @@
 #pragma once
 
 #ifdef RZ_PLATFORM_WINDOWS
+#if RZ_DYNAMIC_LINK
 	#ifdef RZ_BUILD_DLL
 		#define RAZEL_API __declspec(dllexport)
 	#else
 		#define RAZEL_API __declspec(dllimport)
 	#endif
+#else
+	#define RAZEL_API
+#endif
 #else
 	#error RAZEL only supports Windows!
 #endif
