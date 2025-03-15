@@ -21,8 +21,10 @@ workspace "Razel"
 
 	filter "action:vs*"
         buildoptions { "/utf-8" }
+		buildoptions { "/wd4828" }
     filter {}
-	
+	externalincludedirs { "vendor/spdlog/include" }
+
 	--查找并执行另一个脚本文件，也就是查找路径下的premake文件并将内容拷贝到此处(如果之前尚未运行过)
 	include "Razel/vendor/GLFW"
 	include "Razel/vendor/Glad"
