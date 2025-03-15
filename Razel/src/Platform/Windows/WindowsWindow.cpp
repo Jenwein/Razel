@@ -5,7 +5,8 @@
 #include "Razel/Events/MouseEvent.h"
 #include "Razel/Events/ApplicationEvent.h"
 
-#include "glad/glad.h"
+#include "Platform/OpenGL/OpenGLContext.h"
+
 
 namespace Razel {
 	static bool s_GLFWInitialized = false;
@@ -49,11 +50,8 @@ namespace Razel {
 		}
 
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, props.Title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_Window);
-		
-		// 获取 OpenGL 函数地址，初始化glad
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		RZ_CORE_ASSERT(status, "Failed to initialize Glad!");
+		m_Context = new OpenGLContext(m_Window);
+		m_Context->Init();
 
 		// 设置窗口数据指针（保存m_Data数据的指针到窗口，以便于通过窗口句柄来获取窗口相关数据）
 		glfwSetWindowUserPointer(m_Window, &m_Data);
@@ -174,7 +172,7 @@ namespace Razel {
 	void WindowsWindow::OnUpdate() const
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)

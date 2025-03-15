@@ -1,5 +1,7 @@
 #pragma once
 #include "Razel/Window.h"
+#include "Razel/Renderer/GraphicsContext.h"
+
 #include <GLFW/glfw3.h>
 
 namespace Razel
@@ -28,6 +30,7 @@ namespace Razel
 		virtual void Shutdown();
 	private:
 		GLFWwindow* m_Window;
+		GraphicsContext* m_Context;
 
 		struct WindowData
 		{
