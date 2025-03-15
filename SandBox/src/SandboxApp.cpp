@@ -12,21 +12,21 @@ public:
 	{
 		if (Razel::Input::IsKeyPressed(RZ_KEY_TAB))
 		{
-			RZ_TRACE("Tab key is pressed(poll)");
+			//RZ_TRACE("Tab key is pressed(poll)");
 		}
 	}
 
     void OnEvent(Razel::Event& event) override
     {
-        if (event.GetEventType() == Razel::EventType::KeyPressed)
-        {
-			Razel::KeyPressedEvent& e = (Razel::KeyPressedEvent&)event;
-            if (e.GetKeyCode() == RZ_KEY_TAB)
-            {
-                RZ_TRACE("Tab key is pressed (event)!");
-            }
-            RZ_TRACE("{0}", (char)e.GetKeyCode());
-        }
+		//if (event.GetEventType() == Razel::EventType::KeyPressed)
+		//{
+		//	Razel::KeyPressedEvent& e = (Razel::KeyPressedEvent&)event;
+		//    if (e.GetKeyCode() == RZ_KEY_TAB)
+		//    {
+		//        RZ_TRACE("Tab key is pressed (event)!");
+		//    }
+		//    RZ_TRACE("{0}", (char)e.GetKeyCode());
+		//}
     }
 	void OnImGuiRender()override
 	{

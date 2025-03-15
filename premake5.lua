@@ -20,8 +20,7 @@ workspace "Razel"
 	IncludeDir["glm"] = "Razel/vendor/glm"
 
 	filter "action:vs*"
-        buildoptions { "/utf-8" }
-		buildoptions { "/wd4828" }
+        buildoptions { "/utf-8" , "/wd4828" }
     filter {}
 	externalwarnings "Off"
 	--查找并执行另一个脚本文件，也就是查找路径下的premake文件并将内容拷贝到此处(如果之前尚未运行过)
