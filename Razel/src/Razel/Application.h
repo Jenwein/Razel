@@ -6,6 +6,7 @@
 #include "Window.h"
 
 #include "Razel/ImGui/ImGuiLayer.h"
+#include "Razel/Renderer/Shader.h"
 
 namespace Razel {
 
@@ -35,6 +36,7 @@ namespace Razel {
 		LayerStack m_LayerStack;
 
 		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+		std::unique_ptr<Shader> m_Shader;
 
 		static Application* s_Instance;
 	};
