@@ -1366,6 +1366,9 @@
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
     <ClInclude Include="src\Razel\Renderer\Shader.h" />
+    <ClInclude Include="src\Razel\Renderer\Buffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
+    <ClInclude Include="src\Razel\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
@@ -1399,5 +1402,8 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Razel\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Razel\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\Razel\Renderer\Renderer.cpp" />
   </ItemGroup>
 </Project>
