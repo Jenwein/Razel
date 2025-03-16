@@ -7,6 +7,7 @@
 
 namespace Razel
 {
+	
 	Razel::VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t size)
 	{
 		switch (Renderer::GetAPI())
