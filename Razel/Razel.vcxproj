@@ -146,6 +146,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
@@ -168,13 +169,16 @@
     <ClInclude Include="src\Razel\MouseButtonCodes.h" />
     <ClInclude Include="src\Razel\Renderer\Buffer.h" />
     <ClInclude Include="src\Razel\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Razel\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Razel\Renderer\Renderer.h" />
+    <ClInclude Include="src\Razel\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Razel\Renderer\Shader.h" />
     <ClInclude Include="src\Razel\Window.h" />
     <ClInclude Include="src\rzpch.h" />
     <ClInclude Include="src\Razel\Renderer\VertexArray.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
@@ -187,7 +191,9 @@
     <ClCompile Include="src\Razel\LayerStack.cpp" />
     <ClCompile Include="src\Razel\Log.cpp" />
     <ClCompile Include="src\Razel\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Razel\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Razel\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Razel\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Razel\Renderer\Shader.cpp" />
     <ClCompile Include="src\rzpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

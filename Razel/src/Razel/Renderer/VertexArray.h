@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Razel/Renderer/Buffer.h"
+#include <memory>
 
 namespace Razel
 {

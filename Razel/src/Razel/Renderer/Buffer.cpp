@@ -12,10 +12,9 @@ namespace Razel
 	{
 		switch (Renderer::GetAPI())
 		{
-
-			case RendererAPI::None: RZ_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-			case RendererAPI::OpenGL: return new OpenGLVertexBuffer(vertices,size);
-			case RendererAPI::DirectX11: RZ_CORE_ASSERT(false, "RendererAPI::DirectX11 is currently not supported!"); return nullptr;
+			case RendererAPI::API::None: RZ_CORE_ASSERT(false, "RendererAPI::API::None is currently not supported!"); return nullptr;
+			case RendererAPI::API::OpenGL: return new OpenGLVertexBuffer(vertices,size);
+			case RendererAPI::API::DirectX11: RZ_CORE_ASSERT(false, "RendererAPI::API::DirectX11 is currently not supported!"); return nullptr;
 			default: break;
 		}
 		RZ_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -27,9 +26,9 @@ namespace Razel
 	{
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPI::None: RZ_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-			case RendererAPI::OpenGL: return new OpenGLIndexBuffer(indices,count);
-			case RendererAPI::DirectX11: RZ_CORE_ASSERT(false, "RendererAPI::DirectX11 is currently not supported!"); return nullptr;
+			case RendererAPI::API::None: RZ_CORE_ASSERT(false, "RendererAPI::API::None is currently not supported!"); return nullptr;
+			case RendererAPI::API::OpenGL: return new OpenGLIndexBuffer(indices,count);
+			case RendererAPI::API::DirectX11: RZ_CORE_ASSERT(false, "RendererAPI::API::DirectX11 is currently not supported!"); return nullptr;
 			default: break;
 		}
 		RZ_CORE_ASSERT(false, "Unknown RendererAPI!");
