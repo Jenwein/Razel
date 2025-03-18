@@ -3,9 +3,12 @@
 
 namespace Razel
 {
-	void Renderer::BeginScene()
+	Renderer::SceneData* Renderer::m_SceneData = new Renderer::SceneData;
+
+	void Renderer::BeginScene(OrthographicCamera& camera)
 	{
 		// 设置场景信息
+		m_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
 
 	}
 
@@ -14,8 +17,11 @@ namespace Razel
 		// 结束场景
 	}
 
-	void Renderer::Submit(const std::shared_ptr<VertexArray>& vertexArray)
+	void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray)
 	{
+		shader->Bind();
+		shader->UploadUniformMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
+
 		vertexArray->Bind();
 		RenderCommand::DrawIndexed(vertexArray);
 	}

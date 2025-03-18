@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include <glm/glm.hpp>
+
 namespace Razel
 {
 	class Shader
@@ -12,6 +14,8 @@ namespace Razel
 		void Bind()const;
 		void UnBind()const;
 
+		// ÉÏ´«UniformMat4
+		void UploadUniformMat4(const std::string& name, const glm::mat4& matrix);
 	private:
 		uint32_t m_RendererID;
 	};
