@@ -1,18 +1,14 @@
 #pragma once
-#include "Razel/Events/ApplicationEvent.h"
-#include "Razel/LayerStack.h"
 #include "Razel/Core.h"
+#include "Razel/LayerStack.h"
+#include "Razel/Events/ApplicationEvent.h"
+
+#include "Razel/Core/Timestep.h"
 
 #include "Events/Event.h"
 #include "Window.h"
 
 #include "Razel/ImGui/ImGuiLayer.h"
-
-#include "Razel/Renderer/Shader.h"
-#include "Razel/Renderer/Buffer.h"
-#include "Razel/Renderer/VertexArray.h"
-
-#include "Razel/Renderer/OrthographicCamera.h"
 
 namespace Razel {
 
@@ -39,15 +35,8 @@ namespace Razel {
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
-
-		std::shared_ptr<Shader> m_Shader;
-		std::shared_ptr<VertexArray> m_VertexArray;
-
-		std::shared_ptr<Shader> m_BlueShader;
-		std::shared_ptr<VertexArray> m_SquareVA;
-	
-		// 正交投影相机
-		OrthographicCamera m_Camera;
+		float m_LastFrameTime = 0.0f;
+		
 	private:
 		static Application* s_Instance;
 	};

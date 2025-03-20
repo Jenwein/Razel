@@ -101,6 +101,8 @@
     <ClInclude Include="src\Razel\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Razel\Renderer\OrthographicCamera.h" />
+    <ClInclude Include="src\Razel\Renderer\PerspectiveCamera.h" />
+    <ClInclude Include="src\Razel\Core\Timestep.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -149,5 +151,6 @@
     <ClCompile Include="src\Razel\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Razel\Renderer\OrthographicCamera.cpp" />
+    <ClCompile Include="src\Razel\Renderer\PerspectiveCamera.cpp" />
   </ItemGroup>
 </Project>
