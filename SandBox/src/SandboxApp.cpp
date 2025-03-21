@@ -2,6 +2,8 @@
 
 #include "imgui/imgui.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include "Platform/OpenGL/OpenGLShader.h"
 
 class ExampleLayer :public Razel::Layer
 {
@@ -87,7 +89,7 @@ public:
 			}
 		)";
 
-		m_Shader.reset(new Razel::Shader(vertexSrc, fragmentSrc));
+		m_Shader.reset(Razel::Shader::Create(vertexSrc, fragmentSrc));
 
 		std::string blueShaderVertexSrc = R"(
 			#version 330 core
@@ -112,14 +114,15 @@ public:
 			layout(location = 0) out vec4 color;
 
 			in vec3 v_Position;
-
+			uniform vec3 u_Color;
 			void main()
 			{
-				color = vec4(0.2, 0.3, 0.8, 1.0);
+				color = vec4(u_Color,1.0f);
+
 			}
 		)";
 
-		m_BlueShader.reset(new Razel::Shader(blueShaderVertexSrc, blueShaderFragmentSrc));
+		m_FlatColorShader.reset(Razel::Shader::Create(blueShaderVertexSrc, blueShaderFragmentSrc));
 		
 	}
 	
@@ -141,9 +144,9 @@ public:
 			m_CameraPosition.y -= m_CameraMoveSpeed * ts;
 
 		if (Razel::Input::IsKeyPressed(RZ_KEY_A))
-			m_CameraRotation -= m_CameraRotationSpeed*ts;
-		if (Razel::Input::IsKeyPressed(RZ_KEY_D))
 			m_CameraRotation += m_CameraRotationSpeed*ts;
+		if (Razel::Input::IsKeyPressed(RZ_KEY_D))
+			m_CameraRotation -= m_CameraRotationSpeed*ts;
 
 		if (Razel::Input::IsKeyPressed(RZ_KEY_J))
 			pos1.x -= m_CameraMoveSpeed * ts;
@@ -162,6 +165,9 @@ public:
 		m_Camera.SetRotation(m_CameraRotation);
 
 
+		std::dynamic_pointer_cast<Razel::OpenGLShader>(m_FlatColorShader)->Bind();
+		std::dynamic_pointer_cast<Razel::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
+
 		Razel::Renderer::BeginScene(m_Camera);
 		
 		//glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos1);
@@ -173,7 +179,7 @@ public:
 				glm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
 				glm::vec3 Pos = pos + pos1;
 				glm::mat4 transform = glm::translate(glm::mat4(1.0f), Pos) * scale;
-				Razel::Renderer::Submit(m_BlueShader, m_SquareVA, transform);
+				Razel::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
 			}
 		}
 
@@ -189,7 +195,7 @@ public:
 	void OnImGuiRender()override
 	{
 		ImGui::Begin("Test");
-		ImGui::Text("Hello World");
+		ImGui::ColorEdit3("Square Color",glm::value_ptr(m_SquareColor));
 		ImGui::End();
 	}
 	
@@ -197,8 +203,10 @@ private:
 	std::shared_ptr<Razel::Shader> m_Shader;
 	std::shared_ptr<Razel::VertexArray> m_VertexArray;
 
-	std::shared_ptr<Razel::Shader> m_BlueShader;
+	std::shared_ptr<Razel::Shader> m_FlatColorShader;
 	std::shared_ptr<Razel::VertexArray> m_SquareVA;
+
+	glm::vec3 m_SquareColor = glm::vec3(0.2f, 0.3f, 0.8f);
 
 	// 正交投影相机
 	Razel::OrthographicCamera m_Camera;
