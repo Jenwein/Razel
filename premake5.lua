@@ -17,6 +17,7 @@ workspace "Razel"
 	IncludeDir["GLFW"] = "Razel/vendor/GLFW/include"
 	IncludeDir["Glad"] = "Razel/vendor/Glad/include"
 	IncludeDir["ImGui"] = "Razel/vendor/imgui"
+	IncludeDir["stb_image"] = "Razel/vendor/stb_image"
 	IncludeDir["glm"] = "Razel/vendor/glm"
 
 	filter "action:vs*"
@@ -48,8 +49,10 @@ workspace "Razel"
 		{
 			"%{prj.name}/src/**.h",
 			"%{prj.name}/src/**.cpp",
+			"%{prj.name}/vendor/stb_image/**.h",
+			"%{prj.name}/vendor/stb_image/**.cpp",
 			"%{prj.name}/vendor/glm/glm/**.hpp",
-			"%{prj.name}/vendor/glm/glm/**.inl",
+			"%{prj.name}/vendor/glm/glm/**.inl"
 		}
 		
 		defines
@@ -64,6 +67,7 @@ workspace "Razel"
 			"%{IncludeDir.GLFW}",
 			"%{IncludeDir.Glad}",
 			"%{IncludeDir.ImGui}",
+			"%{IncludeDir.stb_image}",
 			"%{IncludeDir.glm}"
 
 		}

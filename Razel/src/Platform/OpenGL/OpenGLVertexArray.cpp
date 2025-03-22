@@ -47,7 +47,7 @@ namespace Razel {
 	}
 
 	// 保存顶点缓冲布局
-	void OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer)
+	void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
 	{
 		glBindVertexArray(m_RendererID);
 		uint32_t index = 0;
@@ -67,7 +67,7 @@ namespace Razel {
 	}
 
 	// 设置顶点索引状态
-	void OpenGLVertexArray::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer)
+	void OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
 	{
 		glBindVertexArray(m_RendererID);
 		indexBuffer->Bind();

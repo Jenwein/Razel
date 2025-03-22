@@ -1,5 +1,5 @@
 #pragma once
-
+#include <memory>
 #ifdef RZ_PLATFORM_WINDOWS
 #if RZ_DYNAMIC_LINK
 	#ifdef RZ_BUILD_DLL
@@ -32,3 +32,15 @@
 
 // 将1左移x位得到二进制掩码，以用来分类事件，可以快速用过'|'或'&'进行不同的事件操作
 #define BIT(x) (1 << x)
+
+
+namespace Razel
+{
+	template<typename T>
+	using Scope = std::unique_ptr<T>;
+
+	template<typename T>
+	using Ref = std::shared_ptr<T>;
+
+}
+

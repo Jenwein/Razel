@@ -5,13 +5,13 @@
 
 namespace Razel
 {
-	//
+	// 初始化静态成员
 	std::shared_ptr<spdlog::logger> Log::s_CoreLogger;
 	std::shared_ptr<spdlog::logger> Log::s_ClientLogger;
 
 	void Log::Init()
 	{
-		//
+		// 设置日志模式
 		spdlog::set_pattern("%^[%T] %n: %v%$");
 
 		s_CoreLogger = spdlog::stdout_color_mt("RAZEL");

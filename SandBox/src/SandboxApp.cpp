@@ -4,6 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Platform/OpenGL/OpenGLShader.h"
+#include "Platform/OpenGL/OpenGLTexture.h"
 
 class ExampleLayer :public Razel::Layer
 {
@@ -18,7 +19,7 @@ public:
 			 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
 			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
-		std::shared_ptr<Razel::VertexBuffer> vertexBuffer;
+		Razel::Ref<Razel::VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(Razel::VertexBuffer::Create(vertices, sizeof(vertices)));
 		
 		Razel::BufferLayout layout = {
@@ -30,28 +31,29 @@ public:
 
 
 		uint32_t indices[3] = { 0, 1, 2 };
-		std::shared_ptr<Razel::IndexBuffer> indexBuffer;
+		Razel::Ref<Razel::IndexBuffer> indexBuffer;
 		indexBuffer.reset(Razel::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 		m_SquareVA.reset(Razel::VertexArray::Create());
 
-		float squareVertices[3 * 4] = {
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.5f,  0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f
+		float squareVertices[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
-		std::shared_ptr<Razel::VertexBuffer> squareVB;
+		Razel::Ref<Razel::VertexBuffer> squareVB;
 		squareVB.reset(Razel::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 		squareVB->SetLayout({
-			{ Razel::ShaderDataType::Float3, "a_Position" }
-			});
+			{ Razel::ShaderDataType::Float3, "a_Position" },
+			{ Razel::ShaderDataType::Float2, "a_TexCoord" }
+		});
 		m_SquareVA->AddVertexBuffer(squareVB);
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		std::shared_ptr<Razel::IndexBuffer> squareIB;
+		Razel::Ref<Razel::IndexBuffer> squareIB;
 		squareIB.reset(Razel::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
@@ -91,7 +93,7 @@ public:
 
 		m_Shader.reset(Razel::Shader::Create(vertexSrc, fragmentSrc));
 
-		std::string blueShaderVertexSrc = R"(
+		std::string FlatShaderVertexSrc = R"(
 			#version 330 core
 			
 			layout(location = 0) in vec3 a_Position;
@@ -108,7 +110,7 @@ public:
 			}
 		)";
 
-		std::string blueShaderFragmentSrc = R"(
+		std::string FlatShaderFragmentSrc = R"(
 			#version 330 core
 			
 			layout(location = 0) out vec4 color;
@@ -122,8 +124,53 @@ public:
 			}
 		)";
 
-		m_FlatColorShader.reset(Razel::Shader::Create(blueShaderVertexSrc, blueShaderFragmentSrc));
+		m_FlatColorShader.reset(Razel::Shader::Create(FlatShaderVertexSrc, FlatShaderFragmentSrc));
 		
+		std::string TextureShaderVertexSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec2 a_TexCoord;
+
+			uniform mat4 u_ViewProjection;
+			uniform mat4 u_Transform;			
+
+			out vec2 v_TexCoord;
+
+			void main()
+			{
+				v_TexCoord = a_TexCoord;
+				gl_Position = u_ViewProjection *u_Transform* vec4(a_Position, 1.0);	
+			
+			}
+		)";
+
+		std::string TextureShaderFragmentSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) out vec4 color;
+
+			in vec2 v_TexCoord;
+
+			uniform vec3 u_Color;
+			uniform sampler2D u_Texture;
+
+			void main()
+			{
+				
+				color = texture(u_Texture,v_TexCoord);
+
+			}
+		)";
+
+		m_TextureShader.reset(Razel::Shader::Create(TextureShaderVertexSrc, TextureShaderFragmentSrc));
+
+		m_Texture = Razel::Texture2D::Create("assets/textures/Checkerboard.png");
+
+		std::dynamic_pointer_cast<Razel::OpenGLShader>(m_TextureShader)->Bind();
+		std::dynamic_pointer_cast<Razel::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+
+
 	}
 	
 	void OnUpdate(Razel::Timestep ts) override
@@ -183,8 +230,11 @@ public:
 			}
 		}
 
+		m_Texture->Bind();
+		Razel::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
-		Razel::Renderer::Submit(m_Shader, m_VertexArray);
+		// Èý½ÇÐÎ
+		//Razel::Renderer::Submit(m_Shader, m_VertexArray);
 		Razel::Renderer::EndScene();
 	}
 
@@ -200,11 +250,14 @@ public:
 	}
 	
 private:
-	std::shared_ptr<Razel::Shader> m_Shader;
-	std::shared_ptr<Razel::VertexArray> m_VertexArray;
+	Razel::Ref<Razel::Shader> m_Shader;
+	Razel::Ref<Razel::VertexArray> m_VertexArray;
 
-	std::shared_ptr<Razel::Shader> m_FlatColorShader;
-	std::shared_ptr<Razel::VertexArray> m_SquareVA;
+	Razel::Ref<Razel::Shader> m_FlatColorShader, m_TextureShader;
+	Razel::Ref<Razel::VertexArray> m_SquareVA;
+
+	Razel::Ref<Razel::Texture2D> m_Texture;
+
 
 	glm::vec3 m_SquareColor = glm::vec3(0.2f, 0.3f, 0.8f);
 
