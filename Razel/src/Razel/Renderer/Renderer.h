@@ -9,6 +9,10 @@ namespace Razel
 	class Renderer
 	{
 	public:
+
+		// 初始化渲染
+		static void Init();
+
 		// 设置场景信息
 		static void BeginScene(OrthographicCamera& camera);
 		

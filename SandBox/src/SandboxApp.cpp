@@ -164,8 +164,9 @@ public:
 		)";
 
 		m_TextureShader.reset(Razel::Shader::Create(TextureShaderVertexSrc, TextureShaderFragmentSrc));
-
+		
 		m_Texture = Razel::Texture2D::Create("assets/textures/Checkerboard.png");
+		m_CppTexture = Razel::Texture2D::Create("assets/textures/C++.png");
 
 		std::dynamic_pointer_cast<Razel::OpenGLShader>(m_TextureShader)->Bind();
 		std::dynamic_pointer_cast<Razel::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
@@ -233,6 +234,10 @@ public:
 		m_Texture->Bind();
 		Razel::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
+		m_CppTexture->Bind();
+		Razel::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+
 		// Èý½ÇÐÎ
 		//Razel::Renderer::Submit(m_Shader, m_VertexArray);
 		Razel::Renderer::EndScene();
@@ -256,7 +261,7 @@ private:
 	Razel::Ref<Razel::Shader> m_FlatColorShader, m_TextureShader;
 	Razel::Ref<Razel::VertexArray> m_SquareVA;
 
-	Razel::Ref<Razel::Texture2D> m_Texture;
+	Razel::Ref<Razel::Texture2D> m_Texture, m_CppTexture;
 
 
 	glm::vec3 m_SquareColor = glm::vec3(0.2f, 0.3f, 0.8f);

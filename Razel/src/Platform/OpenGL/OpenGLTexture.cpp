@@ -31,7 +31,7 @@ namespace Razel
 			internalFormat = GL_RGB8;
 			dataFormat = GL_RGB;
 		}
-		RZ_CORE_ASSERT(internalFormat & dataFormat, "图像格式不支持!");
+		RZ_CORE_ASSERT(internalFormat & dataFormat, "Format not supported!");
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
 		glTextureStorage2D(m_RendererID, 1, internalFormat, m_Width, m_Height);
