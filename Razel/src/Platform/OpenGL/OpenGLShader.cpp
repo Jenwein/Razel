@@ -6,6 +6,7 @@
 
 namespace Razel
 {
+	// 根据字符返回着色器类型
 	static GLenum ShaderTypeFromString(const std::string& type)
 	{
 		if (type == "vertex")
@@ -19,18 +20,17 @@ namespace Razel
 
 	OpenGLShader::OpenGLShader(const std::string& filepath)
 	{
-		std::string source = ReadFile(filepath);
-		auto shaderSources= PreProcess(source);
-		Compile(shaderSources);
+		std::string source = ReadFile(filepath);	// 从文件中读取着色器代码
+		auto shaderSources= PreProcess(source);		// 将着色器的type与source对应
+		Compile(shaderSources);						// 编译着色器
 	}
-
 
 	OpenGLShader::OpenGLShader(const std::string vertexSrc, const std::string& fragmentSrc)
 	{
 		std::unordered_map<GLenum, std::string> sources;	// 顶点着色器和片段着色器源码
 		sources[GL_VERTEX_SHADER] = vertexSrc;				// 顶点着色器源码
 		sources[GL_FRAGMENT_SHADER] = fragmentSrc;			// 片段着色器源码
-		Compile(sources);						// 编译着色器
+		Compile(sources);									// 编译着色器
 	}
 
 
@@ -46,7 +46,7 @@ namespace Razel
 		if (in)
 		{
 			in.seekg(0, std::ios::end);			// 定位到文件末尾
-			result.resize(in.tellg());				// 重新调整大小以容纳文件
+			result.resize(in.tellg());			// 重新调整大小以容纳文件,tellg返回当前读取位置
 			in.seekg(0, std::ios::beg);			// 定位到文件开头
 			in.read(&result[0], result.size());	// 读取文件到字符串
 			in.close();
@@ -63,18 +63,18 @@ namespace Razel
 		std::unordered_map<GLenum, std::string> shaderSources;
 		const char* typeToken = "#type";
 		size_t typeTokenLength = strlen(typeToken);
-		size_t pos = source.find(typeToken, 0);	// 在source中查找typeToken，从0开始
+		size_t pos = source.find(typeToken, 0);							// 在source中查找typeToken，从0开始
 
 		while (pos != std::string::npos)
 		{
-			size_t eol = source.find_first_of("\r\n", pos);	// 从pos开始查找第一个换行符
+			size_t eol = source.find_first_of("\r\n", pos);				// 从pos开始查找第一个换行符
 			RZ_CORE_ASSERT(eol != std::string::npos, "Syntax error");	
 			size_t begin = pos + typeTokenLength + 1;					// 从typeToken后开始
 			std::string type = source.substr(begin, eol - begin);
-			RZ_CORE_ASSERT(ShaderTypeFromString(type), "Invalid shader type specified");
+			RZ_CORE_ASSERT(ShaderTypeFromString(type), "Invalid shader type({0}) specified",type);
 
 			size_t nextLinePos = source.find_first_not_of("\r\n", eol);
-			pos = source.find(typeToken, nextLinePos);		// 从下一行开始查找typeToken
+			pos = source.find(typeToken, nextLinePos);					// 从下一行开始查找typeToken
 			shaderSources[ShaderTypeFromString(type)] 
 				= source.substr(nextLinePos, pos - (nextLinePos == std::string::npos ? source.size() - 1 : nextLinePos));
 		}
@@ -163,12 +163,7 @@ namespace Razel
 			// 已经链接在程序中，不再需要着色器
 			glDetachShader(program, id);
 		}
-
-		
-
-
 	}
-
 
 
 	void OpenGLShader::Bind() const
