@@ -91,7 +91,7 @@ public:
 			}
 		)";
 
-		m_Shader.reset(Razel::Shader::Create(vertexSrc, fragmentSrc));
+		m_Shader = Razel::Shader::Create("VertexPosColor",vertexSrc, fragmentSrc);
 
 		std::string FlatShaderVertexSrc = R"(
 			#version 330 core
@@ -124,15 +124,15 @@ public:
 			}
 		)";
 
-		m_FlatColorShader.reset(Razel::Shader::Create(FlatShaderVertexSrc, FlatShaderFragmentSrc));
+		m_FlatColorShader = Razel::Shader::Create("FlatColor",FlatShaderVertexSrc, FlatShaderFragmentSrc);
 		
-		m_TextureShader.reset(Razel::Shader::Create("assets/shaders/Texture.glsl"));
+		auto textureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
 		
 		m_Texture = Razel::Texture2D::Create("assets/textures/Checkerboard.png");
 		m_CppTexture = Razel::Texture2D::Create("assets/textures/C++.png");
 
-		std::dynamic_pointer_cast<Razel::OpenGLShader>(m_TextureShader)->Bind();
-		std::dynamic_pointer_cast<Razel::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+		std::dynamic_pointer_cast<Razel::OpenGLShader>(textureShader)->Bind();
+		std::dynamic_pointer_cast<Razel::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 
 
 	}
@@ -194,11 +194,13 @@ public:
 			}
 		}
 
+		auto textureShader = m_ShaderLibrary.Get("Texture");
+
 		m_Texture->Bind();
-		Razel::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		Razel::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		m_CppTexture->Bind();
-		Razel::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		Razel::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 
 		// Èý½ÇÐÎ
@@ -221,8 +223,10 @@ private:
 	Razel::Ref<Razel::Shader> m_Shader;
 	Razel::Ref<Razel::VertexArray> m_VertexArray;
 
-	Razel::Ref<Razel::Shader> m_FlatColorShader, m_TextureShader;
+	Razel::Ref<Razel::Shader> m_FlatColorShader;
 	Razel::Ref<Razel::VertexArray> m_SquareVA;
+
+	Razel::ShaderLibrary m_ShaderLibrary;
 
 	Razel::Ref<Razel::Texture2D> m_Texture, m_CppTexture;
 
@@ -249,7 +253,6 @@ public:
 	}
 	~Sandbox()
 	{
-
 	}
 
 };

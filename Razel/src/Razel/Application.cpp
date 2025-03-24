@@ -53,13 +53,12 @@ namespace Razel {
 	void Application::PushLayer(Layer* layer)
 	{
 		m_LayerStack.PushLayer(layer);
-		layer->OnAttach();
+		
 	}
 
 	void Application::PushOverLayer(Layer* overlayer)
 	{
 		m_LayerStack.PushOverLayer(overlayer);
-		overlayer->OnAttach();
 	}
 	void Application::Run()
 	{

@@ -23,9 +23,16 @@ namespace Razel
 		std::string source = ReadFile(filepath);	// 从文件中读取着色器代码
 		auto shaderSources= PreProcess(source);		// 将着色器的type与source对应
 		Compile(shaderSources);						// 编译着色器
+
+		// 从文件路径提取着色器名称
+		auto lastSlash = filepath.find_last_of("/\\");
+		lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+		auto lastDot = filepath.rfind(".");
+		auto count = lastDot == std::string::npos ? filepath.size() - lastSlash : lastDot - lastSlash;
+		m_Name = filepath.substr(lastSlash, count);
 	}
 
-	OpenGLShader::OpenGLShader(const std::string vertexSrc, const std::string& fragmentSrc)
+	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
 	{
 		std::unordered_map<GLenum, std::string> sources;	// 顶点着色器和片段着色器源码
 		sources[GL_VERTEX_SHADER] = vertexSrc;				// 顶点着色器源码
@@ -83,10 +90,11 @@ namespace Razel
 
 	void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources)
 	{
-
 		GLuint program = glCreateProgram();
-		std::vector<GLenum> glShaderIDs(shaderSources.size());
-
+		RZ_CORE_ASSERT(shaderSources.size() <= 2, "We only support 2 shaders for now");
+		
+		std::array<GLenum, 2> glShaderIDs;
+		int glShaderIDsIndex = 0;
 		for (auto& [type,source]:shaderSources)
 		{
 
@@ -125,7 +133,7 @@ namespace Razel
 			}
 
 			glAttachShader(program, shader);
-			glShaderIDs.push_back(shader);
+			glShaderIDs[glShaderIDsIndex++] = shader;
 
 		}
 		m_RendererID = program;
@@ -175,6 +183,7 @@ namespace Razel
 	{
 		glUseProgram(0);
 	}
+
 
 	void OpenGLShader::UploadUniformInt(const std::string& name, int value)
 	{

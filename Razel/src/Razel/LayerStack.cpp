@@ -19,19 +19,20 @@ namespace Razel
 	{
 		// 将layer添加在m_LayerInsert位置，并更新m_LayerInsert 
 		m_Layers.emplace(m_Layers.begin() + m_LayerInsertIndex, layer);
+		layer->OnAttach();
 		m_LayerInsertIndex++;
 	}
 
 	void LayerStack::PushOverLayer(Layer* overlayer)
 	{
 		m_Layers.emplace_back(overlayer);
-
+		overlayer->OnAttach();
 	}
 	// 查找要移除的层的位置，移除层并更新m_LayerInsert
 	void LayerStack::PopLayer(Layer* layer)
 	{
 		auto it =  std::find(m_Layers.begin(), m_Layers.end(), layer);
-		
+		layer->OnDetach();
 		if (it != m_Layers.end())
 		{
 			m_Layers.erase(it);
@@ -42,7 +43,7 @@ namespace Razel
 	void LayerStack::PopOverLayer(Layer* overlayer)
 	{
 		auto it = std::find(m_Layers.begin(), m_Layers.end(), overlayer);
-
+		overlayer->OnDetach();
 		if (it != m_Layers.end())
 		{
 			m_Layers.erase(it);
