@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <filesystem>
 namespace Razel
 {
 	// 根据字符返回着色器类型
@@ -25,11 +26,16 @@ namespace Razel
 		Compile(shaderSources);						// 编译着色器
 
 		// 从文件路径提取着色器名称
-		auto lastSlash = filepath.find_last_of("/\\");
-		lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
-		auto lastDot = filepath.rfind(".");
-		auto count = lastDot == std::string::npos ? filepath.size() - lastSlash : lastDot - lastSlash;
-		m_Name = filepath.substr(lastSlash, count);
+		//auto lastSlash = filepath.find_last_of("/\\");
+		//lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+		//auto lastDot = filepath.rfind(".");
+		//auto count = lastDot == std::string::npos ? filepath.size() - lastSlash : lastDot - lastSlash;
+		//m_Name = filepath.substr(lastSlash, count);
+
+		// 使用std::filesystem进行提取
+		std::filesystem::path pathObj(filepath);
+		m_Name = pathObj.stem().string();					//返回不带扩展名的文件名
+	
 	}
 
 	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
