@@ -25,14 +25,14 @@ namespace Razel
 		auto shaderSources= PreProcess(source);		// 将着色器的type与source对应
 		Compile(shaderSources);						// 编译着色器
 
-		// 从文件路径提取着色器名称
+		// 原始方法:从文件路径提取着色器名称
 		//auto lastSlash = filepath.find_last_of("/\\");
 		//lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
 		//auto lastDot = filepath.rfind(".");
 		//auto count = lastDot == std::string::npos ? filepath.size() - lastSlash : lastDot - lastSlash;
 		//m_Name = filepath.substr(lastSlash, count);
 
-		// 使用std::filesystem进行提取
+		// C++17:使用std::filesystem进行提取
 		std::filesystem::path pathObj(filepath);
 		m_Name = pathObj.stem().string();					//返回不带扩展名的文件名
 	
