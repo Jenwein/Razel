@@ -1,8 +1,12 @@
 #pragma once
-
 #include "Renderer/OrthographicCamera.h"
+
 #include "Core/Timestep.h"
+
 #include "Events/Event.h"
+
+#include "Razel/Events/ApplicationEvent.h"
+#include "Razel/Events/MouseEvent.h"
 
 namespace Razel
 {
@@ -14,13 +18,17 @@ namespace Razel
 		OrthographicCameraController(float aspectRatio, bool rotation = false);
 
 		// 更新相机的Transform
-		void OnUpdate(Timestep);
+		void OnUpdate(Timestep ts);
 
 		void OnEvent(Event& e);
 
 		// 获取相机对象
-		OrthographicCamera& GetCamera();
-		const OrthographicCamera& GetCamera()const;
+		OrthographicCamera& GetCamera() { return m_Camera; }
+		const OrthographicCamera& GetCamera()const { return m_Camera; }
+
+	private:
+		bool OnMouseScrolled(MouseScrolledEvent& e);
+		bool OnWindowResized(WindowResizeEvent& e);
 
 	private:
 		float m_AspectRatio;								// 相机的宽高比

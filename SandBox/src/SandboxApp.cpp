@@ -10,7 +10,7 @@ class ExampleLayer :public Razel::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f),m_CameraPosition(0.0f)
+		: Layer("Example"), m_CameraController(1280.0f / 720.0f)
 	{
 		m_VertexArray.reset(Razel::VertexArray::Create());
 
@@ -139,47 +139,21 @@ public:
 	
 	void OnUpdate(Razel::Timestep ts) override
 	{
-		RZ_CORE_TRACE("Timestep: {0}s,{1}ms", ts.GetSeconds(),ts.GetMilliseconds());
+		//RZ_CORE_TRACE("Timestep: {0}s,{1}ms", ts.GetSeconds(),ts.GetMilliseconds());
 
 		//glm::mat4 scale = glm::scale(glm::mat4(1.0), glm::vec3(0.1f));
 		static glm::vec3 pos1(0.11f, 0.11f, 0.0f);
 		
-		if (Razel::Input::IsKeyPressed(RZ_KEY_LEFT))
-			m_CameraPosition.x -= m_CameraMoveSpeed * ts;
-		else if (Razel::Input::IsKeyPressed(RZ_KEY_RIGHT))
-			m_CameraPosition.x += m_CameraMoveSpeed * ts;
-
-		if (Razel::Input::IsKeyPressed(RZ_KEY_UP))
-			m_CameraPosition.y += m_CameraMoveSpeed * ts;
-		else if (Razel::Input::IsKeyPressed(RZ_KEY_DOWN))
-			m_CameraPosition.y -= m_CameraMoveSpeed * ts;
-
-		if (Razel::Input::IsKeyPressed(RZ_KEY_A))
-			m_CameraRotation += m_CameraRotationSpeed*ts;
-		if (Razel::Input::IsKeyPressed(RZ_KEY_D))
-			m_CameraRotation -= m_CameraRotationSpeed*ts;
-
-		if (Razel::Input::IsKeyPressed(RZ_KEY_J))
-			pos1.x -= m_CameraMoveSpeed * ts;
-		else if (Razel::Input::IsKeyPressed(RZ_KEY_L))
-			pos1.x += m_CameraMoveSpeed * ts;
-
-		if (Razel::Input::IsKeyPressed(RZ_KEY_I))
-			pos1.y += m_CameraMoveSpeed * ts;
-		else if (Razel::Input::IsKeyPressed(RZ_KEY_K))
-			pos1.y -= m_CameraMoveSpeed * ts;
+		m_CameraController.OnUpdate(ts);
 
 		Razel::RenderCommand::SetClearColor({ 0.1f,0.1f,0.1f,1 });
 		Razel::RenderCommand::Clear();
-
-		m_Camera.SetPosition(m_CameraPosition);
-		m_Camera.SetRotation(m_CameraRotation);
 
 
 		std::dynamic_pointer_cast<Razel::OpenGLShader>(m_FlatColorShader)->Bind();
 		std::dynamic_pointer_cast<Razel::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
 
-		Razel::Renderer::BeginScene(m_Camera);
+		Razel::Renderer::BeginScene(m_CameraController.GetCamera());
 		
 		//glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos1);
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
@@ -208,9 +182,9 @@ public:
 		Razel::Renderer::EndScene();
 	}
 
-    void OnEvent(Razel::Event& event) override
+    void OnEvent(Razel::Event& e) override
     {
-		
+		m_CameraController.OnEvent(e);
     }
 	void OnImGuiRender()override
 	{
@@ -230,18 +204,11 @@ private:
 
 	Razel::Ref<Razel::Texture2D> m_Texture, m_CppTexture;
 
-
 	glm::vec3 m_SquareColor = glm::vec3(0.2f, 0.3f, 0.8f);
 
+
 	// 正交投影相机
-	Razel::OrthographicCamera m_Camera;
-
-
-
-	glm::vec3 m_CameraPosition;				// 相机位置
-	float m_CameraMoveSpeed = 5.0f;			// 相机移动速度
-	float m_CameraRotation = 0.0f;			// 相机角度
-	float m_CameraRotationSpeed = 180.0f;	// 相机旋转速度
+	Razel::OrthographicCameraController m_CameraController;
 };
 
 class Sandbox : public Razel::Application

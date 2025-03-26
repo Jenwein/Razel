@@ -21,7 +21,7 @@
 #include "Razel/Renderer/VertexArray.h"
 
 #include "Razel/Renderer/OrthographicCamera.h"
-
+#include "Razel/OrthographicCameraController.h"
 //--Entry Point--
 #include "Razel/EntryPoint.h"
 //---------------
