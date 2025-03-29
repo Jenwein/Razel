@@ -81,7 +81,7 @@ namespace Razel {
 	}
 	bool Application::OnWindowClose(WindowCloseEvent& e)
 	{
-		m_Running = 0;
+		m_Running = false;
 		return true;
 	}
 

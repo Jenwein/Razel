@@ -47,9 +47,9 @@ namespace Razel
 	// 作为所有事件的基类
 	class RAZEL_API Event 
 	{
-		friend class EventDispatcher;
 	public:
-		
+		bool Handled = false;		// 事件是否被处理
+
 		virtual EventType GetEventType() const = 0;					// 获取事件类型
 		virtual const char* GetName() const = 0;					// 获取事件名称(用于调试)
 		virtual int GetCategoryFlags() const = 0;					// 获取事件类别标签
@@ -60,9 +60,8 @@ namespace Razel
 		{
 			return GetCategoryFlags() & category;
 		}
-		bool Handled = false;		// 事件是否被处理
-	private:
-		//--
+
+
 	};
 
 

@@ -22,6 +22,3 @@
 
 #include "Razel/Renderer/OrthographicCamera.h"
 #include "Razel/Renderer/OrthographicCameraController.h"
-//--Entry Point--
-#include "Razel/Core/EntryPoint.h"
-//---------------
