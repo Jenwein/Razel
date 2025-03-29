@@ -2,7 +2,7 @@
 
 #include "Application.h"
 
-#include "Razel/Log.h"
+#include "Razel/Core/Log.h"
 
 #include "Razel/Renderer/Renderer.h"
 
@@ -27,15 +27,11 @@ namespace Razel {
 		PushOverLayer(m_ImGuiLayer);
 	}
 
-	Application::~Application()
-	{
-
-	}
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
-	
+		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
 		//RZ_CORE_TRACE("{0}", e);
 
 		// 事件处理自顶向下遍历
@@ -69,8 +65,11 @@ namespace Razel {
 
 			m_LastFrameTime = time;
 
-			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate(timestep);
+			if (!m_Minimized)
+			{
+				for (Layer* layer : m_LayerStack)
+					layer->OnUpdate(timestep);
+			}
 			
 			m_ImGuiLayer->Begin();
 			for (Layer* layer : m_LayerStack)
@@ -84,6 +83,20 @@ namespace Razel {
 	{
 		m_Running = 0;
 		return true;
+	}
+
+	bool Application::OnWindowResize(WindowResizeEvent& e)
+	{
+		if (e.GetWidth() == 0 || e.GetHeight() == 0)
+		{
+			m_Minimized = true;
+			return false;
+		}
+
+		m_Minimized = false;
+		Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+
+		return false;
 	}
 
 

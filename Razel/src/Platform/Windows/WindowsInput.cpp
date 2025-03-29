@@ -1,7 +1,7 @@
 #include "rzpch.h"
 #include "WindowsInput.h"
 
-#include "Razel/Application.h"
+#include "Razel/Core/Application.h"
 #include <GLFW/glfw3.h>
 
 namespace Razel {

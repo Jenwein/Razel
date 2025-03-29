@@ -1,5 +1,5 @@
 #pragma once
-#include "Razel/Window.h"
+#include "Razel/Core/Window.h"
 #include "Razel/Renderer/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>

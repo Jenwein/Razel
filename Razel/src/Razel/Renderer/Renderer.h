@@ -13,6 +13,8 @@ namespace Razel
 		// 初始化渲染
 		static void Init();
 
+		static void OnWindowResize(uint32_t width, uint32_t height);
+
 		// 设置场景信息
 		static void BeginScene(OrthographicCamera& camera);
 		
@@ -32,6 +34,6 @@ namespace Razel
 		{
 			glm::mat4 ViewProjectionMatrix = glm::mat4(1.0f);
 		};
-		static SceneData* m_SceneData;
+		static SceneData* s_SceneData;
 	};
 }

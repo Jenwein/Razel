@@ -1,12 +1,13 @@
 #pragma once
-#include "Razel/Core.h"
-#include "Razel/LayerStack.h"
+
+#include "Core.h"
+
+#include "Window.h"
+#include "Razel/Core/LayerStack.h"
+#include "Razel/Events/Event.h"
 #include "Razel/Events/ApplicationEvent.h"
 
 #include "Razel/Core/Timestep.h"
-
-#include "Events/Event.h"
-#include "Window.h"
 
 #include "Razel/ImGui/ImGuiLayer.h"
 
@@ -16,7 +17,7 @@ namespace Razel {
 	{
 	public:
 		Application();
-		virtual ~Application();
+		virtual ~Application() = default;
 
 		void Run();
 		void OnEvent(Event& e);
@@ -29,11 +30,13 @@ namespace Razel {
 		inline static Application& Get() { return *s_Instance; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
-
+		bool OnWindowResize(WindowResizeEvent& e);
 	private:
 		std::unique_ptr<Window>m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
+		bool m_Minimized = false;
+
 		LayerStack m_LayerStack;
 		float m_LastFrameTime = 0.0f;
 		

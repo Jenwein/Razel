@@ -1,7 +1,7 @@
 #pragma once
 #include "rzpch.h"
 
-#include "Razel/Core.h"
+#include "Razel/Core/Core.h"
 
 namespace Razel
 {
@@ -69,20 +69,19 @@ namespace Razel
 	// 事件分发器
 	class EventDispatcher
 	{
-		template<typename T>
-		using EventFn = std::function<bool(T&)>;
 	public:
 		EventDispatcher(Event& event)
-			:m_Event(event){}
+			:m_Event(event) 
+		{
+		}
 
-		// 分发事件
-		template<typename T>
-		bool Dispatch(EventFn<T> func)
+		// F will be deduced by the compiler
+		template<typename T, typename F>
+		bool Dispatch(const F& func)
 		{
 			if (m_Event.GetEventType() == T::GetStaticType())
 			{
-				// 强制类型转换
-				m_Event.Handled = func(*(T*)&m_Event);
+				m_Event.Handled = func(static_cast<T&>(m_Event));
 				return true;
 			}
 			return false;

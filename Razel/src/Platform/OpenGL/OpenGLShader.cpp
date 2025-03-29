@@ -176,6 +176,7 @@ namespace Razel
 		{
 			// 已经链接在程序中，不再需要着色器
 			glDetachShader(program, id);
+			glDeleteShader(id);
 		}
 	}
 

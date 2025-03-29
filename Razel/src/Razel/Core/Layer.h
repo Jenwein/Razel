@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Razel/Core.h"
+#include "Razel/Core/Core.h"
 #include "Razel/Core/Timestep.h"
 #include "Razel/Events/Event.h"
 
@@ -10,7 +10,7 @@ namespace Razel
 	{
 	public: 
 		Layer(const std::string& name = "Layer");
-		virtual ~Layer();
+		virtual ~Layer() = default;
 
 		virtual void OnAttach() {}				// 层被添加到层栈时调用
 		virtual void OnDetach() {}				// 层被从层栈移除时调用
