@@ -1,9 +1,9 @@
 #pragma once
 #include <Razel.h>
 
+// 创建一个2D测试环境
 class Sandbox2D :public Razel::Layer
 {
-
 public:
 	Sandbox2D();
 	virtual ~Sandbox2D() = default;

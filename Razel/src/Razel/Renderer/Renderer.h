@@ -15,7 +15,7 @@ namespace Razel
 
 		static void OnWindowResize(uint32_t width, uint32_t height);
 
-		// 设置场景信息
+		// 设置场景信息,scene负责组织和管理所有需要渲染的
 		static void BeginScene(OrthographicCamera& camera);
 		
 		// 结束场景，准备渲染

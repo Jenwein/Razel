@@ -15,6 +15,7 @@
 
 //--Renderer---------------------
 #include "Razel/Renderer/Renderer.h"
+#include "Razel/Renderer/Renderer2D.h"
 #include "Razel/Renderer/RenderCommand.h"
 #include "Razel/Renderer/Buffer.h"
 #include "Razel/Renderer/Shader.h"
