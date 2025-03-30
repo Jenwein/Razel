@@ -20,6 +20,7 @@ private:
 	// Temp
 	Razel::Ref<Razel::VertexArray> m_SquareVA;
 	Razel::Ref<Razel::Shader> m_FlatColorShader;
+	Razel::Ref<Razel::Texture2D> m_CheckerboardTexture;
 
 	glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 };
