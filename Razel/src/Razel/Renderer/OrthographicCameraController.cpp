@@ -1,8 +1,8 @@
 #include "rzpch.h"
 #include "OrthographicCameraController.h"
 
-#include "Razel/Input.h"
-#include "Razel/KeyCodes.h"
+#include "Razel/Core/Input.h"
+#include "Razel/Core/KeyCodes.h"
 
 namespace Razel
 {
@@ -33,6 +33,7 @@ namespace Razel
 		}
 
 		m_Camera.SetPosition(m_CameraPosition);		// 更新相机位置
+		m_Camera.SetRotation(m_CameraRotation);		// 更新相机旋转
 		m_CameraTranslationSpeed = m_ZoomLevel;		// 相机移动速度随缩放级别变化
 	}
 

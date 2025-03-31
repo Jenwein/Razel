@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Razel/Input.h"
+#include "Razel/Core/Input.h"
 
 namespace Razel {
 	class WindowsInput :public Input

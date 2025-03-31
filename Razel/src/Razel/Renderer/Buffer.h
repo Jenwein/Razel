@@ -35,7 +35,7 @@ namespace Razel
 		std::string Name;
 		ShaderDataType Type;
 		uint32_t Size;
-		uint32_t Offset;
+		size_t Offset;
 		bool Normalized;		//  «∑ÒπÈ“ªªØ
 
 		BufferElement() = default;
@@ -88,7 +88,7 @@ namespace Razel
 	private:
 		void CalculateOffsetsAndStride()
 		{
-			uint32_t offset = 0;
+			size_t offset = 0;
 			m_Stride = 0;
 			for (auto& element : m_Elements)
 			{
@@ -106,21 +106,21 @@ namespace Razel
 	class VertexBuffer
 	{
 	public:
-		virtual ~VertexBuffer(){}
+		virtual ~VertexBuffer() = default;
 
 		virtual void Bind() const = 0;
 		virtual void UnBind() const = 0;
 
 		virtual const BufferLayout& GetLayout() const = 0;
 		virtual void SetLayout(const BufferLayout& layout) = 0;
-
+		
 		static VertexBuffer* Create(float* vertices,uint32_t size);
 	};
 
 	class IndexBuffer
 	{
 	public:
-		virtual ~IndexBuffer() {}
+		virtual ~IndexBuffer() = default;
 
 		virtual void Bind() const = 0;
 		virtual void UnBind() const = 0;

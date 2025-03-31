@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Razel/Core/Core.h"
 namespace Razel
 {
 	class Texture

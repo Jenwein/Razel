@@ -1,5 +1,5 @@
 #pragma once
-#include "Razel/Layer.h"
+#include "Razel/Core/Layer.h"
 
 #include "Razel/Events/ApplicationEvent.h"
 #include "Razel/Events/MouseEvent.h"
@@ -10,7 +10,7 @@ namespace Razel
 	{
 	public:
 		ImGuiLayer();
-		~ImGuiLayer();
+		~ImGuiLayer() = default;
 	
 		virtual void OnAttach() override;
 		virtual void OnDetach() override;

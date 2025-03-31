@@ -9,6 +9,11 @@ workspace "Razel"
 		"Dist"
 	}
 
+	flags
+	{
+		"MultiProcessorCompile"
+	}
+
 	-- ‰≥ˆŒª÷√	eg: build-Windows-x64
 	outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 	

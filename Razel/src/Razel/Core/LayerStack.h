@@ -1,7 +1,9 @@
 #pragma once
 
-#include "Razel/Core.h"
+#include "Razel/Core/Core.h"
 #include "Layer.h"
+
+#include <vector>
 
 namespace Razel
 {

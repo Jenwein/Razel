@@ -5,7 +5,7 @@
 #include "backends/imgui_impl_opengl3.h"
 #include "backends/imgui_impl_glfw.h"
 
-#include "Razel/Application.h"
+#include "Razel/Core/Application.h"
 
 // TEMPORARY
 #include <GLFW/glfw3.h>
@@ -15,10 +15,6 @@ namespace Razel
 
 	ImGuiLayer::ImGuiLayer()
 		:Layer("ImGuiLayer")
-	{
-	}
-
-	ImGuiLayer::~ImGuiLayer()
 	{
 	}
 

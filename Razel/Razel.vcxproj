@@ -80,7 +80,9 @@
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\stb_image;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/utf-8 /wd4828 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
@@ -106,6 +108,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/utf-8 /wd4828 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
@@ -132,6 +135,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/utf-8 /wd4828 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
@@ -146,7 +150,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Razel\OrthographicCameraController.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
@@ -156,32 +159,34 @@
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Razel.h" />
-    <ClInclude Include="src\Razel\Application.h" />
-    <ClInclude Include="src\Razel\Core.h" />
+    <ClInclude Include="src\Razel\Core\Application.h" />
+    <ClInclude Include="src\Razel\Core\Core.h" />
+    <ClInclude Include="src\Razel\Core\EntryPoint.h" />
+    <ClInclude Include="src\Razel\Core\Input.h" />
+    <ClInclude Include="src\Razel\Core\KeyCodes.h" />
+    <ClInclude Include="src\Razel\Core\Layer.h" />
+    <ClInclude Include="src\Razel\Core\LayerStack.h" />
+    <ClInclude Include="src\Razel\Core\Log.h" />
+    <ClInclude Include="src\Razel\Core\MouseButtonCodes.h" />
     <ClInclude Include="src\Razel\Core\Timestep.h" />
-    <ClInclude Include="src\Razel\EntryPoint.h" />
+    <ClInclude Include="src\Razel\Core\Window.h" />
     <ClInclude Include="src\Razel\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Razel\Events\Event.h" />
     <ClInclude Include="src\Razel\Events\KeyEvent.h" />
     <ClInclude Include="src\Razel\Events\MouseEvent.h" />
     <ClInclude Include="src\Razel\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\Razel\Input.h" />
-    <ClInclude Include="src\Razel\KeyCodes.h" />
-    <ClInclude Include="src\Razel\Layer.h" />
-    <ClInclude Include="src\Razel\LayerStack.h" />
-    <ClInclude Include="src\Razel\Log.h" />
-    <ClInclude Include="src\Razel\MouseButtonCodes.h" />
     <ClInclude Include="src\Razel\Renderer\Buffer.h" />
     <ClInclude Include="src\Razel\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Razel\Renderer\OrthographicCamera.h" />
+    <ClInclude Include="src\Razel\Renderer\OrthographicCameraController.h" />
     <ClInclude Include="src\Razel\Renderer\PerspectiveCamera.h" />
     <ClInclude Include="src\Razel\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Razel\Renderer\Renderer.h" />
+    <ClInclude Include="src\Razel\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Razel\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Razel\Renderer\Shader.h" />
     <ClInclude Include="src\Razel\Renderer\Texture.h" />
     <ClInclude Include="src\Razel\Renderer\VertexArray.h" />
-    <ClInclude Include="src\Razel\Window.h" />
     <ClInclude Include="src\rzpch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
@@ -604,7 +609,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Razel\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
@@ -613,17 +617,19 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
-    <ClCompile Include="src\Razel\Application.cpp" />
+    <ClCompile Include="src\Razel\Core\Application.cpp" />
+    <ClCompile Include="src\Razel\Core\Layer.cpp" />
+    <ClCompile Include="src\Razel\Core\LayerStack.cpp" />
+    <ClCompile Include="src\Razel\Core\Log.cpp" />
     <ClCompile Include="src\Razel\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Razel\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\Razel\Layer.cpp" />
-    <ClCompile Include="src\Razel\LayerStack.cpp" />
-    <ClCompile Include="src\Razel\Log.cpp" />
     <ClCompile Include="src\Razel\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Razel\Renderer\OrthographicCamera.cpp" />
+    <ClCompile Include="src\Razel\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Razel\Renderer\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Razel\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Razel\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Razel\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Razel\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Razel\Renderer\Shader.cpp" />
     <ClCompile Include="src\Razel\Renderer\Texture.cpp" />

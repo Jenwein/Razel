@@ -2,7 +2,7 @@
 
 #include "rzpch.h"
 
-#include "Razel/Core.h"
+#include "Razel/Core/Core.h"
 #include "Razel/Events/Event.h"
 
 namespace Razel
@@ -26,7 +26,7 @@ namespace Razel
 	{
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;
-		virtual ~Window() {}
+		virtual ~Window() = default;
 		
 		virtual void OnUpdate() const = 0;
 

@@ -81,17 +81,38 @@
     <ClInclude Include="src\Razel.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Razel\Application.h">
-      <Filter>src\Razel</Filter>
+    <ClInclude Include="src\Razel\Core\Application.h">
+      <Filter>src\Razel\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Razel\Core.h">
-      <Filter>src\Razel</Filter>
+    <ClInclude Include="src\Razel\Core\Core.h">
+      <Filter>src\Razel\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Razel\Core\EntryPoint.h">
+      <Filter>src\Razel\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Razel\Core\Input.h">
+      <Filter>src\Razel\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Razel\Core\KeyCodes.h">
+      <Filter>src\Razel\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Razel\Core\Layer.h">
+      <Filter>src\Razel\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Razel\Core\LayerStack.h">
+      <Filter>src\Razel\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Razel\Core\Log.h">
+      <Filter>src\Razel\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Razel\Core\MouseButtonCodes.h">
+      <Filter>src\Razel\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Razel\Core\Timestep.h">
       <Filter>src\Razel\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Razel\EntryPoint.h">
-      <Filter>src\Razel</Filter>
+    <ClInclude Include="src\Razel\Core\Window.h">
+      <Filter>src\Razel\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Razel\Events\ApplicationEvent.h">
       <Filter>src\Razel\Events</Filter>
@@ -108,24 +129,6 @@
     <ClInclude Include="src\Razel\ImGui\ImGuiLayer.h">
       <Filter>src\Razel\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Razel\Input.h">
-      <Filter>src\Razel</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Razel\KeyCodes.h">
-      <Filter>src\Razel</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Razel\Layer.h">
-      <Filter>src\Razel</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Razel\LayerStack.h">
-      <Filter>src\Razel</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Razel\Log.h">
-      <Filter>src\Razel</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Razel\MouseButtonCodes.h">
-      <Filter>src\Razel</Filter>
-    </ClInclude>
     <ClInclude Include="src\Razel\Renderer\Buffer.h">
       <Filter>src\Razel\Renderer</Filter>
     </ClInclude>
@@ -135,6 +138,9 @@
     <ClInclude Include="src\Razel\Renderer\OrthographicCamera.h">
       <Filter>src\Razel\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Razel\Renderer\OrthographicCameraController.h">
+      <Filter>src\Razel\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Razel\Renderer\PerspectiveCamera.h">
       <Filter>src\Razel\Renderer</Filter>
     </ClInclude>
@@ -142,6 +148,9 @@
       <Filter>src\Razel\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Razel\Renderer\Renderer.h">
+      <Filter>src\Razel\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Razel\Renderer\Renderer2D.h">
       <Filter>src\Razel\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Razel\Renderer\RendererAPI.h">
@@ -155,9 +164,6 @@
     </ClInclude>
     <ClInclude Include="src\Razel\Renderer\VertexArray.h">
       <Filter>src\Razel\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Razel\Window.h">
-      <Filter>src\Razel</Filter>
     </ClInclude>
     <ClInclude Include="src\rzpch.h">
       <Filter>src</Filter>
@@ -1419,7 +1425,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Razel\OrthographicCameraController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1446,8 +1451,17 @@
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\Razel\Application.cpp">
-      <Filter>src\Razel</Filter>
+    <ClCompile Include="src\Razel\Core\Application.cpp">
+      <Filter>src\Razel\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Razel\Core\Layer.cpp">
+      <Filter>src\Razel\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Razel\Core\LayerStack.cpp">
+      <Filter>src\Razel\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Razel\Core\Log.cpp">
+      <Filter>src\Razel\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Razel\ImGui\ImGuiBuild.cpp">
       <Filter>src\Razel\ImGui</Filter>
@@ -1455,19 +1469,13 @@
     <ClCompile Include="src\Razel\ImGui\ImGuiLayer.cpp">
       <Filter>src\Razel\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Razel\Layer.cpp">
-      <Filter>src\Razel</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Razel\LayerStack.cpp">
-      <Filter>src\Razel</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Razel\Log.cpp">
-      <Filter>src\Razel</Filter>
-    </ClCompile>
     <ClCompile Include="src\Razel\Renderer\Buffer.cpp">
       <Filter>src\Razel\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Razel\Renderer\OrthographicCamera.cpp">
+      <Filter>src\Razel\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Razel\Renderer\OrthographicCameraController.cpp">
       <Filter>src\Razel\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Razel\Renderer\PerspectiveCamera.cpp">
@@ -1477,6 +1485,9 @@
       <Filter>src\Razel\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Razel\Renderer\Renderer.cpp">
+      <Filter>src\Razel\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Razel\Renderer\Renderer2D.cpp">
       <Filter>src\Razel\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Razel\Renderer\RendererAPI.cpp">
@@ -1497,6 +1508,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Razel\OrthographicCameraController.cpp" />
   </ItemGroup>
 </Project>

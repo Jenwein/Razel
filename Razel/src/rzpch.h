@@ -14,7 +14,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "Razel/Log.h"
+#include "Razel/Core/Log.h"
 
 #ifdef RZ_PLATFORM_WINDOWS
 	#include <Windows.h>

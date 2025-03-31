@@ -13,7 +13,9 @@ namespace Razel
 		// 初始化渲染
 		static void Init();
 
-		// 设置场景信息
+		static void OnWindowResize(uint32_t width, uint32_t height);
+
+		// 设置场景信息,scene负责组织和管理所有需要渲染的
 		static void BeginScene(OrthographicCamera& camera);
 		
 		// 结束场景，准备渲染
@@ -32,6 +34,6 @@ namespace Razel
 		{
 			glm::mat4 ViewProjectionMatrix = glm::mat4(1.0f);
 		};
-		static SceneData* m_SceneData;
+		static SceneData* s_SceneData;
 	};
 }
