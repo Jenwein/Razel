@@ -22,17 +22,20 @@ workspace "Razel"
 	IncludeDir["GLFW"] = "Razel/vendor/GLFW/include"
 	IncludeDir["Glad"] = "Razel/vendor/Glad/include"
 	IncludeDir["ImGui"] = "Razel/vendor/imgui"
-	IncludeDir["stb_image"] = "Razel/vendor/stb_image"
 	IncludeDir["glm"] = "Razel/vendor/glm"
+	IncludeDir["stb_image"] = "Razel/vendor/stb_image"
 
 	filter "action:vs*"
         buildoptions { "/utf-8" , "/wd4828" }
     filter {}
 	externalwarnings "Off"
 	--查找并执行另一个脚本文件，也就是查找路径下的premake文件并将内容拷贝到此处(如果之前尚未运行过)
+group "Dependencies"
 	include "Razel/vendor/GLFW"
 	include "Razel/vendor/Glad"
 	include "Razel/vendor/imgui"
+
+group ""
 
 	project "Razel"			--项目名称
 		location"Razel"		--项目目录
@@ -72,8 +75,8 @@ workspace "Razel"
 			"%{IncludeDir.GLFW}",
 			"%{IncludeDir.Glad}",
 			"%{IncludeDir.ImGui}",
-			"%{IncludeDir.stb_image}",
-			"%{IncludeDir.glm}"
+			"%{IncludeDir.glm}",
+			"%{IncludeDir.stb_image}"
 
 		}
 
@@ -92,8 +95,7 @@ workspace "Razel"
 			--添加预处理器或编译器符号到项目中
 			defines
 			{
-				"RZ_PLATFORM_WINDOWS;",
-				"RZ_BUILD_DLL;",
+				"RZ_BUILD_DLL",
 				"GLFW_INCLUDE_NONE"
 			}
 		
@@ -133,8 +135,8 @@ workspace "Razel"
 		{
 			"Razel/vendor/spdlog/include",
 			"Razel/src",
-			"%{IncludeDir.glm}",
-			"Razel/vendor"
+			"Razel/vendor",
+			"%{IncludeDir.glm}"
 
 		}
 
@@ -145,11 +147,6 @@ workspace "Razel"
 
 		filter "system:windows"
 			systemversion "latest"
-
-			defines
-			{
-				"RZ_PLATFORM_WINDOWS"
-			}
 
 		filter "configurations:Debug"
 			defines "RZ_DEBUG"
