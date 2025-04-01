@@ -170,6 +170,7 @@
     <ClInclude Include="src\Razel\Core\MouseButtonCodes.h" />
     <ClInclude Include="src\Razel\Core\Timestep.h" />
     <ClInclude Include="src\Razel\Core\Window.h" />
+    <ClInclude Include="src\Razel\Debug\Instrumentor.h" />
     <ClInclude Include="src\Razel\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Razel\Events\Event.h" />
     <ClInclude Include="src\Razel\Events\KeyEvent.h" />

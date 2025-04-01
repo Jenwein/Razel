@@ -3,7 +3,9 @@
 // For use by Razel applications
 #include "Razel/Core/Application.h"
 #include "Razel/Core/Layer.h"
+
 #include "Razel/Core/Log.h"
+#include "Razel/Debug/Instrumentor.h"
 
 #include "Razel/ImGui/ImGuiLayer.h"
 
