@@ -15,6 +15,7 @@
 #include <unordered_set>
 
 #include "Razel/Core/Log.h"
+#include "Razel/Debug/Instrumentor.h"
 
 #ifdef RZ_PLATFORM_WINDOWS
 	#include <Windows.h>

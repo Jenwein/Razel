@@ -13,12 +13,16 @@ Sandbox2D::Sandbox2D()
 
 void Sandbox2D::OnAttach()
 {
+	RZ_PROFILE_FUNCTION();
+
 	m_CheckerboardTexture = Razel::Texture2D::Create("assets/textures/Checkerboard.png");
 }
 
 void Sandbox2D::OnDetach()
 {
-	
+
+	RZ_PROFILE_FUNCTION();
+
 }
 
 void Sandbox2D::OnUpdate(Razel::Timestep ts)
@@ -26,10 +30,8 @@ void Sandbox2D::OnUpdate(Razel::Timestep ts)
 	RZ_PROFILE_FUNCTION();
 
 	// Update
-	{
-		RZ_PROFILE_SCOPE("CameraController::OnUpdate");
-		m_CameraController.OnUpdate(ts);
-	}
+	m_CameraController.OnUpdate(ts);
+
 
 	// Render
 	{

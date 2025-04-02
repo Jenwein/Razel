@@ -8,6 +8,8 @@ namespace Razel
 
 	void Renderer::Init()
 	{
+		RZ_PROFILE_FUNCTION();
+
 		RenderCommand::Init();
 		Renderer2D::Init();
 	}

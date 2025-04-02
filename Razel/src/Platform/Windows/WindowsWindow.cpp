@@ -23,16 +23,22 @@ namespace Razel {
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
+		RZ_PROFILE_FUNCTION();
+
 		Init(props);
 	}
 
 	WindowsWindow::~WindowsWindow()
 	{
+		RZ_PROFILE_FUNCTION();
+
 		Shutdown();
 	}
 
 	void WindowsWindow::Init(const WindowProps& props)
 	{
+		RZ_PROFILE_FUNCTION();
+
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
@@ -42,6 +48,7 @@ namespace Razel {
 		// 如果GLFW未初始化
 		if (!s_GLFWInitialized)
 		{
+			RZ_PROFILE_SCOPE("glfwInit");
 			// TODO: glfwTerminate on system shutdown
 			int success = glfwInit();
 			RZ_CORE_ASSERT(success, "Could not intialize GLFW!");
@@ -49,9 +56,13 @@ namespace Razel {
 			s_GLFWInitialized = true;
 		}
 
-		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, props.Title.c_str(), nullptr, nullptr);
-		m_Context = new OpenGLContext(m_Window);
-		m_Context->Init();
+		{
+			RZ_PROFILE_SCOPE("glfwCreateWindow");
+
+			m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, props.Title.c_str(), nullptr, nullptr);
+			m_Context = new OpenGLContext(m_Window);
+			m_Context->Init();
+		}
 
 		// 设置窗口数据指针（保存m_Data数据的指针到窗口，以便于通过窗口句柄来获取窗口相关数据）
 		glfwSetWindowUserPointer(m_Window, &m_Data);
@@ -166,11 +177,15 @@ namespace Razel {
 
 	void WindowsWindow::Shutdown()
 	{
+		RZ_PROFILE_FUNCTION();
+
 		glfwDestroyWindow(m_Window);
 	}
 
 	void WindowsWindow::OnUpdate() const
 	{
+		RZ_PROFILE_FUNCTION();
+
 		glfwPollEvents();
 		m_Context->SwapBuffers();
 	}
@@ -185,6 +200,8 @@ namespace Razel {
 
 	bool WindowsWindow::IsVSync() const
 	{
+		RZ_PROFILE_FUNCTION();
+
 		return m_Data.VSync;
 	}
 

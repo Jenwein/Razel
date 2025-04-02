@@ -17,13 +17,13 @@ namespace Razel
 		// 将layer添加在m_LayerInsert位置，并更新m_LayerInsert 
 		m_Layers.emplace(m_Layers.begin() + m_LayerInsertIndex, layer);
 		m_LayerInsertIndex++;
-		layer->OnAttach();
+		
 	}
 
 	void LayerStack::PushOverLayer(Layer* overlayer)
 	{
 		m_Layers.emplace_back(overlayer);
-		overlayer->OnAttach();
+		
 	}
 	// 查找要移除的层的位置，移除层并更新m_LayerInsert
 	void LayerStack::PopLayer(Layer* layer)

@@ -9,6 +9,8 @@ namespace Razel
 	////////////////////////////////////////////////
 	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
 	{
+		RZ_PROFILE_FUNCTION();
+
 		glCreateBuffers(1,&m_RendererID);
 		glBindBuffer(GL_ARRAY_BUFFER,m_RendererID);
 		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
@@ -16,16 +18,22 @@ namespace Razel
 
 	OpenGLVertexBuffer::~OpenGLVertexBuffer()
 	{
+		RZ_PROFILE_FUNCTION();
+
 		glDeleteBuffers(1, &m_RendererID);
 	}
 
 	void OpenGLVertexBuffer::Bind() const 
 	{
+		RZ_PROFILE_FUNCTION();
+
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 	}
 
 	void OpenGLVertexBuffer::UnBind() const
 	{
+		RZ_PROFILE_FUNCTION();
+
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
@@ -36,6 +44,8 @@ namespace Razel
 	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, uint32_t count)
 		:m_Count(count)
 	{
+		RZ_PROFILE_FUNCTION();
+
 		glCreateBuffers(1, &m_RendererID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 		glBufferData(GL_ARRAY_BUFFER, count*sizeof(uint32_t), indices, GL_STATIC_DRAW);
@@ -43,16 +53,22 @@ namespace Razel
 
 	OpenGLIndexBuffer::~OpenGLIndexBuffer()
 	{
+		RZ_PROFILE_FUNCTION();
+
 		glDeleteBuffers(1, &m_RendererID);
 	}
 
 	void OpenGLIndexBuffer::Bind() const
 	{
+		RZ_PROFILE_FUNCTION();
+
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
 	}
 
 	void OpenGLIndexBuffer::UnBind() const
 	{
+		RZ_PROFILE_FUNCTION();
+
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 

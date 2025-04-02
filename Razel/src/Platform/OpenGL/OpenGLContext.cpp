@@ -15,6 +15,8 @@ namespace Razel
 
 	void OpenGLContext::Init()
 	{
+		RZ_PROFILE_FUNCTION();
+
 		glfwMakeContextCurrent(m_WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		RZ_CORE_ASSERT(status, "Failed to initialize Glad!");
@@ -26,6 +28,8 @@ namespace Razel
 
 	void OpenGLContext::SwapBuffers()
 	{
+		RZ_PROFILE_FUNCTION();
+
 		glfwSwapBuffers(m_WindowHandle);
 	}
 

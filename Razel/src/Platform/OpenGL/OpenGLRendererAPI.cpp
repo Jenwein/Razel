@@ -7,6 +7,8 @@ namespace Razel
 {
 	void OpenGLRendererAPI::Init()
 	{
+		RZ_PROFILE_FUNCTION();
+
 		glEnable(GL_BLEND);			// 启用混合
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_DEPTH_TEST);	// 深度测试

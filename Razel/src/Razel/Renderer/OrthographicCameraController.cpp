@@ -15,6 +15,8 @@ namespace Razel
 
 	void OrthographicCameraController::OnUpdate(Timestep ts)
 	{
+		RZ_PROFILE_FUNCTION();
+
 		if (Razel::Input::IsKeyPressed(RZ_KEY_A))
 			m_CameraPosition.x -= m_CameraTranslationSpeed * ts;
 		else if (Razel::Input::IsKeyPressed(RZ_KEY_D))
@@ -40,29 +42,18 @@ namespace Razel
 
 	void OrthographicCameraController::OnEvent(Event& e)
 	{
+		RZ_PROFILE_FUNCTION();
+
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_FN(OrthographicCameraController::OnMouseScrolled));
 		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OrthographicCameraController::OnWindowResized));
-	
-		/* lambda
-		dispatcher.Dispatch<MouseScrolledEvent>([=](MouseScrolledEvent& e) {
-			m_ZoomLevel -= e.GetYOffset() * 0.25f;
-			m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
-			m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
-			return false;
-		});
-
-		dispatcher.Dispatch<WindowResizeEvent>([=](WindowResizeEvent& e) {
-			m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
-			m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
-			return false;
-		});
-		*/
 
 	}
 
 	bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
+		RZ_PROFILE_FUNCTION();
+
 		m_ZoomLevel -= e.GetYOffset() * 0.25f;
 		m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
 		m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
@@ -71,6 +62,8 @@ namespace Razel
 
 	bool OrthographicCameraController::OnWindowResized(WindowResizeEvent& e)
 	{
+		RZ_PROFILE_FUNCTION();
+
 		m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
 		m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 		return false;

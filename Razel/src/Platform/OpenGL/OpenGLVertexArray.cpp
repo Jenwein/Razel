@@ -28,27 +28,37 @@ namespace Razel {
 
 	OpenGLVertexArray::OpenGLVertexArray()
 	{
+		RZ_PROFILE_FUNCTION();
+
 		glCreateVertexArrays(1, &m_RendererID);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
+		RZ_PROFILE_FUNCTION();
+
 		glDeleteVertexArrays(1, &m_RendererID);
 	}
 
 	void OpenGLVertexArray::Bind() const
 	{
+		RZ_PROFILE_FUNCTION();
+
 		glBindVertexArray(m_RendererID);
 	}
 
 	void OpenGLVertexArray::UnBind() const
 	{
+		RZ_PROFILE_FUNCTION();
+
 		glBindVertexArray(0);
 	}
 
 	// 保存顶点缓冲布局
 	void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
 	{
+		RZ_PROFILE_FUNCTION();
+
 		RZ_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "Vertex Buffer has no layout!");
 
 		glBindVertexArray(m_RendererID);
@@ -73,6 +83,8 @@ namespace Razel {
 	// 设置顶点索引状态
 	void OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
 	{
+		RZ_PROFILE_FUNCTION();
+
 		glBindVertexArray(m_RendererID);
 		indexBuffer->Bind();
 
