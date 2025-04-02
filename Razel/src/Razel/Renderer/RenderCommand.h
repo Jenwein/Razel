@@ -1,5 +1,5 @@
 #pragma once
-#include "RendererAPI.h"
+#include "Razel/Renderer/RendererAPI.h"
 
 namespace Razel
 {
@@ -32,7 +32,7 @@ namespace Razel
 		}
 
 	private:
-		static RendererAPI* s_RendererAPI;
+		static Scope<RendererAPI> s_RendererAPI;
 	};
 
 }

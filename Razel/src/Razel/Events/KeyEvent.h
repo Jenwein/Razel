@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Event.h"
+#include "Razel/Events/Event.h"
 
 namespace Razel {
 	// 键盘事件
-	class RAZEL_API KeyEvent :public Event
+	class KeyEvent :public Event
 	{
 	public:
 		// 获取按键值
@@ -20,7 +20,7 @@ namespace Razel {
 	};
 
 	// 按键按下事件类
-	class RAZEL_API KeyPressedEvent : public KeyEvent
+	class KeyPressedEvent : public KeyEvent
 	{
 	public:
 		KeyPressedEvent(int keycode,int repeatCount)
@@ -42,7 +42,7 @@ namespace Razel {
 	};
 
 	// 按键释放事件类
-	class RAZEL_API KeyReleasedEvent : public KeyEvent
+	class KeyReleasedEvent : public KeyEvent
 	{
 	public:
 		KeyReleasedEvent(int keycode)
@@ -59,7 +59,7 @@ namespace Razel {
 	};
 	
 	// 键盘键入事件
-	class RAZEL_API KeyTypedEvent : public KeyEvent
+	class KeyTypedEvent : public KeyEvent
 	{
 	public:
 		KeyTypedEvent(int keycode)

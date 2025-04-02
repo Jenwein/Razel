@@ -6,7 +6,7 @@
 #include "Razel/Events/KeyEvent.h"
 namespace Razel
 {
-	class RAZEL_API ImGuiLayer :public Layer
+	class ImGuiLayer :public Layer
 	{
 	public:
 		ImGuiLayer();

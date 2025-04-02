@@ -1,7 +1,7 @@
 #include <Razel.h>
 #include <Razel/Core/EntryPoint.h>
 
-#include "imgui/imgui.h"
+#include <imgui/imgui.h>
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -25,7 +25,7 @@ public:
 			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
 		Razel::Ref<Razel::VertexBuffer> vertexBuffer;
-		vertexBuffer.reset(Razel::VertexBuffer::Create(vertices, sizeof(vertices)));
+		vertexBuffer = Razel::VertexBuffer::Create(vertices, sizeof(vertices));
 		
 		Razel::BufferLayout layout = {
 			{Razel::ShaderDataType::Float3,"a_Position"},
@@ -37,7 +37,7 @@ public:
 
 		uint32_t indices[3] = { 0, 1, 2 };
 		Razel::Ref<Razel::IndexBuffer> indexBuffer;
-		indexBuffer.reset(Razel::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		indexBuffer = Razel::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 		m_SquareVA = Razel::VertexArray::Create();
@@ -50,7 +50,7 @@ public:
 		};
 
 		Razel::Ref<Razel::VertexBuffer> squareVB;
-		squareVB.reset(Razel::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		squareVB = Razel::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
 		squareVB->SetLayout({
 			{ Razel::ShaderDataType::Float3, "a_Position" },
 			{ Razel::ShaderDataType::Float2, "a_TexCoord" }
@@ -59,7 +59,7 @@ public:
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
 		Razel::Ref<Razel::IndexBuffer> squareIB;
-		squareIB.reset(Razel::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		squareIB = Razel::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
 		std::string vertexSrc = R"(

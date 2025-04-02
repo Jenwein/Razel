@@ -22,7 +22,7 @@ namespace Razel
 	};
 		
 	// 定义了一个跨平台的窗口接口
-	class RAZEL_API Window
+	class Window
 	{
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;
@@ -44,7 +44,7 @@ namespace Razel
 		virtual bool IsVSync() const = 0;
 
 		// 静态工厂方法，创建Window实例（接口实现分离）
-		static Window* Create(const WindowProps& props = WindowProps());
+		static Scope<Window> Create(const WindowProps& props = WindowProps());
 
 	};
 }

@@ -1,5 +1,5 @@
 #include "rzpch.h"
-#include "OpenGLShader.h"
+#include "Platform/OpenGL/OpenGLShader.h"
 
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
@@ -58,11 +58,19 @@ namespace Razel
 		std::ifstream in(filepath, std::ios::in | std::ios::binary);
 		if (in)
 		{
-			in.seekg(0, std::ios::end);			// 定位到文件末尾
-			result.resize(in.tellg());			// 重新调整大小以容纳文件,tellg返回当前读取位置
-			in.seekg(0, std::ios::beg);			// 定位到文件开头
-			in.read(&result[0], result.size());	// 读取文件到字符串
-			in.close();
+			in.seekg(0, std::ios::end);				// 定位到文件末尾
+			size_t size = in.tellg();
+			if (size != -1)
+			{
+				result.resize(size);				// 重新调整大小以容纳文件,tellg返回当前读取位置
+				in.seekg(0, std::ios::beg);			// 定位到文件开头
+				in.read(&result[0], size);			// 读取文件到字符串
+				in.close();
+			}
+			else
+			{
+				RZ_CORE_ERROR("Could not read from file '{0}'", filepath);
+			}
 		}
 		else
 		{

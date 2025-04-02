@@ -1,7 +1,8 @@
 #include "rzpch.h"
 
-#include "Log.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
+#include "Razel/Core/Log.h"
+
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace Razel
 {

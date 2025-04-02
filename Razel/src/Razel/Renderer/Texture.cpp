@@ -1,7 +1,7 @@
 #include "rzpch.h"
-#include "Texture.h"
+#include "Razel/Renderer/Texture.h"
 
-#include "Renderer.h"
+#include "Razel/Renderer/Renderer.h"
 #include "Platform/OpenGL/OpenGLTexture.h"
 
 namespace Razel

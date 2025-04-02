@@ -1,5 +1,5 @@
 #include "rzpch.h"
-#include "WindowsWindow.h"
+#include "Platform/Windows/WindowsWindow.h"
 
 #include "Razel/Events/KeyEvent.h"
 #include "Razel/Events/MouseEvent.h"
@@ -16,9 +16,9 @@ namespace Razel {
 		RZ_CORE_ERROR("GLFW Error ({0}): {1}", error_code, description);
 	}
 
-	Window* Window::Create(const WindowProps& props)
+	Scope<Window> Window::Create(const WindowProps& props)
 	{
-		return new WindowsWindow(props);
+		return CreateScope<WindowsWindow>(props);
 	}
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)

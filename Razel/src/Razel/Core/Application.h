@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Core.h"
+#include "Razel/Core/Core.h"
 
-#include "Window.h"
+#include "Razel/Core/Window.h"
 #include "Razel/Core/LayerStack.h"
 #include "Razel/Events/Event.h"
 #include "Razel/Events/ApplicationEvent.h"
@@ -17,7 +17,7 @@ namespace Razel {
 	{
 	public:
 		Application();
-		virtual ~Application() = default;
+		virtual ~Application();
 
 		void Run();
 		void OnEvent(Event& e);

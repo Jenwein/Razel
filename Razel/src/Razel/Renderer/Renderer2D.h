@@ -1,7 +1,7 @@
 #pragma once
 
-#include "OrthographicCameraController.h"
-#include "Texture.h"
+#include "Razel/Renderer/Texture.h"
+#include "Razel/Renderer/OrthographicCameraController.h"
 namespace Razel
 {
 	// 2D渲染静态类,封装一些渲染指令,管理场景数据,隐藏底层渲染API

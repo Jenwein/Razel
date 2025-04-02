@@ -45,7 +45,7 @@ namespace Razel
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags()const override {return category;}
 
 	// 作为所有事件的基类
-	class RAZEL_API Event 
+	class Event 
 	{
 	public:
 		bool Handled = false;		// 事件是否被处理

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "RenderCommand.h"
+#include "Razel/Renderer/RenderCommand.h"
 
-#include "OrthographicCamera.h"
-#include "Shader.h"
+#include "Razel/Renderer/OrthographicCamera.h"
+#include "Razel/Renderer/Shader.h"
 namespace Razel
 {
 	class Renderer
@@ -12,6 +12,8 @@ namespace Razel
 
 		// ≥ı ºªØ‰÷»æ
 		static void Init();
+
+		static void Shutdown();
 
 		static void OnWindowResize(uint32_t width, uint32_t height);
 

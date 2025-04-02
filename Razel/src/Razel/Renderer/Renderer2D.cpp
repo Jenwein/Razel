@@ -1,11 +1,8 @@
 #include "rzpch.h"
-#include "Renderer2D.h"
-
-#include "VertexArray.h"
-#include "Buffer.h"
-#include "Shader.h"
-
-#include "RenderCommand.h"
+#include "Razel/Renderer/Renderer2D.h"
+#include "Razel/Renderer/VertexArray.h"
+#include "Razel/Renderer/Shader.h"
+#include "Razel/Renderer/RenderCommand.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -37,7 +34,7 @@ namespace Razel
 		};
 
 		Ref<VertexBuffer> squareVB;
-		squareVB.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		squareVB = VertexBuffer::Create(squareVertices, sizeof(squareVertices));
 		// TOEDIT:
 		//squareVB = VertexBuffer::Create(squareVertices, sizeof(squareVertices));
 		
@@ -49,7 +46,7 @@ namespace Razel
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
 		Ref<IndexBuffer> squareIB;
-		squareIB.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		squareIB = IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
 		// TOEDIT:
 		//squareIB =IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
 		

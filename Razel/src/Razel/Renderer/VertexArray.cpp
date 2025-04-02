@@ -1,7 +1,8 @@
 #include "rzpch.h"
-#include "VertexArray.h"
 
-#include "Renderer.h"
+#include "Razel/Renderer/VertexArray.h"
+#include "Razel/Renderer/Renderer.h"
+
 #include "Platform/OpenGL/OpenGLVertexArray.h"
 
 namespace Razel
@@ -11,7 +12,7 @@ namespace Razel
 		switch (Renderer::GetAPI())
 		{
 			case RendererAPI::API::None: RZ_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-			case RendererAPI::API::OpenGL: return std::make_shared<OpenGLVertexArray>();
+			case RendererAPI::API::OpenGL: return CreateRef<OpenGLVertexArray>();
 			case RendererAPI::API::DirectX11: RZ_CORE_ASSERT(false, "RendererAPI::DirectX11 is currently not supported!"); return nullptr;
 			default: break;
 		}

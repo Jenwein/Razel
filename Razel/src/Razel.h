@@ -1,6 +1,8 @@
 #pragma once
 
 // For use by Razel applications
+#include "Razel/Core/Core.h"
+
 #include "Razel/Core/Application.h"
 #include "Razel/Core/Layer.h"
 

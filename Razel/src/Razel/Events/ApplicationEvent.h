@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Event.h"
+#include "Razel/Events/Event.h"
 
 namespace Razel
 {
 	// 窗口调整事件类
-	class RAZEL_API WindowResizeEvent : public Event
+	class WindowResizeEvent : public Event
 	{
 	public:
 		WindowResizeEvent(unsigned int width, unsigned int height)
@@ -31,40 +31,40 @@ namespace Razel
 	};
 
 	// 窗口关闭事件类
-	class RAZEL_API WindowCloseEvent : public Event
+	class WindowCloseEvent : public Event
 	{
 	public:
-		WindowCloseEvent(){}
+		WindowCloseEvent() = default;
 	
 		EVENT_CLASS_TYPE(WindowClose);
 		EVENT_CLASS_CATEGORY(EventCategoryApplication);
 	};
 
 	// 应用时钟更新事件
-	class RAZEL_API AppTickEvent : public Event
+	class AppTickEvent : public Event
 	{
 	public:
-		AppTickEvent(){}
+		AppTickEvent() = default;
 						
 		EVENT_CLASS_TYPE(AppTick);
 		EVENT_CLASS_CATEGORY(EventCategoryApplication);
 	};
 
 	// 应用更新事件
-	class RAZEL_API AppUpdateEvent  : public Event
+	class AppUpdateEvent  : public Event
 	{
 	public:
-		AppUpdateEvent() {}
+		AppUpdateEvent() = default;
 
 		EVENT_CLASS_TYPE(AppUpdate);
 		EVENT_CLASS_CATEGORY(EventCategoryApplication);
 	};
 
 	// 应用渲染事件
-	class RAZEL_API AppRenderEvent : public Event
+	class AppRenderEvent : public Event
 	{
 	public:
-		AppRenderEvent() {}
+		AppRenderEvent() = default;
 
 		EVENT_CLASS_TYPE(AppRender);
 		EVENT_CLASS_CATEGORY(EventCategoryApplication);

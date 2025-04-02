@@ -1,4 +1,6 @@
 #pragma once
+#include "Razel/Core/Core.h"
+
 #ifdef RZ_PLATFORM_WINDOWS
 
 extern Razel::Application* Razel::CreateApplication();

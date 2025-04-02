@@ -1,18 +1,18 @@
 #pragma once
 
 #include "Razel/Core/Core.h"
-#include "Layer.h"
+#include "Razel/Core/Layer.h"
 
 #include <vector>
 
 namespace Razel
 {
-	class RAZEL_API LayerStack
+	class LayerStack
 	{
 		// |--------------------≤„’ª--------------------------|
 		// | ∆’Õ®≤„’ª (Layer Stack) | µ˛º”≤„’ª (Overlay Stack) |
 	public:
-		LayerStack();
+		LayerStack() = default;
 		~LayerStack();
 
 		void PushLayer(Layer* layer);			// ÃÌº”∆’Õ®≤„

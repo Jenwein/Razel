@@ -3,7 +3,7 @@
 #include <utility>
 namespace Razel
 {
-	class RAZEL_API Input
+	class Input
 	{
 	protected:
 		Input() = default;

@@ -1,5 +1,5 @@
 #include "rzpch.h"
-#include "WindowsInput.h"
+#include "Platform/Windows/WindowsInput.h"
 
 #include "Razel/Core/Application.h"
 #include <GLFW/glfw3.h>

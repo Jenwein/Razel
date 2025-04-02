@@ -3,9 +3,6 @@
 
 namespace Razel
 {
-	LayerStack::LayerStack()
-	{
-	}
 
 	LayerStack::~LayerStack()
 	{

@@ -1,5 +1,6 @@
 #include "rzpch.h"
-#include "OrthographicCameraController.h"
+
+#include "Razel/Renderer/OrthographicCameraController.h"
 
 #include "Razel/Core/Input.h"
 #include "Razel/Core/KeyCodes.h"

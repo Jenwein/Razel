@@ -1,10 +1,10 @@
 #include "rzpch.h"
-#include "Shader.h"
 
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Renderer.h"
+#include "Razel/Renderer/Shader.h"
+#include "Razel/Renderer/Renderer.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 
 namespace Razel
@@ -15,7 +15,7 @@ namespace Razel
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None: RZ_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-		case RendererAPI::API::OpenGL: return std::make_shared<OpenGLShader>(filepath);
+		case RendererAPI::API::OpenGL: return CreateRef<OpenGLShader>(filepath);
 		case RendererAPI::API::DirectX11: RZ_CORE_ASSERT(false, "RendererAPI::DirectX11 is currently not supported!"); return nullptr;
 		default: break;
 		}
@@ -30,7 +30,7 @@ namespace Razel
 		switch (Renderer::GetAPI())
 		{
 			case RendererAPI::API::None: RZ_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-			case RendererAPI::API::OpenGL: return std::make_shared<OpenGLShader>(name,vertexSrc,fragmentSrc);
+			case RendererAPI::API::OpenGL: return CreateRef<OpenGLShader>(name,vertexSrc,fragmentSrc);
 			case RendererAPI::API::DirectX11: RZ_CORE_ASSERT(false, "RendererAPI::DirectX11 is currently not supported!"); return nullptr;
 			default: break;
 		}
