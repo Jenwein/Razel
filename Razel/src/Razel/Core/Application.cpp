@@ -45,9 +45,9 @@ namespace Razel {
 		//RZ_CORE_TRACE("{0}", e);
 
 		// 事件处理自顶向下遍历
-		for (auto it = m_LayerStack.end();it !=m_LayerStack.begin();)
+		for (auto it = m_LayerStack.rbegin();it !=m_LayerStack.rend();++it)
 		{
-			(*--it)->OnEvent(e);
+			(*it)->OnEvent(e);
 			// 如果事件被当前层处理则停止继续传递
 			if (e.Handled)
 			{
