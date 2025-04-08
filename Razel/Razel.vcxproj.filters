@@ -239,5 +239,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Razel\Renderer\GraphicsContext.cpp" />
+    <ClCompile Include="src\Razel\Core\Input.cpp" />
+    <ClCompile Include="src\Razel\Core\Window.cpp" />
   </ItemGroup>
 </Project>

@@ -202,9 +202,11 @@
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Razel\Core\Application.cpp" />
+    <ClCompile Include="src\Razel\Core\Input.cpp" />
     <ClCompile Include="src\Razel\Core\Layer.cpp" />
     <ClCompile Include="src\Razel\Core\LayerStack.cpp" />
     <ClCompile Include="src\Razel\Core\Log.cpp" />
+    <ClCompile Include="src\Razel\Core\Window.cpp" />
     <ClCompile Include="src\Razel\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Razel\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Razel\Renderer\Buffer.cpp" />

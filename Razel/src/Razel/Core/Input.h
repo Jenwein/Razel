@@ -28,8 +28,10 @@ namespace Razel
 		virtual float GetMouseXImpl() = 0;
 		virtual float GetMouseYImpl() = 0;
 
+		static Scope<Input> Create();
+
 	private:
-		static Input* s_Instance;
+		static Scope<Input> s_Instance;
 	};
 
 }
