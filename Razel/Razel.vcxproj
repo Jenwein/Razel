@@ -168,6 +168,7 @@
     <ClInclude Include="src\Razel\Core\LayerStack.h" />
     <ClInclude Include="src\Razel\Core\Log.h" />
     <ClInclude Include="src\Razel\Core\MouseButtonCodes.h" />
+    <ClInclude Include="src\Razel\Core\MouseCodes.h" />
     <ClInclude Include="src\Razel\Core\Timestep.h" />
     <ClInclude Include="src\Razel\Core\Window.h" />
     <ClInclude Include="src\Razel\Debug\Instrumentor.h" />

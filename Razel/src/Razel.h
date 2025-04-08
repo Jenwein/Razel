@@ -16,6 +16,8 @@
 #include "Razel/Core/Input.h"
 #include "Razel/Core/KeyCodes.h"
 #include "Razel/Core/MouseButtonCodes.h"
+#include "Razel/Core/MouseCodes.h"
+
 
 //--Renderer---------------------
 #include "Razel/Renderer/Renderer.h"

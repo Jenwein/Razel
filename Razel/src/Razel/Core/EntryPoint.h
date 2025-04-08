@@ -9,16 +9,16 @@ int main(int argc, char** argv)
 {
 	Razel::Log::Init();
 
-	RZ_PROFILE_BEGIN_SESSION("Startup", "HazelProfile-Startup.json");
+	RZ_PROFILE_BEGIN_SESSION("Startup", "RazelProfile-Startup.json");
 	auto app = Razel::CreateApplication();
 	RZ_PROFILE_END_SESSION();
 
-	RZ_PROFILE_BEGIN_SESSION("Runtime", "HazelProfile-Runtime.json");
+	RZ_PROFILE_BEGIN_SESSION("Runtime", "RazelProfile-Runtime.json");
 	app->Run();
 	RZ_PROFILE_END_SESSION();
 
 
-	RZ_PROFILE_BEGIN_SESSION("Shutdown", "HazelProfile-Shutdown.json");
+	RZ_PROFILE_BEGIN_SESSION("Shutdown", "RazelProfile-Shutdown.json");
 	delete app;
 	RZ_PROFILE_END_SESSION();
 }
