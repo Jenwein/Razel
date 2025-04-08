@@ -3,6 +3,7 @@
 bin/
 bin-int/
 # Files
+*.log
 *.user
 SandBox/imgui.ini
 SandBox/RazelProfile*
