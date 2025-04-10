@@ -168,7 +168,7 @@ namespace Razel
 	};
 }
 
-#define RZ_PROFILE 1		// 启用性能分析 (1/0)
+#define RZ_PROFILE 0		// 启用性能分析 (1/0)
 #if RZ_PROFILE
 
 // Resolve which function signature macro will be used. Note that this only

@@ -8,59 +8,77 @@
 
 namespace Razel
 {
-	struct Renderer2DStorage
+	// 四边形顶点属性
+	struct QuadVertex
 	{
+		glm::vec3 Position;
+		glm::vec4 Color;
+		glm::vec2 TexCoord;
+		// TODO: texid
+	};
+
+	struct Renderer2DData
+	{
+		const uint32_t MaxQuads = 10000;			// 每批次最大渲染数量,超过将进行新的绘制调用
+		const uint32_t MaxVertices = MaxQuads * 4;	// 最大顶点数
+		const uint32_t MaxIndices = MaxQuads * 6;	// 最大索引数
+
 		Ref<VertexArray> QuadVertexArray;	// 四边形顶点数组
+		Ref<VertexBuffer> QuadVertexBuffer;	// 四边形顶点缓冲数组
 		//Ref<Shader> FlatColorShader;		// 平面颜色着色器
 		Ref<Shader> TextureShader;			// 纹理着色器
 		Ref<Texture2D> WhiteTexture;			// 默认白色纹理
+		
+		uint32_t QuadIndexCount = 0;				// 记录当前批次中已经添加的索引数量
+		QuadVertex* QuadVertexBufferBase = nullptr;	// 存储当前批次中所有四边形的顶点数据。
+		QuadVertex* QuadVertexBufferPtr = nullptr;	// 指向 QuadVertexBufferBase 中当前写入位置的指针
 	};
 
-	// 创建为指针,显式的控制生命周期
-	static Renderer2DStorage* s_Data;
+	static Renderer2DData s_Data;
 
 	void Renderer2D::Init()
 	{
 		RZ_PROFILE_FUNCTION();
 
-		s_Data = new Renderer2DStorage;
-		s_Data->QuadVertexArray = VertexArray::Create();
-		
+		s_Data.QuadVertexArray = VertexArray::Create();
 
-		//WhiteTexture = Texture2D::Create();
-		float squareVertices[5 * 4] = {
-			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
-		};
+		s_Data.QuadVertexBuffer = VertexBuffer::Create(s_Data.MaxVertices * sizeof(QuadVertex));
 
-		Ref<VertexBuffer> squareVB;
-		squareVB = VertexBuffer::Create(squareVertices, sizeof(squareVertices));
-		// TOEDIT:
-		//squareVB = VertexBuffer::Create(squareVertices, sizeof(squareVertices));
-		
-		squareVB->SetLayout({
+		s_Data.QuadVertexBuffer->SetLayout({
 			{ShaderDataType::Float3, "a_Position" },
+			{ShaderDataType::Float4, "a_Color" },
 			{ShaderDataType::Float2, "a_TexCrood" }
-			});
-		s_Data->QuadVertexArray->AddVertexBuffer(squareVB);
+		});
+		s_Data.QuadVertexArray->AddVertexBuffer(s_Data.QuadVertexBuffer);
 
-		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		Ref<IndexBuffer> squareIB;
-		squareIB = IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
-		// TOEDIT:
-		//squareIB =IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
-		
-		s_Data->QuadVertexArray->SetIndexBuffer(squareIB);
+		s_Data.QuadVertexBufferBase = new QuadVertex[s_Data.MaxVertices];	
+		uint32_t* quadIndices = new uint32_t[s_Data.MaxIndices];		// 用于存储索引数据
+		uint32_t offset = 0;											// 追踪当前处理的四边形的起始顶点索引
+		// 生成所有四边形的索引数据,每次循环会设置一个四边形,也就是两个三角形六个顶点的索引顺序
+		for (uint32_t i = 0; i < s_Data.MaxIndices; i += 6)
+		{
+			quadIndices[i + 0] = offset + 0;
+			quadIndices[i + 1] = offset + 1;
+			quadIndices[i + 2] = offset + 2;
 
-		s_Data->WhiteTexture = Texture2D::Create(1, 1);
+			quadIndices[i + 3] = offset + 2;
+			quadIndices[i + 4] = offset + 3;
+			quadIndices[i + 5] = offset + 0;
+
+			offset += 4;		// 追踪四边形的顶点起始索引
+		}
+
+		Ref<IndexBuffer> quadIB = IndexBuffer::Create(quadIndices, s_Data.MaxIndices);
+		s_Data.QuadVertexArray->SetIndexBuffer(quadIB);
+		delete[]quadIndices;
+
+		s_Data.WhiteTexture = Texture2D::Create(1, 1);
 		uint32_t whiteTextureData = 0xffffffff;
-		s_Data->WhiteTexture->SetData(&whiteTextureData, sizeof(uint32_t));
+		s_Data.WhiteTexture->SetData(&whiteTextureData, sizeof(uint32_t));
 
-		s_Data->TextureShader = Shader::Create("assets/shaders/Texture.glsl");
-		s_Data->TextureShader->Bind();
-		s_Data->TextureShader->SetInt("u_Texture", 0);
+		s_Data.TextureShader = Shader::Create("assets/shaders/Texture.glsl");
+		s_Data.TextureShader->Bind();
+		s_Data.TextureShader->SetInt("u_Texture", 0);
 
 	}
 
@@ -68,7 +86,6 @@ namespace Razel
 	{
 		RZ_PROFILE_FUNCTION();
 
-		delete s_Data;
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
@@ -76,14 +93,28 @@ namespace Razel
 		RZ_PROFILE_FUNCTION();
 
 		// 设置相机参数
-		s_Data->TextureShader->Bind();
-		s_Data->TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
+		s_Data.TextureShader->Bind();
+		s_Data.TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 
+
+		s_Data.QuadIndexCount = 0;
+		s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
 	}	
 
 	void Renderer2D::EndScene()
 	{
 		RZ_PROFILE_FUNCTION();
+
+		uint32_t dataSize = (uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase;
+		s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase,dataSize);
+
+		Flush();
+
+	}
+
+	void Renderer2D::Flush()
+	{
+		RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4 color)
@@ -96,18 +127,36 @@ namespace Razel
 	{
 		RZ_PROFILE_FUNCTION();
 
-		s_Data->TextureShader->SetFloat4("u_Color", color);
-		s_Data->TextureShader->SetFloat("u_TilingFactor", 1.0f);
-		s_Data->WhiteTexture->Bind();
-		
-		glm::mat4 transform = 
-			glm::translate(glm::mat4(1.0f), position)* 
-			glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-		
-		s_Data->TextureShader->SetMat4("u_Transform", transform);
-		s_Data->QuadVertexArray->Bind();
+		s_Data.QuadVertexBufferPtr->Position = position;
+		s_Data.QuadVertexBufferPtr->Color = color;
+		s_Data.QuadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
+		s_Data.QuadVertexBufferPtr++;
 
-		RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
+		s_Data.QuadVertexBufferPtr->Position = { position.x + size.x, position.y, 0.0f };
+		s_Data.QuadVertexBufferPtr->Color = color;
+		s_Data.QuadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
+		s_Data.QuadVertexBufferPtr++;
+
+		s_Data.QuadVertexBufferPtr->Position = { position.x + size.x, position.y + size.y, 0.0f };
+		s_Data.QuadVertexBufferPtr->Color = color;
+		s_Data.QuadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
+		s_Data.QuadVertexBufferPtr++;
+
+		s_Data.QuadVertexBufferPtr->Position = { position.x, position.y + size.y, 0.0f };
+		s_Data.QuadVertexBufferPtr->Color = color;
+		s_Data.QuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
+		s_Data.QuadVertexBufferPtr++;
+
+		s_Data.QuadIndexCount += 6;
+
+		/*s_Data.TextureShader->SetFloat("u_TilingFactor", 1.0f);
+		s_Data.WhiteTexture->Bind();
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		s_Data.TextureShader->SetMat4("u_Transform", transform);
+		s_Data.QuadVertexArray->Bind();
+		RenderCommand::DrawIndexed(s_Data.QuadVertexArray);*/
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor /*= 1.0f*/, const glm::vec4& tintColor /*= glm::vec4(1.0f)*/)
@@ -120,18 +169,17 @@ namespace Razel
 		RZ_PROFILE_FUNCTION();
 
 		// 设置纹理则将颜色设置为白色,也就是无影响
-		s_Data->TextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
-		s_Data->TextureShader->SetFloat("u_TilingFactor", tilingFactor);
+		s_Data.TextureShader->SetFloat4("u_Color", tintColor);
+		s_Data.TextureShader->SetFloat("u_TilingFactor", tilingFactor);
 		texture->Bind();
 
 		glm::mat4 transform =
 			glm::translate(glm::mat4(1.0f), position) *
 			glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-		s_Data->TextureShader->SetMat4("u_Transform", transform);
+		s_Data.TextureShader->SetMat4("u_Transform", transform);
 
-
-		s_Data->QuadVertexArray->Bind();
-		RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
+		s_Data.QuadVertexArray->Bind();
+		RenderCommand::DrawIndexed(s_Data.QuadVertexArray);
 	}
 
 	void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
@@ -143,16 +191,16 @@ namespace Razel
 	{
 		RZ_PROFILE_FUNCTION();
 
-		s_Data->TextureShader->SetFloat4("u_Color", color);
-		s_Data->TextureShader->SetFloat("u_TilingFactor", 1.0f);
-		s_Data->WhiteTexture->Bind();
+		s_Data.TextureShader->SetFloat4("u_Color", color);
+		s_Data.TextureShader->SetFloat("u_TilingFactor", 1.0f);
+		s_Data.WhiteTexture->Bind();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f })
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-		s_Data->TextureShader->SetMat4("u_Transform", transform);
-		s_Data->QuadVertexArray->Bind();
-		RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
+		s_Data.TextureShader->SetMat4("u_Transform", transform);
+		s_Data.QuadVertexArray->Bind();
+		RenderCommand::DrawIndexed(s_Data.QuadVertexArray);
 	}
 
 	void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
@@ -164,17 +212,17 @@ namespace Razel
 	{
 		RZ_PROFILE_FUNCTION();
 
-		s_Data->TextureShader->SetFloat4("u_Color", tintColor);
-		s_Data->TextureShader->SetFloat("u_TilingFactor", tilingFactor);
+		s_Data.TextureShader->SetFloat4("u_Color", tintColor);
+		s_Data.TextureShader->SetFloat("u_TilingFactor", tilingFactor);
 		texture->Bind();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f })
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-		s_Data->TextureShader->SetMat4("u_Transform", transform);
+		s_Data.TextureShader->SetMat4("u_Transform", transform);
 
-		s_Data->QuadVertexArray->Bind();
-		RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
+		s_Data.QuadVertexArray->Bind();
+		RenderCommand::DrawIndexed(s_Data.QuadVertexArray);
 	}
 
 }
