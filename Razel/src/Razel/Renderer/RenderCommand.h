@@ -31,7 +31,6 @@ namespace Razel
 			s_RendererAPI->DrawIndexed(vertexArray,count);
 		}
 
-
 	private:
 		static Scope<RendererAPI> s_RendererAPI;
 	};
