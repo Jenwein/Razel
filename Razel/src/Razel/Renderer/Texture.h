@@ -15,11 +15,13 @@ namespace Razel
 
 		virtual void SetData(void* data, uint32_t size) = 0;
 
+		virtual bool operator==(const Texture& other)const = 0;
+
 	};
 
 	class Texture2D : public Texture
 	{
-	public: 
+	public:
 		static Ref<Texture2D>Create(uint32_t width, uint32_t height);
 		static Ref<Texture2D>Create(const std::string& path);
 	};

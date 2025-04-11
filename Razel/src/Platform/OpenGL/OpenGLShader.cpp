@@ -222,7 +222,12 @@ namespace Razel
 
 		UploadUniformInt(name, value);
 	}
+	void OpenGLShader::SetIntArray(const std::string& name, int* value, uint32_t count)
+	{
+		RZ_PROFILE_FUNCTION();
 
+		UploadUniformIntArray(name, value,count);
+	}
 	void OpenGLShader::SetFloat(const std::string& name,float value)
 	{
 		RZ_PROFILE_FUNCTION();
@@ -255,6 +260,13 @@ namespace Razel
 	{
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform1i(location, value);
+	}
+
+	void OpenGLShader::UploadUniformIntArray(const std::string& name, int* values, uint32_t count)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform1iv(location, count, values);
+
 	}
 
 	void OpenGLShader::UploadUniformFloat(const std::string& name, float value)
