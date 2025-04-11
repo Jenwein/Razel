@@ -13,8 +13,8 @@ namespace Razel
 		{
 		}
 
-		inline unsigned int GetWidth() { return m_Width; }
-		inline unsigned int GetHeight() { return m_Height; }
+		unsigned int GetWidth() { return m_Width; }
+		unsigned int GetHeight() { return m_Height; }
 
 		std::string ToString() const override
 		{

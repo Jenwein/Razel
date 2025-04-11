@@ -9,7 +9,7 @@ namespace Razel {
 	{
 	public:
 		// 获取按键值
-		inline KeyCode GetKeyCode() const { return m_KeyCode; }
+		KeyCode GetKeyCode() const { return m_KeyCode; }
 		
 		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput);
 
@@ -27,7 +27,7 @@ namespace Razel {
 		KeyPressedEvent(KeyCode keycode,int repeatCount)
 			:KeyEvent(keycode),m_RepeatCount(repeatCount){}
 
-		inline int GetRepeatCount()const { return m_RepeatCount; }
+		int GetRepeatCount()const { return m_RepeatCount; }
 
 		std::string ToString() const override
 		{

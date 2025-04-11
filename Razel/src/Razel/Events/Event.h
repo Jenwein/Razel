@@ -56,7 +56,7 @@ namespace Razel
 		virtual std::string ToString() const { return GetName(); }	// 返回事件类型的字符串表示(用于调试)
 
 		// 检查事件是否属于特定类别（IsHasCategory？）
-		inline bool IsInCategory(EventCategory category) const
+		bool IsInCategory(EventCategory category) const
 		{
 			return GetCategoryFlags() & category;
 		}
