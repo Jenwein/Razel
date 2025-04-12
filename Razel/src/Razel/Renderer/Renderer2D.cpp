@@ -39,7 +39,7 @@ namespace Razel
 		std::array<Ref<Texture2D>, MaxTextureSlots> TextureSlots;	// 存储当前绑定的纹理 ID
 		uint32_t TextureSlotIndex = 1;								// 追踪下一个可用的纹理槽位置(标记纹理槽数组末尾位置)，默认第 0 个插槽为白色纹理。
 	
-		glm::vec4 QuadVertexPositions[4];							// 四边形四个顶点位置
+		glm::vec4 QuadVertexPositions[4] = {};						// 四边形四个顶点位置
 		Renderer2D::Statistics Stats;								// 统计渲染
 
 	};
@@ -110,7 +110,7 @@ namespace Razel
 	void Renderer2D::Shutdown()
 	{
 		RZ_PROFILE_FUNCTION();
-
+		delete[] s_Data.QuadVertexBufferBase;
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
@@ -133,7 +133,7 @@ namespace Razel
 	{
 		RZ_PROFILE_FUNCTION();
 
-		uint32_t dataSize = (uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase;
+		uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
 		s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase,dataSize);		// 上传VB给OpenGL
 
 		Flush();	//实际调用DrawCall
@@ -142,6 +142,9 @@ namespace Razel
 
 	void Renderer2D::Flush()
 	{
+		if (s_Data.QuadIndexCount == 0)
+			return; // Nothing to draw
+
 		// 绑定纹理
 		for (uint32_t i = 0;i < s_Data.TextureSlotIndex;i++)
 		{
@@ -204,7 +207,7 @@ namespace Razel
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor /*= 1.0f*/, const glm::vec4& tintColor /*= glm::vec4(1.0f)*/)
 	{
-		DrawQuad({ position.x, position.y, 0.0f }, size, texture);
+		DrawQuad({ position.x, position.y, 0.0f }, size, texture, tilingFactor, tintColor);
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor /*= 1.0f*/, const glm::vec4& tintColor /*= glm::vec4(1.0f)*/)
@@ -214,7 +217,7 @@ namespace Razel
 
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
 		constexpr size_t quadVertexCount = 4;
-		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };	// 默认白色将属于常量不会改变,设置为constexpr避免多次创建
+		//constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };	// 默认白色将属于常量不会改变,设置为constexpr避免多次创建
 		float textureIndex = 0.0f;								// 索引当前纹理位置
 
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
@@ -254,7 +257,7 @@ namespace Razel
 		for (uint32_t i = 0; i < quadVertexCount; ++i)
 		{
 			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = color;
+			s_Data.QuadVertexBufferPtr->Color = tintColor;
 			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
 			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
 			s_Data.QuadVertexBufferPtr->TilingFactor = tilingFactor;
@@ -313,7 +316,7 @@ namespace Razel
 
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
 		constexpr size_t quadVertexCount = 4;
-		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };	// 默认白色将属于常量不会改变,设置为constexpr避免多次创建
+		//constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };	// 默认白色将属于常量不会改变,设置为constexpr避免多次创建
 		float textureIndex = 0.0f;								// 索引当前纹理位置
 
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
@@ -351,7 +354,7 @@ namespace Razel
 		for (uint32_t i = 0; i < quadVertexCount; ++i)
 		{
 			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = color;
+			s_Data.QuadVertexBufferPtr->Color = tintColor;
 			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
 			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
 			s_Data.QuadVertexBufferPtr->TilingFactor = tilingFactor;

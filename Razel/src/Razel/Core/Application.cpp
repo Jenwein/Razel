@@ -47,12 +47,12 @@ namespace Razel {
 		// 事件处理自顶向下遍历
 		for (auto it = m_LayerStack.rbegin();it !=m_LayerStack.rend();++it)
 		{
-			(*it)->OnEvent(e);
 			// 如果事件被当前层处理则停止继续传递
 			if (e.Handled)
 			{
 				break;
 			}
+			(*it)->OnEvent(e);
 		}
 	}
 
