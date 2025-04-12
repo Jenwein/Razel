@@ -21,9 +21,9 @@ namespace Razel
 	// 渲染数据
 	struct Renderer2DData
 	{
-		const uint32_t MaxQuads = 10000;							// 每批次最大渲染数量,超过将进行新的绘制调用
-		const uint32_t MaxVertices = MaxQuads * 4;					// 最大顶点数
-		const uint32_t MaxIndices = MaxQuads * 6;					// 最大索引数
+		static const uint32_t MaxQuads = 10000;						// 每批次最大渲染数量,超过将进行新的绘制调用
+		static const uint32_t MaxVertices = MaxQuads * 4;			// 最大顶点数
+		static const uint32_t MaxIndices = MaxQuads * 6;			// 最大索引数
 		static const uint32_t MaxTextureSlots = 32;					// 最大纹理槽数(TODO:RenderCaps)
 
 		Ref<VertexArray> QuadVertexArray;							// 四边形顶点数组
@@ -39,7 +39,9 @@ namespace Razel
 		std::array<Ref<Texture2D>, MaxTextureSlots> TextureSlots;	// 存储当前绑定的纹理 ID
 		uint32_t TextureSlotIndex = 1;								// 追踪下一个可用的纹理槽位置(标记纹理槽数组末尾位置)，默认第 0 个插槽为白色纹理。
 	
-		glm::vec4 QuadVertexPositions[4];
+		glm::vec4 QuadVertexPositions[4];							// 四边形四个顶点位置
+		Renderer2D::Statistics Stats;								// 统计渲染
+
 	};
 
 	static Renderer2DData s_Data;
@@ -147,8 +149,19 @@ namespace Razel
 		}
 
 		RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
+		s_Data.Stats.DrawCalls++;
+	}
+
+	void Renderer2D::FlushAndReset()
+	{
+		EndScene();
+		s_Data.QuadIndexCount = 0;
+		s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
+
+		s_Data.TextureSlotIndex = 1;
 
 	}
+
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
 	{
@@ -159,6 +172,11 @@ namespace Razel
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
 		RZ_PROFILE_FUNCTION();
+
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+		{
+			FlushAndReset();
+		}
 
 		const float textureIndex = 0.0f;		// 白色纹理
 		const float tilingFactor = 1.0f;	// 平铺因子
@@ -196,6 +214,7 @@ namespace Razel
 		s_Data.QuadVertexBufferPtr++;
 
 		s_Data.QuadIndexCount += 6;
+		s_Data.Stats.QuadCount++;
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor /*= 1.0f*/, const glm::vec4& tintColor /*= glm::vec4(1.0f)*/)
@@ -207,7 +226,11 @@ namespace Razel
 	{
 		RZ_PROFILE_FUNCTION();
 
-		
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+		{
+			FlushAndReset();
+		}
+
 		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };	// 默认白色将属于常量不会改变,设置为constexpr避免多次创建
 		float textureIndex = 0.0f;								// 索引当前纹理位置
 	
@@ -264,6 +287,7 @@ namespace Razel
 		s_Data.QuadVertexBufferPtr++;
 
 		s_Data.QuadIndexCount += 6;
+		s_Data.Stats.QuadCount++;
 	}
 
 	void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
@@ -274,6 +298,11 @@ namespace Razel
 	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color)
 	{
 		RZ_PROFILE_FUNCTION();
+
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+		{
+			FlushAndReset();
+		}
 
 		const float textureIndex = 0.0f; // White Texture
 		const float tilingFactor = 1.0f;
@@ -310,6 +339,7 @@ namespace Razel
 		s_Data.QuadVertexBufferPtr++;
 
 		s_Data.QuadIndexCount += 6;
+		s_Data.Stats.QuadCount++;
 	}
 
 	void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
@@ -320,6 +350,11 @@ namespace Razel
 	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
 	{
 		RZ_PROFILE_FUNCTION();
+
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+		{
+			FlushAndReset();
+		}
 
 		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };	// 默认白色将属于常量不会改变,设置为constexpr避免多次创建
 		float textureIndex = 0.0f;								// 索引当前纹理位置
@@ -376,6 +411,18 @@ namespace Razel
 		s_Data.QuadVertexBufferPtr++;
 
 		s_Data.QuadIndexCount += 6;
+
+		s_Data.Stats.QuadCount++;
+	}
+
+	void Renderer2D::ResetStats()
+	{
+		memset(&s_Data.Stats, 0, sizeof(Statistics));
+	}
+
+	Renderer2D::Statistics Renderer2D::GetStats()
+	{
+		return s_Data.Stats;
 	}
 
 }
