@@ -60,12 +60,22 @@
 #endif // End of DLL support
 
 #ifdef RZ_DEBUG
+	#if defined(RZ_PLATFORM_WINDOWS)
+		#define RZ_DEBUGBREAK() __debugbreak()
+	#elif defined(RZ_PLATFORM_LINUX)
+		#include <signal.h>
+		#define RZ_DEBUGBREAK() raise(SIGTRAP)
+	#else
+		#error "Platform doesn't support debugbreak yet!"
+	#endif
 	#define RZ_ENABLE_ASSERTS
+#else
+	#define RZ_DEBUGBREAK()
 #endif
 
 #ifdef RZ_ENABLE_ASSERTS
-	#define RZ_ASSERT(x, ...) { if(!(x)) { RZ_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-	#define RZ_CORE_ASSERT(x, ...) { if(!(x)) { RZ_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#define RZ_ASSERT(x, ...) { if(!(x)) { RZ_ERROR("Assertion Failed: {0}", __VA_ARGS__); RZ_DEBUGBREAK(); } }
+	#define RZ_CORE_ASSERT(x, ...) { if(!(x)) { RZ_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); RZ_DEBUGBREAK(); } }
 #else
 	#define RZ_ASSERT(x, ...)
 	#define RZ_CORE_ASSERT(x, ...)

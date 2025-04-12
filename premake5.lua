@@ -65,7 +65,8 @@ group ""
 		
 		defines
 		{
-			"_CRT_SECURE_NO_WARNINGS"
+			"_CRT_SECURE_NO_WARNINGS",
+			"GLFW_INCLUDE_NONE"
 		}
 		--指定编译器的包含文件搜索路径
 		includedirs
@@ -95,8 +96,7 @@ group ""
 			--添加预处理器或编译器符号到项目中
 			defines
 			{
-				"RZ_BUILD_DLL",
-				"GLFW_INCLUDE_NONE"
+
 			}
 		
 		filter "configurations:Debug"

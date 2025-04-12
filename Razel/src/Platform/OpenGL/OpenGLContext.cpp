@@ -10,7 +10,6 @@ namespace Razel
 		:m_WindowHandle(windowHandle)
 	{
 		RZ_CORE_ASSERT(windowHandle, "Window handle is null!");
-	
 	}
 
 	void OpenGLContext::Init()
