@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Razel/Core/Core.h"
+#include "Razel/Core/Base.h"
 
 #include "Razel/Core/Window.h"
 #include "Razel/Core/LayerStack.h"

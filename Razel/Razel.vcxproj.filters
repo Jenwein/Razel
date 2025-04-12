@@ -87,7 +87,7 @@
     <ClInclude Include="src\Razel\Core\Application.h">
       <Filter>src\Razel\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Razel\Core\Core.h">
+    <ClInclude Include="src\Razel\Core\Base.h">
       <Filter>src\Razel\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Razel\Core\EntryPoint.h">

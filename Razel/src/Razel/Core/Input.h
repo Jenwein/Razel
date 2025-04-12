@@ -1,5 +1,5 @@
 #pragma once
-#include "Razel/Core/Core.h"
+#include "Razel/Core/Base.h"
 #include "Razel/Core/KeyCodes.h"
 #include "Razel/Core/MouseCodes.h"
 

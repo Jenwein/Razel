@@ -1,7 +1,7 @@
 #pragma once
 #include "rzpch.h"
 
-#include "Razel/Core/Core.h"
+#include "Razel/Core/Base.h"
 
 namespace Razel
 {

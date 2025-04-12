@@ -2,7 +2,7 @@
 
 #include "rzpch.h"
 
-#include "Razel/Core/Core.h"
+#include "Razel/Core/Base.h"
 #include "Razel/Events/Event.h"
 
 namespace Razel

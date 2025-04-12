@@ -1,5 +1,5 @@
 #pragma once
-#include "Razel/Core/Core.h"
+#include "Razel/Core/Base.h"
 
 #ifdef RZ_PLATFORM_WINDOWS
 
