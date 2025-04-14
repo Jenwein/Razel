@@ -21,6 +21,7 @@ namespace Razel {
 		Application();
 		virtual ~Application();
 
+		void Close();
 
 		void OnEvent(Event& e);
 
@@ -28,7 +29,6 @@ namespace Razel {
 		void PushOverLayer(Layer* layer);
 
 		Window& GetWindow() { return *m_Window; }
-		
 		static Application& Get() { return *s_Instance; }
 	private:
 		void Run();

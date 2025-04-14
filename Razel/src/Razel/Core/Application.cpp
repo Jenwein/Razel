@@ -35,6 +35,11 @@ namespace Razel {
 		Renderer::Shutdown();
 	}
 
+	void Application::Close()
+	{
+		m_Running = false;
+	}
+
 	void Application::OnEvent(Event& e)
 	{
 		RZ_PROFILE_FUNCTION();
@@ -127,6 +132,7 @@ namespace Razel {
 
 		return false;
 	}
+
 
 
 }
