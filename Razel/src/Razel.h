@@ -24,6 +24,7 @@
 #include "Razel/Renderer/Renderer2D.h"
 #include "Razel/Renderer/RenderCommand.h"
 #include "Razel/Renderer/Buffer.h"
+#include "Razel/Renderer/FrameBuffer.h"
 #include "Razel/Renderer/Shader.h"
 #include "Razel/Renderer/VertexArray.h"
 
