@@ -63,6 +63,9 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
@@ -139,6 +142,9 @@
       <Filter>src\Razel\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\Razel\Renderer\Buffer.h">
+      <Filter>src\Razel\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Razel\Renderer\Framebuffer.h">
       <Filter>src\Razel\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Razel\Renderer\GraphicsContext.h">
@@ -1442,6 +1448,9 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
@@ -1485,6 +1494,9 @@
       <Filter>src\Razel\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Razel\Renderer\Buffer.cpp">
+      <Filter>src\Razel\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Razel\Renderer\Framebuffer.cpp">
       <Filter>src\Razel\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Razel\Renderer\GraphicsContext.cpp">
