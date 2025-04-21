@@ -16,6 +16,7 @@ void Sandbox2D::OnAttach()
 	RZ_PROFILE_FUNCTION();
 
 	m_CheckerboardTexture = Razel::Texture2D::Create("assets/textures/Checkerboard.png");
+
 	Razel::FramebufferSpecification fbSpec;
 	fbSpec.Width = 1280;
 	fbSpec.Height = 720;
@@ -160,7 +161,7 @@ void Sandbox2D::OnImGuiRender()
 
 		ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
 
-		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
+		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();;
 		ImGui::Image((void*)textureID, ImVec2{ 1280, 720 });
 		ImGui::End();
 
@@ -180,7 +181,7 @@ void Sandbox2D::OnImGuiRender()
 		ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
 
 		uint32_t textureID = m_CheckerboardTexture->GetRendererID();
-		ImGui::Image((void*)textureID, ImVec2{ 1280, 720 });
+		ImGui::Image((void*)textureID, ImVec2{ 256.0f, 256.0f });
 		ImGui::End();
 	}
 }

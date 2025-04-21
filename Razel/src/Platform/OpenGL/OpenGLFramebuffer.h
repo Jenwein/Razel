@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Razel/Renderer/Framebuffer.h"
 
 namespace Razel
@@ -8,7 +9,7 @@ namespace Razel
 	public:
 		OpenGLFramebuffer(const FramebufferSpecification& spec);
 		virtual ~OpenGLFramebuffer();
-		
+
 		// 创建或重新创建帧缓冲区
 		void Invalidate();
 
@@ -18,6 +19,7 @@ namespace Razel
 		virtual uint32_t GetColorAttachmentRendererID() const override { return m_ColorAttachment; }
 		virtual const FramebufferSpecification& GetSpecification() const override { return m_Specification; }
 
+		virtual const FramebufferSpecification& GetSpecification() const override { return m_Specification; }
 	private:
 		uint32_t m_RendererID;
 		uint32_t m_ColorAttachment, m_DepthAttachment;	// 颜色缓冲,深度缓冲

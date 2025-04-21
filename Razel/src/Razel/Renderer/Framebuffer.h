@@ -24,4 +24,6 @@ namespace Razel
 
 		static Ref<Framebuffer> Create(const FramebufferSpecification& spec);
 	};
+
+
 }
