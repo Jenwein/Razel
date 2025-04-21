@@ -70,7 +70,6 @@ namespace Razel {
 			m_Framebuffer->UnBind();
 		}
 	}
-
 	void EditorLayer::OnImGuiRender()
 	{
 		RZ_PROFILE_FUNCTION();
@@ -159,7 +158,7 @@ namespace Razel {
 			ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
 
 			uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
-			ImGui::Image((void*)textureID, ImVec2{ 1280, 720 });
+			ImGui::Image((void*)textureID, ImVec2{ 1280, 720 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 			ImGui::End();
 
 			ImGui::End();
@@ -178,7 +177,7 @@ namespace Razel {
 			ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
 
 			uint32_t textureID = m_CheckerboardTexture->GetRendererID();
-			ImGui::Image((void*)textureID, ImVec2{ 1280, 720 });
+			ImGui::Image((void*)textureID, ImVec2{ 1280, 720 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 			ImGui::End();
 		}
 	}

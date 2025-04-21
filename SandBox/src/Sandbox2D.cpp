@@ -50,8 +50,7 @@ void Sandbox2D::OnUpdate(Razel::Timestep ts)
 		Razel::Renderer2D::DrawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
 		Razel::Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, m_SquareColor);
 		Razel::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 20.0f, 20.0f }, m_CheckerboardTexture, 10.0f);
-		Razel::Renderer2D::DrawRotatedQuad({ -2.0f, 0.0f, 0.0f }, { 1.0f, 1.0f }, rotation, m_CheckerboardTexture, 20.0f);		
-		//Razel::Renderer2D::DrawRotatedQuad({ 0.0f, 0.0f, 0.0f }, { 10.0f, 10.0f }, rotation, m_CheckerboardTexture, 10.0f, { 0.8f,0.5f,0.5f,1.0f });
+		Razel::Renderer2D::DrawRotatedQuad({ -2.0f, 0.0f, 0.0f }, { 1.0f, 1.0f }, rotation, m_CheckerboardTexture, 20.0f);
 		Razel::Renderer2D::EndScene();
 
 		Razel::Renderer2D::BeginScene(m_CameraController.GetCamera());

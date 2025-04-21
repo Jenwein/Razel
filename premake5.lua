@@ -1,6 +1,6 @@
 workspace "Razel"
 	architecture "x86_64"
-	startproject "Sandbox"
+	startproject "Hazel-Editor"
 	--指定工作区或项目的构建配置集，例如“调试”和“发布”
 	configurations
 	{

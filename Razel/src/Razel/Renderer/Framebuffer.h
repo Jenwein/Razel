@@ -19,6 +19,8 @@ namespace Razel
 		virtual void Bind() = 0;
 		virtual void UnBind() = 0;
 
+		virtual void Resize(uint32_t width, uint32_t height) = 0;
+
 		virtual uint32_t GetColorAttachmentRendererID() const = 0;				// 获取颜色附件ID
 		virtual const FramebufferSpecification& GetSpecification() const = 0;	// 获取帧缓冲规范
 
