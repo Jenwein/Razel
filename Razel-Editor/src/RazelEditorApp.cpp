@@ -1,33 +1,27 @@
 #include <Razel.h>
 #include <Razel/Core/EntryPoint.h>
 
-#include <imgui/imgui.h>
+#include "EditorLayer.h"
 
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+namespace Razel {
 
-#include "Platform/OpenGL/OpenGLShader.h"
-#include <Razel/Core/EntryPoint.h>
-#include "ExampleLayer.h"
-#include "Sandbox2D.h"
-
-
-class Sandbox : public Razel::Application
-{
-public:
-	Sandbox()
+	class RazelEditor : public Application
 	{
-		// PushLayer(new ExampleLayer());
-		PushLayer(new Sandbox2D());
+	public:
+		RazelEditor()
+			: Application("Razel Editor")
+		{
+			PushLayer(new EditorLayer());
+		}
 
-	}
-	~Sandbox()
+		~RazelEditor()
+		{
+		}
+	};
+
+	Application* CreateApplication()
 	{
+		return new RazelEditor();
 	}
 
-};
-
-Razel::Application* Razel::CreateApplication()
-{
-	return new Sandbox();
 }

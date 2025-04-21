@@ -18,7 +18,7 @@ namespace Razel {
 	class RAZEL_API Application
 	{
 	public:
-		Application();
+		Application(const std::string& name = "Razel App");
 		virtual ~Application();
 
 		void Close();

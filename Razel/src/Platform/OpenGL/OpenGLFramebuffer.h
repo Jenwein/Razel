@@ -18,12 +18,9 @@ namespace Razel
 
 		virtual uint32_t GetColorAttachmentRendererID() const override { return m_ColorAttachment; }
 		virtual const FramebufferSpecification& GetSpecification() const override { return m_Specification; }
-
-		virtual const FramebufferSpecification& GetSpecification() const override { return m_Specification; }
 	private:
 		uint32_t m_RendererID;
 		uint32_t m_ColorAttachment, m_DepthAttachment;	// ÑÕÉ«»º³å,Éî¶È»º³å
 		FramebufferSpecification m_Specification;		// Ö¡»º³å¹æ·¶
 	};
-
 }
