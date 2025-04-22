@@ -200,9 +200,6 @@
     <ClCompile Include="src\Razel\Core\Application.cpp">
       <Filter>src\Razel\Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Razel\Core\Input.cpp">
-      <Filter>src\Razel\Core</Filter>
-    </ClCompile>
     <ClCompile Include="src\Razel\Core\Layer.cpp">
       <Filter>src\Razel\Core</Filter>
     </ClCompile>
