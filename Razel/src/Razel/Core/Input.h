@@ -12,7 +12,7 @@ namespace Razel
 	public:
 		Input(const Input&) = delete;
 		Input& operator=(const Input&) = delete;
-
+		virtual ~Input() = default;
 		// 全局范围内访问输入状态
 		static bool IsKeyPressed(KeyCode keycode) { return s_Instance->IsKeyPressedImpl(keycode); }
 

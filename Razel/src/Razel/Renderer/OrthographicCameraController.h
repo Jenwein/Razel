@@ -17,8 +17,8 @@ namespace Razel
 
 		// 更新相机的Transform
 		void OnUpdate(Timestep ts);
-
 		void OnEvent(Event& e);
+		void OnResize(float width, float height);
 
 		// 获取相机对象
 		OrthographicCamera& GetCamera() { return m_Camera; }

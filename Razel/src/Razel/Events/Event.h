@@ -48,6 +48,8 @@ namespace Razel
 	class Event 
 	{
 	public:
+		virtual ~Event() = default;
+
 		bool Handled = false;		// 事件是否被处理
 
 		virtual EventType GetEventType() const = 0;					// 获取事件类型
