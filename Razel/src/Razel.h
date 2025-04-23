@@ -13,6 +13,10 @@
 
 #include "Razel/Core/Timestep.h"
 
+
+#include "Razel/Scene/Scene.h"
+#include "Razel/Scene/Components.h"
+
 #include "Razel/Core/Input.h"
 #include "Razel/Core/KeyCodes.h"
 #include "Razel/Core/MouseButtonCodes.h"

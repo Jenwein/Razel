@@ -268,6 +268,89 @@ namespace Razel
 		s_Data.Stats.QuadCount++;
 	}
 
+	void Renderer2D::DrawQuad(const glm::mat4 transform, glm::vec4 color)
+	{
+		RZ_PROFILE_FUNCTION();
+
+		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+		constexpr size_t quadVertexCount = 4;
+		const float textureIndex = 0.0f;		// 白色纹理
+		const float tilingFactor = 1.0f;	// 平铺因子
+
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+		{
+			FlushAndReset();
+		}
+
+		for (uint32_t i = 0; i < quadVertexCount; ++i)
+		{
+			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
+			s_Data.QuadVertexBufferPtr->Color = color;
+			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
+			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+			s_Data.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+			s_Data.QuadVertexBufferPtr++;
+		}
+
+		s_Data.QuadIndexCount += 6;
+		s_Data.Stats.QuadCount++;
+	}
+
+	void Renderer2D::DrawQuad(const glm::mat4 transform, const Ref<Texture2D>& texture, float tilingFactor /*= 1.0f*/, const glm::vec4& tintColor /*= glm::vec4(1.0f)*/)
+	{
+		RZ_PROFILE_FUNCTION();
+
+
+		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+		constexpr size_t quadVertexCount = 4;
+		//constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };	// 默认白色将属于常量不会改变,设置为constexpr避免多次创建
+		float textureIndex = 0.0f;								// 索引当前纹理位置
+
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+		{
+			FlushAndReset();
+		}
+
+		// 检查纹理是否已经存在于s_Data.TextureSlots中
+		for (uint32_t i = 1; i < s_Data.TextureSlotIndex;++i)
+		{
+			if (s_Data.TextureSlots[i].get() == texture.get())
+			{
+				// 如果已存在,则纹理索引指向该纹理位置
+				textureIndex = (float)i;
+				break;
+			}
+		}
+
+		// 绑定新的纹理到槽
+		if (textureIndex == 0.0f)		// 如果纹理未绑定
+		{
+			if (s_Data.TextureSlotIndex >= Renderer2DData::MaxTextureSlots)
+			{
+				FlushAndReset();
+			}
+
+			textureIndex = (float)s_Data.TextureSlotIndex;			// 更新当前纹理索引的位置
+			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;	// 绑定到该槽
+			s_Data.TextureSlotIndex++;								// 更新纹理记录位置
+		}
+
+
+		for (uint32_t i = 0; i < quadVertexCount; ++i)
+		{
+			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
+			s_Data.QuadVertexBufferPtr->Color = tintColor;
+			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
+			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+			s_Data.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+			s_Data.QuadVertexBufferPtr++;
+		}
+
+		s_Data.QuadIndexCount += 6;
+		s_Data.Stats.QuadCount++;
+
+	}
+
 	void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
 	{
 		DrawRotatedQuad({ position.x, position.y, 0.0f }, size, rotation, color);

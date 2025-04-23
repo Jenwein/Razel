@@ -24,6 +24,8 @@ workspace "Razel"
 	IncludeDir["ImGui"] = "Razel/vendor/imgui"
 	IncludeDir["glm"] = "Razel/vendor/glm"
 	IncludeDir["stb_image"] = "Razel/vendor/stb_image"
+	IncludeDir["entt"] = "Razel/vendor/entt/include"
+
 
 	filter "action:vs*"
         buildoptions { "/utf-8" , "/wd4828" }
@@ -77,7 +79,9 @@ group ""
 			"%{IncludeDir.Glad}",
 			"%{IncludeDir.ImGui}",
 			"%{IncludeDir.glm}",
-			"%{IncludeDir.stb_image}"
+			"%{IncludeDir.stb_image}",
+			"%{IncludeDir.entt}"
+
 
 		}
 
@@ -136,8 +140,8 @@ group ""
 			"Razel/vendor/spdlog/include",
 			"Razel/src",
 			"Razel/vendor",
-			"%{IncludeDir.glm}"
-
+			"%{IncludeDir.glm}",
+			"%{IncludeDir.entt}"
 		}
 
 		links
@@ -184,8 +188,8 @@ group ""
 			"Razel/vendor/spdlog/include",
 			"Razel/src",
 			"Razel/vendor",
-			"%{IncludeDir.glm}"
-
+			"%{IncludeDir.glm}",
+			"%{IncludeDir.entt}"
 		}
 
 		links
