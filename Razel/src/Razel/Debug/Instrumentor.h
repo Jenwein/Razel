@@ -29,16 +29,9 @@ namespace Razel
 	// 管理性能分析的整个生命周期
 	class Instrumentor
 	{
-	private:
-		InstrumentationSession* m_CurrentSession;	// 当前会话
-		std::ofstream m_OutputStream;				// 输出文件流
-		std::mutex m_Mutex;
-
 	public:
-		Instrumentor()
-			:m_CurrentSession(nullptr)
-		{
-		}
+		Instrumentor(const Instrumentor&) = delete;
+		Instrumentor(Instrumentor&&) = delete;
 
 		// 开始会话
 		void BeginSession(const std::string& name, const std::string& filepath = "result.json")
@@ -112,7 +105,15 @@ namespace Razel
 			return instance;
 		}
 	private:
+		Instrumentor()
+			: m_CurrentSession(nullptr)
+		{
+		}
 
+		~Instrumentor()
+		{
+			EndSession();
+		}
 		void WriteHeader()
 		{
 			m_OutputStream << "{\"otherData\": {},\"traceEvents\":[{}";
@@ -137,6 +138,10 @@ namespace Razel
 			}
 		}
 
+	private:
+		std::mutex m_Mutex;
+		InstrumentationSession* m_CurrentSession;
+		std::ofstream m_OutputStream;
 
 	};
 	// 计时器类，用于测量代码段的执行时间
@@ -228,8 +233,10 @@ namespace Razel
 
 #define RZ_PROFILE_BEGIN_SESSION(name, filepath) ::Razel::Instrumentor::Get().BeginSession(name, filepath)	// 开始分析会话
 #define RZ_PROFILE_END_SESSION() ::Razel::Instrumentor::Get().EndSession()									// 结束会话
-#define HZ_PROFILE_SCOPE(name) constexpr auto fixedName = ::Razel::InstrumentorUtils::CleanupOutputString(name, "__cdecl ");\
-									::Razel::InstrumentationTimer timer##__LINE__(fixedName.Data)
+#define RZ_PROFILE_SCOPE_LINE2(name, line) constexpr auto fixedName##line = ::Razel::InstrumentorUtils::CleanupOutputString(name, "__cdecl ");\
+											   ::Razel::InstrumentationTimer timer##line(fixedName##line.Data)
+#define RZ_PROFILE_SCOPE_LINE(name, line) RZ_PROFILE_SCOPE_LINE2(name, line)
+#define RZ_PROFILE_SCOPE(name) RZ_PROFILE_SCOPE_LINE(name, __LINE__)
 #define RZ_PROFILE_FUNCTION() RZ_PROFILE_SCOPE(__FUNCSIG__)													// 自动获取当前函数名进行分析
 #else
 #define RZ_PROFILE_BEGIN_SESSION(name, filepath)
