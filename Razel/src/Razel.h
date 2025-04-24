@@ -15,6 +15,7 @@
 
 
 #include "Razel/Scene/Scene.h"
+#include "Razel/Scene/Entity.h"
 #include "Razel/Scene/Components.h"
 
 #include "Razel/Core/Input.h"

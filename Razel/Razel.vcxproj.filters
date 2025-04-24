@@ -170,6 +170,7 @@
     </ClInclude>
     <ClInclude Include="src\Razel\Scene\Scene.h" />
     <ClInclude Include="src\Razel\Scene\Components.h" />
+    <ClInclude Include="src\Razel\Scene\Entity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -266,5 +267,6 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Razel\Scene\Scene.cpp" />
+    <ClCompile Include="src\Razel\Scene\Entity.cpp" />
   </ItemGroup>
 </Project>

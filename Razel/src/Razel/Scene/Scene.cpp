@@ -1,5 +1,6 @@
 #include "rzpch.h"
 #include "Scene.h"
+#include "Entity.h"
 
 #include "Components.h"
 #include "Razel/Renderer/Renderer2D.h"
@@ -47,9 +48,13 @@ namespace Razel
 	{
 	}
 
-	entt::entity Scene::CreateEntity()
+	Entity Scene::CreateEntity(const std::string& name)
 	{
-		return m_Registry.create();
+		Entity entity = { m_Registry.create(),this };
+		entity.AddComponent<TransformComponent>();
+		auto& tag = entity.AddComponent<TagComponent>(name);
+		tag.Tag = name.empty() ? "Entity" : name;
+		return entity;
 	}
 
 	void Scene::OnUpdate(Timestep ts)
