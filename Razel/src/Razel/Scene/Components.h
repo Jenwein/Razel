@@ -1,7 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include "Razel/Renderer/Camera.h"
+#include "SceneCamera.h"
 namespace Razel
 {
 	struct TagComponent
@@ -41,16 +41,14 @@ namespace Razel
 
 	struct CameraComponent
 	{
-		Razel::Camera Camera;
+		Razel::SceneCamera Camera;
 
 		// 是否是主相机
-		bool Primary = true;	//TODO: 考虑移动到Scene中
+		bool Primary = true;			//TODO: 考虑移动到Scene中
+		bool FixedAspectRadio = false;	//固定宽高比
+
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
-		CameraComponent(const glm::mat4& projection)
-			:Camera(projection)
-		{
-		}
 	};
 }

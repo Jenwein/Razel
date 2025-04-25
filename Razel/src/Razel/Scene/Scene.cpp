@@ -93,4 +93,21 @@ namespace Razel
 			Renderer2D::EndScene();
 		}
 	}
+
+	void Scene::OnViewportResize(uint32_t width, uint32_t height)
+	{
+		m_ViewportWidth = width;
+		m_ViewportHeight = height;
+
+		// 调整非固定宽高比相机
+		auto view = m_Registry.view<CameraComponent>();
+		for (auto entity : view)
+		{
+			auto& cameraComponent = view.get<CameraComponent>(entity);
+			if (!cameraComponent.FixedAspectRadio)	//如果是非固定宽高比相机
+			{
+				cameraComponent.Camera.SetViewportSize(width, height);
+			}
+		}
+	}
 }

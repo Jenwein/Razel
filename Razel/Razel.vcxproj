@@ -150,6 +150,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Razel\Scene\SceneCamera.h" />
     <ClInclude Include="src\Razel\Renderer\Camera.h" />
     <ClInclude Include="src\Razel\Scene\Entity.h" />
     <ClInclude Include="src\Razel\Scene\Components.h" />
@@ -199,6 +200,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Razel\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Razel\Scene\Entity.cpp" />
     <ClCompile Include="src\Razel\Scene\Scene.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
