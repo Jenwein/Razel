@@ -150,6 +150,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Razel\Renderer\Camera.h" />
     <ClInclude Include="src\Razel\Scene\Entity.h" />
     <ClInclude Include="src\Razel\Scene\Components.h" />
     <ClInclude Include="src\Razel\Scene\Scene.h" />

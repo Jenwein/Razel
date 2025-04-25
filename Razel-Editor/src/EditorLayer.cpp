@@ -26,6 +26,16 @@ namespace Razel {
 		auto square = m_ActiveScene->CreateEntity("Green Square");
 		square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
 		m_SquareEntity = square;
+
+		// 创建主相机实体，添加相机组件
+		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
+		m_CameraEntity.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+		
+		// 创建第二个相机实体，添加并获取相机组件，设置该相机的相机组件数据，表示不是主相机（default = true）
+		m_SecondCamera = m_ActiveScene->CreateEntity("Clip-space Entity");
+		auto& cc = m_SecondCamera.AddComponent<CameraComponent>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
+		cc.Primary = false;
+
 	}
 
 	void EditorLayer::OnDetach()
@@ -66,7 +76,7 @@ namespace Razel {
 			rotation += ts * 50.0f;
 
 			RZ_PROFILE_SCOPE("Renderer Draw");
-			Renderer2D::BeginScene(m_CameraController.GetCamera());
+			//Renderer2D::BeginScene(m_CameraController.GetCamera());
 
 			m_ActiveScene->OnUpdate(ts);
 
@@ -75,7 +85,7 @@ namespace Razel {
 			//Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, m_SquareColor);
 			//Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 20.0f, 20.0f }, m_CheckerboardTexture, 10.0f);
 			//Renderer2D::DrawRotatedQuad({ -2.0f, 0.0f, 0.0f }, { 1.0f, 1.0f }, rotation, m_CheckerboardTexture, 20.0f);
-			Renderer2D::EndScene();
+			//Renderer2D::EndScene();
 
 			//Renderer2D::BeginScene(m_CameraController.GetCamera());
 			//for (float y = -5.0f; y < 5.0f; y += 0.5f)
@@ -183,6 +193,12 @@ namespace Razel {
 			ImGui::Separator();
 		}
 
+		ImGui::DragFloat3("Camera Transform", glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]));
+		if (ImGui::Checkbox("Camera A", &m_PrimaryCamera))
+		{
+			m_CameraEntity.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
+			m_SecondCamera.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
+		}
 		
 		ImGui::End();
 
