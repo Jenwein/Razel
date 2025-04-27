@@ -9,11 +9,11 @@ namespace Razel
         SceneCamera();
         virtual ~SceneCamera() = default;
 
-        // 设置正交参数
+        // 设置正交投影参数
         void SetOrthographic(float size, float nearClip, float farClip);
         // 设置视口尺寸
         void SetViewportSize(uint32_t width, uint32_t height);
-        // 获取正交尺寸
+        // 获取/设置 正交投影尺寸
         float GetOrthographicSize()const { return m_OrthographicSize; }
         void SetOrthographicSize(float size) { m_OrthographicSize = size;RecalculateProjection(); }
     private:

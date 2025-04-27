@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include "SceneCamera.h"
+#include "ScriptableEntity.h"
 namespace Razel
 {
 	struct TagComponent
@@ -50,5 +51,29 @@ namespace Razel
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
+	};
+
+	struct NativeScriptComponent
+	{
+		ScriptableEntity* Instance = nullptr;
+
+		std::function<void()> InstantiateFunc;		// 实例化
+		std::function<void()> DestroyInstanceFunc;	// 销毁实例
+
+		std::function<void(ScriptableEntity*)>OnCreateFunc;	
+		std::function<void(ScriptableEntity*)>OnDestroyFunc;
+		std::function<void(ScriptableEntity*,Timestep)>OnUpdateFunc;
+
+		template<typename T>
+		void Bind()
+		{
+			InstantiateFunc = [&]() {Instance = new T();};
+			DestroyInstanceFunc = [&]() {delete (T*)Instance; Instance = nullptr;};
+
+			OnCreateFunc = [](ScriptableEntity* instance) { ((T*)instance)->OnCreate();};
+			OnDestroyFunc = [](ScriptableEntity* instance) { ((T*)instance)->OnDestroy();};
+			OnUpdateFunc = [](ScriptableEntity* instance,Timestep ts) { ((T*)instance)->OnUpdate(ts);};
+		}
+
 	};
 }

@@ -196,6 +196,7 @@
     <ClInclude Include="src\Razel\Renderer\Shader.h" />
     <ClInclude Include="src\Razel\Renderer\Texture.h" />
     <ClInclude Include="src\Razel\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Razel\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\rzpch.h" />
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>

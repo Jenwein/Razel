@@ -7,7 +7,7 @@
 namespace Razel {
 
 	EditorLayer::EditorLayer()
-		: Layer("EditorLayer"), m_CameraController(1280.0f / 720.0f), m_SquareColor({ 0.2f, 0.3f, 0.8f, 1.0f }),m_ViewportFocused(false),m_ViewportHovered(false)
+		: Layer("EditorLayer"), m_CameraController(1280.0f / 720.0f), m_SquareColor({ 0.2f, 0.3f, 0.8f, 1.0f }), m_ViewportFocused(false), m_ViewportHovered(false)
 	{
 	}
 
@@ -30,12 +30,34 @@ namespace Razel {
 		// 创建主相机实体，添加相机组件
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
 		m_CameraEntity.AddComponent<CameraComponent>();
-		
+
 		// 创建第二个相机实体，添加并获取相机组件，设置该相机的相机组件数据，表示不是主相机（default = true）
 		m_SecondCamera = m_ActiveScene->CreateEntity("Clip-space Entity");
 		auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
 		cc.Primary = false;
 
+		class CameraController :public ScriptableEntity
+		{
+		public:
+			void OnCreate() {}
+			void OnDestroy() {}
+			void OnUpdate(Timestep ts)
+			{
+				auto& transform = GetComponent<TransformComponent>().Transform;
+				float speed = 5.0f;
+
+				if (Input::IsKeyPressed(KeyCode::A))
+					transform[3][0] -= speed * ts;
+				if (Input::IsKeyPressed(KeyCode::D))
+					transform[3][0] += speed * ts;
+				if (Input::IsKeyPressed(KeyCode::W))
+					transform[3][1] += speed * ts;
+				if (Input::IsKeyPressed(KeyCode::S))
+					transform[3][1] -= speed * ts;
+			}
+		};
+
+		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 	}
 
 	void EditorLayer::OnDetach()

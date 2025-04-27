@@ -173,6 +173,7 @@
     <ClInclude Include="src\Razel\Scene\Entity.h" />
     <ClInclude Include="src\Razel\Renderer\Camera.h" />
     <ClInclude Include="src\Razel\Scene\SceneCamera.h" />
+    <ClInclude Include="src\Razel\Scene\ScriptableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">

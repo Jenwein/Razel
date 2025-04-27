@@ -16,13 +16,13 @@
 
 #include "Razel/Scene/Scene.h"
 #include "Razel/Scene/Entity.h"
+#include "Razel/Scene/ScriptableEntity.h"
 #include "Razel/Scene/Components.h"
 
 #include "Razel/Core/Input.h"
 #include "Razel/Core/KeyCodes.h"
 #include "Razel/Core/MouseButtonCodes.h"
 #include "Razel/Core/MouseCodes.h"
-#include "Razel/Renderer/Framebuffer.h"
 
 //--Renderer---------------------
 #include "Razel/Renderer/Renderer.h"
