@@ -98,7 +98,8 @@ namespace Razel
 		s_Data.TextureShader = Shader::Create("assets/shaders/Texture.glsl");
 		s_Data.TextureShader->Bind();
 		s_Data.TextureShader->SetIntArray("u_Textures", samplers,s_Data.MaxTextureSlots);
-		s_Data.TextureSlots[0] = s_Data.WhiteTexture;				// 白色纹理设为第一个slot
+		// 设置第一个纹理槽为0
+		s_Data.TextureSlots[0] = s_Data.WhiteTexture;				
 
 		s_Data.QuadVertexPositions[0] = { -0.5, -0.5, 0.0f, 1.0f };
 		s_Data.QuadVertexPositions[1] = {  0.5, -0.5, 0.0f, 1.0f };
@@ -295,7 +296,7 @@ namespace Razel
 		// 检查纹理是否已经存在于s_Data.TextureSlots中
 		for (uint32_t i = 1; i < s_Data.TextureSlotIndex;++i)
 		{
-			if (s_Data.TextureSlots[i].get() == texture.get())
+			if (*s_Data.TextureSlots[i] == *texture)
 			{
 				// 如果已存在,则纹理索引指向该纹理位置
 				textureIndex = (float)i;

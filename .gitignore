@@ -2,8 +2,16 @@
 .vs/
 bin/
 bin-int/
-# Files
-*.log
-*.user
-SandBox/imgui.ini
+
+# Binaries
+**/bin/
+!vendor/premake/bin/
+bin-int/
+
+# Razel files
+@@ -11,4 +11,4 @@ bin-int/
+**.sln
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
 SandBox/RazelProfile*

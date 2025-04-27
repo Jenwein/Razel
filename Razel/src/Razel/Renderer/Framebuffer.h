@@ -6,7 +6,7 @@ namespace Razel
 	// 帧缓冲区规范
 	struct FramebufferSpecification
 	{
-		uint32_t Width, Height;
+		uint32_t Width = 0, Height = 0;
 		//FramebufferFormat Format =	//格式
 		uint32_t Samples = 1;
 

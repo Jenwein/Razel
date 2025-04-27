@@ -5,10 +5,10 @@
 namespace Razel {
 
 	// 鼠标移动事件类
-	class RAZEL_API MouseMovedEvent:public Event
+	class MouseMovedEvent:public Event
 	{
 	public:
-		MouseMovedEvent(float x,float y)
+		MouseMovedEvent(const float x,const float y)
 			:m_MouseX(x),m_MouseY(y)
 		{}
 
@@ -29,10 +29,10 @@ namespace Razel {
 	};
 
 	// 鼠标滚轮事件类
-	class RAZEL_API MouseScrolledEvent :public Event
+	class MouseScrolledEvent :public Event
 	{
 	public:
-		MouseScrolledEvent(float xOffset, float yOffset)
+		MouseScrolledEvent(const float xOffset, const float yOffset)
 			:m_XOffset(xOffset), m_YOffset(yOffset)
 		{}
 
@@ -52,26 +52,26 @@ namespace Razel {
 	};
 
 	// 鼠标按键事件类
-	class RAZEL_API MouseButtonEvent :public Event
+	class MouseButtonEvent :public Event
 	{
 	public:
-		inline MouseCode GetMouseButton()const { return m_Button; }
+		MouseCode GetMouseButton()const { return m_Button; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryMouseButton| EventCategoryInput);
 
 
 	protected:
-		MouseButtonEvent(MouseCode button)
+		MouseButtonEvent(const MouseCode button)
 			:m_Button(button){}
 
 		MouseCode m_Button;
 	};
 
 	//鼠标按键按下事件类
-	class RAZEL_API MouseButtonPressedEvent :public MouseButtonEvent
+	class MouseButtonPressedEvent :public MouseButtonEvent
 	{
 	public:
-		MouseButtonPressedEvent(MouseCode button)
+		MouseButtonPressedEvent(const MouseCode button)
 			:MouseButtonEvent(button){}
 
 		std::string ToString() const override
@@ -85,10 +85,10 @@ namespace Razel {
 	};
 
 	// 鼠标按键释放事件类
-	class RAZEL_API MouseButtonReleasedEvent :public MouseButtonEvent
+	class MouseButtonReleasedEvent :public MouseButtonEvent
 	{
 	public:
-		MouseButtonReleasedEvent(MouseCode button)
+		MouseButtonReleasedEvent(const MouseCode button)
 			:MouseButtonEvent(button) {}
 
 		std::string ToString() const override

@@ -23,6 +23,8 @@ namespace Razel
 		RZ_CORE_INFO("  Vendor: {0}",(const char*)glGetString(GL_VENDOR));
 		RZ_CORE_INFO("  Renderer: {0}",(const char*)glGetString(GL_RENDERER));
 		RZ_CORE_INFO("  Version: {0}",(const char*)glGetString(GL_VERSION));
+
+		RZ_CORE_ASSERT(GLVersion.major > 4 || (GLVersion.major == 4 && GLVersion.minor >= 5), "Razel requires at least OpenGL version 4.5!");
 	}
 
 	void OpenGLContext::SwapBuffers()

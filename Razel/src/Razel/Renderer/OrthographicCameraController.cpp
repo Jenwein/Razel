@@ -17,21 +17,21 @@ namespace Razel
 	{
 		RZ_PROFILE_FUNCTION();
 
-		if (Razel::Input::IsKeyPressed(RZ_KEY_A))
+		if (Razel::Input::IsKeyPressed(Key::A))
 			m_CameraPosition.x -= m_CameraTranslationSpeed * ts;
-		else if (Razel::Input::IsKeyPressed(RZ_KEY_D))
+		else if (Razel::Input::IsKeyPressed(Key::D))
 			m_CameraPosition.x += m_CameraTranslationSpeed * ts;
 
-		if (Razel::Input::IsKeyPressed(RZ_KEY_W))
+		if (Razel::Input::IsKeyPressed(Key::W))
 			m_CameraPosition.y += m_CameraTranslationSpeed * ts;
-		else if (Razel::Input::IsKeyPressed(RZ_KEY_S))
+		else if (Razel::Input::IsKeyPressed(Key::S))
 			m_CameraPosition.y -= m_CameraTranslationSpeed * ts;
 
 		if (m_Rotation)
 		{
-			if (Razel::Input::IsKeyPressed(RZ_KEY_Q))
+			if (Razel::Input::IsKeyPressed(Key::Q))
 				m_CameraRotation += m_CameraRotationSpeed * ts;
-			if (Razel::Input::IsKeyPressed(RZ_KEY_E))
+			if (Razel::Input::IsKeyPressed(Key::E))
 				m_CameraRotation -= m_CameraRotationSpeed * ts;
 		}
 

@@ -150,11 +150,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Razel\Scene\SceneCamera.h" />
-    <ClInclude Include="src\Razel\Renderer\Camera.h" />
-    <ClInclude Include="src\Razel\Scene\Entity.h" />
-    <ClInclude Include="src\Razel\Scene\Components.h" />
-    <ClInclude Include="src\Razel\Scene\Scene.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
@@ -175,6 +170,7 @@
     <ClInclude Include="src\Razel\Core\Log.h" />
     <ClInclude Include="src\Razel\Core\MouseButtonCodes.h" />
     <ClInclude Include="src\Razel\Core\MouseCodes.h" />
+    <ClInclude Include="src\Razel\Core\PlatformDetection.h" />
     <ClInclude Include="src\Razel\Core\Timestep.h" />
     <ClInclude Include="src\Razel\Core\Window.h" />
     <ClInclude Include="src\Razel\Debug\Instrumentor.h" />
@@ -184,6 +180,7 @@
     <ClInclude Include="src\Razel\Events\MouseEvent.h" />
     <ClInclude Include="src\Razel\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Razel\Renderer\Buffer.h" />
+    <ClInclude Include="src\Razel\Renderer\Camera.h" />
     <ClInclude Include="src\Razel\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Razel\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Razel\Renderer\OrthographicCamera.h" />
@@ -196,14 +193,15 @@
     <ClInclude Include="src\Razel\Renderer\Shader.h" />
     <ClInclude Include="src\Razel\Renderer\Texture.h" />
     <ClInclude Include="src\Razel\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Razel\Scene\Components.h" />
+    <ClInclude Include="src\Razel\Scene\Entity.h" />
+    <ClInclude Include="src\Razel\Scene\Scene.h" />
+    <ClInclude Include="src\Razel\Scene\SceneCamera.h" />
     <ClInclude Include="src\Razel\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\rzpch.h" />
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Razel\Scene\SceneCamera.cpp" />
-    <ClCompile Include="src\Razel\Scene\Entity.cpp" />
-    <ClCompile Include="src\Razel\Scene\Scene.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />
@@ -233,6 +231,9 @@
     <ClCompile Include="src\Razel\Renderer\Shader.cpp" />
     <ClCompile Include="src\Razel\Renderer\Texture.cpp" />
     <ClCompile Include="src\Razel\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Razel\Scene\Entity.cpp" />
+    <ClCompile Include="src\Razel\Scene\Scene.cpp" />
+    <ClCompile Include="src\Razel\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\rzpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
