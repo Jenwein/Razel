@@ -41,6 +41,13 @@ namespace Razel
 			return m_EntityHandle != entt::null;
 		}
 
+		operator uint32_t()const 
+		{
+			return (uint32_t)m_EntityHandle;
+		}
+		//bool operator==(const Entity& other) const
+
+
 	private:
 		Scene* m_Scene = nullptr;
 		entt::entity m_EntityHandle = entt::null;
