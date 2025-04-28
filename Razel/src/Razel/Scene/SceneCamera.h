@@ -12,8 +12,8 @@ namespace Razel
         virtual ~SceneCamera() = default;
 
         // 设置 正交/透视 投影参数
+		void SetPerspective(float verticalFOV, float nearClip, float farClip);
         void SetOrthographic(float size, float nearClip, float farClip);
-        void SetPerspective(float verticalFOV, float nearClip, float farClip);
 
         // 设置视口尺寸
         void SetViewportSize(uint32_t width, uint32_t height);
