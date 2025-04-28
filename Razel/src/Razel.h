@@ -7,6 +7,7 @@
 #include "Razel/Core/Layer.h"
 
 #include "Razel/Core/Log.h"
+#include "Razel/Core/Assert.h"
 #include "Razel/Debug/Instrumentor.h"
 
 #include "Razel/ImGui/ImGuiLayer.h"

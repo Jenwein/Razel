@@ -57,7 +57,7 @@ namespace Razel {
 	public:
 		MouseCode GetMouseButton()const { return m_Button; }
 
-		EVENT_CLASS_CATEGORY(EventCategoryMouseButton| EventCategoryInput);
+		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput | EventCategoryMouseButton);
 
 
 	protected:

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Razel/Core/Base.h"
-#include "Razel/Core/Log.h"
 #include "Razel/Scene/Scene.h"
 #include "Razel/Scene/Entity.h"
 

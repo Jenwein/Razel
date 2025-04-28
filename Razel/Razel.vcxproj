@@ -161,6 +161,7 @@
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Razel.h" />
     <ClInclude Include="src\Razel\Core\Application.h" />
+    <ClInclude Include="src\Razel\Core\Assert.h" />
     <ClInclude Include="src\Razel\Core\Base.h" />
     <ClInclude Include="src\Razel\Core\EntryPoint.h" />
     <ClInclude Include="src\Razel\Core\Input.h" />

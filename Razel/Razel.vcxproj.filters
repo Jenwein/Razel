@@ -75,6 +75,9 @@
     <ClInclude Include="src\Razel\Core\Application.h">
       <Filter>src\Razel\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Razel\Core\Assert.h">
+      <Filter>src\Razel\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Razel\Core\Base.h">
       <Filter>src\Razel\Core</Filter>
     </ClInclude>

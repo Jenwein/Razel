@@ -45,9 +45,9 @@ namespace Razel
 		// °´Ãû³Æ¼ìË÷shader
 		Ref<Shader> Get(const std::string& name);
 
-		bool Exist(const std::string& name) const;
+		bool Exists(const std::string& name) const;
 	private:
-		std::unordered_map<std::string, Ref<Shader>>m_Shader;
+		std::unordered_map<std::string, Ref<Shader>>m_Shaders;
 	};
 }
 

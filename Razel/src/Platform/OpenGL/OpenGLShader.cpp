@@ -82,7 +82,7 @@ namespace Razel
 		}
 		else
 		{
-			RZ_CORE_ASSERT(false, "Could not open file '{0}'", filepath);
+			RZ_CORE_ERROR("Could not open file '{0}'", filepath);
 		}
 		return result;
 	}
@@ -102,8 +102,7 @@ namespace Razel
 			RZ_CORE_ASSERT(eol != std::string::npos, "Syntax error");	
 			size_t begin = pos + typeTokenLength + 1;					// 从typeToken后开始
 			std::string type = source.substr(begin, eol - begin);
-			RZ_CORE_ASSERT(ShaderTypeFromString(type), "Invalid shader type({0}) specified",type);
-
+			RZ_CORE_ASSERT(ShaderTypeFromString(type), "Invalid shader type specified");
 			size_t nextLinePos = source.find_first_not_of("\r\n", eol);
 			pos = source.find(typeToken, nextLinePos);					// 从下一行开始查找typeToken
 			shaderSources[ShaderTypeFromString(type)] 
@@ -154,7 +153,7 @@ namespace Razel
 
 				// 显示失败信息
 				RZ_CORE_ERROR("{0}", infoLog.data());
-				RZ_CORE_ASSERT(false, "{0} shader compilation failure!",type);
+				RZ_CORE_ASSERT(false, "Shader compilation failure!");
 				break;
 			}
 

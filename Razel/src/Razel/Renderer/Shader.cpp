@@ -42,8 +42,8 @@ namespace Razel
 
 	void ShaderLibrary::Add(const std::string& name, const Ref<Shader>& shader)
 	{
-		RZ_CORE_ASSERT(!Exist(name), "Shader alread exists!");
-		m_Shader[name] = shader;
+		RZ_CORE_ASSERT(!Exists(name), "Shader alread exists!");
+		m_Shaders[name] = shader;
 	}
 
 	void ShaderLibrary::Add(const Ref<Shader>& shader)
@@ -68,13 +68,13 @@ namespace Razel
 
 	Razel::Ref<Razel::Shader> ShaderLibrary::Get(const std::string& name)
 	{
-		RZ_CORE_ASSERT(Exist(name), "Shader {0} not found", name);
-		return m_Shader[name];
+		RZ_CORE_ASSERT(Exists(name), "Shader not found!");
+		return m_Shaders[name];
 	}
 
-	bool ShaderLibrary::Exist(const std::string& name) const
+	bool ShaderLibrary::Exists(const std::string& name) const
 	{
-		return m_Shader.find(name) != m_Shader.end();
+		return m_Shaders.find(name) != m_Shaders.end();
 	}
 
 }

@@ -17,13 +17,8 @@
 	#define RZ_DEBUGBREAK()
 #endif
 
-#ifdef RZ_ENABLE_ASSERTS
-	#define RZ_ASSERT(x, ...) { if(!(x)) { RZ_ERROR("Assertion Failed: {0}", __VA_ARGS__); RZ_DEBUGBREAK(); } }
-	#define RZ_CORE_ASSERT(x, ...) { if(!(x)) { RZ_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); RZ_DEBUGBREAK(); } }
-#else
-	#define RZ_ASSERT(x, ...)
-	#define RZ_CORE_ASSERT(x, ...)
-#endif
+#define RZ_EXPAND_MACRO(x) x
+#define RZ_STRINGIFY_MACRO(x) #x
 
 //#define  BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
 #define BIND_EVENT_FN(fn) [this](auto&&... args) -> decltype(auto) { return this->fn(std::forward<decltype(args)>(args)...); }
@@ -50,3 +45,6 @@ namespace Razel
 	}
 }
 
+
+#include "Razel/Core/Log.h"
+#include "Razel/Core/Assert.h"
