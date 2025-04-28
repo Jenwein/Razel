@@ -45,8 +45,15 @@ namespace Razel
 		{
 			return (uint32_t)m_EntityHandle;
 		}
-		//bool operator==(const Entity& other) const
+		bool operator==(const Entity& other) const
+		{
+			return m_Scene == other.m_Scene && m_EntityHandle == other.m_EntityHandle;
+		}
 
+		bool operator!=(const Entity& other) const
+		{
+			return !(*this == other);
+		}
 
 	private:
 		Scene* m_Scene = nullptr;
