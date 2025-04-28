@@ -147,9 +147,6 @@
     <ClInclude Include="src\Razel\Renderer\OrthographicCameraController.h">
       <Filter>src\Razel\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Razel\Renderer\PerspectiveCamera.h">
-      <Filter>src\Razel\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="src\Razel\Renderer\RenderCommand.h">
       <Filter>src\Razel\Renderer</Filter>
     </ClInclude>
@@ -255,9 +252,6 @@
       <Filter>src\Razel\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Razel\Renderer\OrthographicCameraController.cpp">
-      <Filter>src\Razel\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Razel\Renderer\PerspectiveCamera.cpp">
       <Filter>src\Razel\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Razel\Renderer\RenderCommand.cpp">

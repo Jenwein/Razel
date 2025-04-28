@@ -85,7 +85,7 @@ namespace Razel
 		for (auto entity : view)
 		{
 			auto& cameraComponent = view.get<CameraComponent>(entity);
-			if (!cameraComponent.FixedAspectRadio)	//如果是非固定宽高比相机
+			if (!cameraComponent.FixedAspectRatio)	//如果是非固定宽高比相机
 			{
 				cameraComponent.Camera.SetViewportSize(width, height);
 			}

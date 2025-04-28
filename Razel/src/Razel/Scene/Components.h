@@ -46,7 +46,7 @@ namespace Razel
 
 		// 是否是主相机
 		bool Primary = true;			//TODO: 考虑移动到Scene中
-		bool FixedAspectRadio = false;	//固定宽高比
+		bool FixedAspectRatio = false;	//固定宽高比
 
 
 		CameraComponent() = default;
