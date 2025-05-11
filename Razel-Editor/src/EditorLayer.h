@@ -38,8 +38,8 @@ namespace Razel {
 		// Panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
 
-		bool m_ViewportFocused;
-		bool m_ViewportHovered;
+		bool m_ViewportFocused = false;
+		bool m_ViewportHovered = false;
 	};
 
 }
