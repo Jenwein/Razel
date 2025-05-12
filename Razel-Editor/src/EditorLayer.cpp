@@ -31,11 +31,11 @@ namespace Razel {
 
 		m_SquareEntity = square;
 
-		// ´´½¨Ö÷Ïà»úÊµÌå£¬Ìí¼ÓÏà»ú×é¼ş
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½å£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera A");
 		m_CameraEntity.AddComponent<CameraComponent>();
 
-		// ´´½¨µÚ¶ş¸öÏà»úÊµÌå£¬Ìí¼Ó²¢»ñÈ¡Ïà»ú×é¼ş£¬ÉèÖÃ¸ÃÏà»úµÄÏà»ú×é¼şÊı¾İ£¬±íÊ¾²»ÊÇÖ÷Ïà»ú£¨default = true£©
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½å£¬ï¿½ï¿½ï¿½Ó²ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ£ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½default = trueï¿½ï¿½
 		m_SecondCamera = m_ActiveScene->CreateEntity("Camera B");
 		auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
 		cc.Primary = false;
@@ -79,8 +79,8 @@ namespace Razel {
 	{
 		RZ_PROFILE_FUNCTION();
 		
-		// µ±Ö¡»º³å´óĞ¡ÓëÊÓ¿Ú´óĞ¡²»Í¬Ê±,ÇÒÊÓ¿Ú´óĞ¡²»Îª0
-		// ÒòÎªµ±Ç°µÄÁ÷³ÌÖĞ,ÏÈOnUpdate,äÖÈ¾,Ìî³äÖ¡»º³å,½â°ó,È»ºóÔÚOnImGuiRendererÖĞÈ¥µ÷ÕûÊÓ¿Ú´óĞ¡,´ËÊ±»áµ¼ÖÂÎÆÀíÎª¿Õ,ËùÒÔÓĞÒ»¸öºÚÉ«µÄÉÁË¸
+		// ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¡ï¿½ï¿½ï¿½Ó¿Ú´ï¿½Ğ¡ï¿½ï¿½Í¬Ê±,ï¿½ï¿½ï¿½Ó¿Ú´ï¿½Ğ¡ï¿½ï¿½Îª0
+		// ï¿½ï¿½Îªï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½OnUpdate,ï¿½ï¿½È¾,ï¿½ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½,È»ï¿½ï¿½ï¿½ï¿½OnImGuiRendererï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿Ú´ï¿½Ğ¡,ï¿½ï¿½Ê±ï¿½áµ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½Ë¸
 		if (FramebufferSpecification spec = m_Framebuffer->GetSpecification();
 			m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized framebuffer is invalid
 			(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
@@ -140,9 +140,9 @@ namespace Razel {
 
 		// Note: Switch this to true to enable dockspace
 
-		static bool dockspaceOpen = true;						// Í£¿¿¿Õ¼ä¿ªÆô
-		static bool opt_fullscreen_persistant = true;			// È«ÆÁ³Ö¾Ã»¯
-		bool opt_fullscreen = opt_fullscreen_persistant;		// È«ÆÁ
+		static bool dockspaceOpen = true;						// Í£ï¿½ï¿½ï¿½Õ¼ä¿ªï¿½ï¿½
+		static bool opt_fullscreen_persistant = true;			// È«ï¿½ï¿½ï¿½Ö¾Ã»ï¿½
+		bool opt_fullscreen = opt_fullscreen_persistant;		// È«ï¿½ï¿½
 		static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 
 		// We are using the ImGuiWindowFlags_NoDocking flag to make the parent window not dockable into,
@@ -180,6 +180,11 @@ namespace Razel {
 
 		// Submit the DockSpace
 		ImGuiIO& io = ImGui::GetIO();
+
+		ImGuiStyle& style = ImGui::GetStyle();
+		float minWinSizeX = style.WindowMinSize.x;
+		style.WindowMinSize.x = 370.0f;
+
 		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 		{
 			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
@@ -194,6 +199,8 @@ namespace Razel {
 			if (ImGui::SmallButton("click here"))
 				io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 		}
+
+		style.WindowMinSize.x = minWinSizeX;
 
 		if (ImGui::BeginMenuBar())
 		{
@@ -225,9 +232,9 @@ namespace Razel {
 		ImGui::Begin("Viewport");
 		m_ViewportFocused = ImGui::IsWindowFocused();
 		m_ViewportHovered = ImGui::IsWindowHovered();
-		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
+		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused && !m_ViewportHovered);
 
-		// »ñÈ¡µ±Ç° ImGui ´°¿Ú»òÃæ°åÖĞ ¿ÉÓÃµÄÄÚÈİÇøÓòµÄ´óĞ¡
+		// È¡ï¿½ï¿½Ç° ImGui ï¿½ï¿½ï¿½Ú»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½Ğ¡
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
@@ -241,7 +248,12 @@ namespace Razel {
 
 	void EditorLayer::OnEvent(Event& e)
 	{
-		m_CameraController.OnEvent(e);
+		// åªæœ‰å½“è§†å£èšç„¦å¹¶ä¸”é¼ æ ‡åœ¨è§†å£ä¸Šæ—¶ï¼Œæ‰è®©æ‘„åƒæœºæ§åˆ¶å™¨å¤„ç†äº‹ä»¶
+		// è¿™æ ·å¯ä»¥ä¿è¯UIäº¤äº’ä¸ä¼šè¢«æ‘„åƒæœºæ§åˆ¶å™¨å¹²æ‰°
+		if (m_ViewportFocused && m_ViewportHovered)
+		{
+			m_CameraController.OnEvent(e);
+		}
 	}
 
 }

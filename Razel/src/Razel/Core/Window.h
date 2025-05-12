@@ -15,8 +15,8 @@ namespace Razel
 		unsigned int Height;	// ¸ß¶È
 
 		WindowProps(const std::string& title = "Razel Engine",
-					unsigned int width = 1280,
-					unsigned int height = 720)
+					unsigned int width = 1600,
+					unsigned int height = 900)
 			:Title(title), Width(width), Height(height)
 		{}
 	};
