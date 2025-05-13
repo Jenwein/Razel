@@ -13,3 +13,7 @@
 	path = Razel/vendor/glm
 	url = https://github.com/g-truc/glm
 	branch = master
+[submodule "Razel/vendor/yaml-cpp"]
+	path = Razel/vendor/yaml-cpp
+	url = https://github.com/jenwein/yaml-cpp
+	branch = master

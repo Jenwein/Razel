@@ -31,7 +31,7 @@ workspace "Razel"
 	IncludeDir["glm"] = "%{wks.location}/Razel/vendor/glm"
 	IncludeDir["stb_image"] = "%{wks.location}/Razel/vendor/stb_image"
 	IncludeDir["entt"] = "%{wks.location}/Razel/vendor/entt/include"
-
+	IncludeDir["yaml_cpp"] = "%{wks.location}/Razel/vendor/yaml-cpp/include"
 
 	filter "action:vs*"
         buildoptions { "/utf-8" , "/wd4828" }
@@ -43,9 +43,9 @@ group "Dependencies"
 	include "Razel/vendor/GLFW"
 	include "Razel/vendor/Glad"
 	include "Razel/vendor/imgui"
+	include "Razel/vendor/yaml-cpp"
 
 group ""
-
 
 include "Razel"
 include "Sandbox"
