@@ -2,13 +2,13 @@ Scene: Untitled
 Entities:
   - Entity: 2
     TagComponent:
-      Tag: SQ2
+      Tag: SQ
     TransformComponent:
       Translation: [0, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
-      Color: [1, 0.4627451, 1, 1]
+      Color: [1, 1, 1, 1]
   - Entity: 1
     TagComponent:
       Tag: CA
@@ -29,10 +29,10 @@ Entities:
       FixedAspectRatio: false
   - Entity: 0
     TagComponent:
-      Tag: SQ
+      Tag: SQ2
     TransformComponent:
       Translation: [0, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
-      Color: [1, 1, 1, 1]
+      Color: [1, 0.4627451, 1, 1]

@@ -199,6 +199,7 @@
     <ClInclude Include="src\Razel\Scene\SceneCamera.h" />
     <ClInclude Include="src\Razel\Scene\SceneSerializer.h" />
     <ClInclude Include="src\Razel\Scene\ScriptableEntity.h" />
+    <ClInclude Include="src\Razel\Utils\PlatformUtils.h" />
     <ClInclude Include="src\rzpch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
@@ -629,6 +630,7 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Razel\Core\Application.cpp" />
     <ClCompile Include="src\Razel\Core\Layer.cpp" />

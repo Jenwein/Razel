@@ -92,7 +92,7 @@ namespace Razel
 	static void SerializerEntity(YAML::Emitter& out, Entity entity)
 	{
 		out << YAML::BeginMap;	// Entity
-		out << YAML::Key << "Entity" << YAML::Value << (uint64_t)(uint32_t)entity;	//TODO:DELETE
+		out << YAML::Key << "Entity" << YAML::Value << (uint64_t)(uint32_t)entity;	//TODO
 		
 
 		if (entity.HasComponent<TagComponent>())

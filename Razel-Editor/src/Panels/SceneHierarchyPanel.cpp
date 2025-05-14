@@ -17,6 +17,7 @@ namespace Razel
 	void SceneHierarchyPanel::SetContext(const Ref<Scene>& context)
 	{
 		m_Context = context;
+		m_SelectionContext = {};
 	}
 
 	void SceneHierarchyPanel::OnImGuiRender()
@@ -313,6 +314,7 @@ namespace Razel
 
 		// 如果有Transform组件，绘制相关内容
 		DrawComponent<SpriteRendererComponent>("SpriteRenderer", entity, [](auto& component) {
+			
 			ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
 
 		});
