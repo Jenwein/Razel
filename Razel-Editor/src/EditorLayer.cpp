@@ -4,6 +4,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Razel/Scene/SceneSerializer.h"
+
 namespace Razel {
 
 	EditorLayer::EditorLayer()
@@ -23,6 +25,11 @@ namespace Razel {
 		m_Framebuffer = Framebuffer::Create(fbSpec);
 
 		m_ActiveScene = CreateRef<Scene>();
+
+#if 0
+
+
+		// Entity
 		auto square = m_ActiveScene->CreateEntity("Green Square");
 		square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
 		
@@ -31,11 +38,11 @@ namespace Razel {
 
 		m_SquareEntity = square;
 
-		// ���������ʵ�壬����������
+		// 创建主相机实体，添加相机组件
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera A");
 		m_CameraEntity.AddComponent<CameraComponent>();
 
-		// �����ڶ������ʵ�壬���Ӳ���ȡ�����������ø���������������ݣ���ʾ�����������default = true��
+		// 创建第二个相机实体，添加并获取相机组件，设置该相机的相机组件数据，表示不是主相机（default = true）
 		m_SecondCamera = m_ActiveScene->CreateEntity("Camera B");
 		auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
 		cc.Primary = false;
@@ -67,6 +74,7 @@ namespace Razel {
 
 		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+#endif
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
@@ -79,8 +87,8 @@ namespace Razel {
 	{
 		RZ_PROFILE_FUNCTION();
 		
-		// ��֡�����С���ӿڴ�С��ͬʱ,���ӿڴ�С��Ϊ0
-		// ��Ϊ��ǰ��������,��OnUpdate,��Ⱦ,���֡����,���,Ȼ����OnImGuiRenderer��ȥ�����ӿڴ�С,��ʱ�ᵼ������Ϊ��,������һ����ɫ����˸
+		// 当帧缓冲大小与视口大小不同时,且视口大小不为0
+		// 因为当前的流程中,先OnUpdate,渲染,填充帧缓冲,解绑,然后在OnImGuiRenderer中去调整视口大小,此时会导致纹理为空,所以有一个黑色的闪烁
 		if (FramebufferSpecification spec = m_Framebuffer->GetSpecification();
 			m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized framebuffer is invalid
 			(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
@@ -140,9 +148,9 @@ namespace Razel {
 
 		// Note: Switch this to true to enable dockspace
 
-		static bool dockspaceOpen = true;						// ͣ���ռ俪��
-		static bool opt_fullscreen_persistant = true;			// ȫ���־û�
-		bool opt_fullscreen = opt_fullscreen_persistant;		// ȫ��
+		static bool dockspaceOpen = true;						// 停靠空间开启
+		static bool opt_fullscreen_persistant = true;			// 全屏持久化
+		bool opt_fullscreen = opt_fullscreen_persistant;		// 全屏
 		static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 
 		// We are using the ImGuiWindowFlags_NoDocking flag to make the parent window not dockable into,
@@ -208,6 +216,19 @@ namespace Razel {
 			{
 				// Disabling fullscreen would allow the window to be moved to the front of other windows,
 				// which we can't undo at the moment without finer window depth/z control.
+				
+				if (ImGui::MenuItem("Serialize"))
+				{
+					SceneSerializer serializer(m_ActiveScene);
+					serializer.Serialize("assets/scenes/Examples.razel");
+				}
+				if (ImGui::MenuItem("Deserialize"))
+				{
+					SceneSerializer serializer(m_ActiveScene);
+					serializer.Deserialize("assets/scenes/Examples.razel");
+				}
+
+
 				if (ImGui::MenuItem("Exit")) Application::Get().Close();
 				ImGui::EndMenu();
 			}
@@ -232,9 +253,9 @@ namespace Razel {
 		ImGui::Begin("Viewport");
 		m_ViewportFocused = ImGui::IsWindowFocused();
 		m_ViewportHovered = ImGui::IsWindowHovered();
-		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused && !m_ViewportHovered);
+		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
 
-		// ȡ��ǰ ImGui ���ڻ������ ���õ���������Ĵ�С
+		// 获取当前 ImGui 窗口或面板中 可用的内容区域的大小
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 

@@ -25,7 +25,8 @@
 		defines
 		{
 			"_CRT_SECURE_NO_WARNINGS",
-			"GLFW_INCLUDE_NONE"
+			"GLFW_INCLUDE_NONE",
+			"YAML_CPP_STATIC_DEFINE"
 		}
 		--指定编译器的包含文件搜索路径
 		includedirs

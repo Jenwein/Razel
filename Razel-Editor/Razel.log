@@ -1,5 +1,8 @@
-[21:43:22] [info] RAZEL: Create window Razel Editor (1600 , 900)
-[21:43:23] [info] RAZEL: OpenGL Info:
-[21:43:23] [info] RAZEL:   Vendor: NVIDIA Corporation
-[21:43:23] [info] RAZEL:   Renderer: NVIDIA GeForce RTX 3050 Laptop GPU/PCIe/SSE2
-[21:43:23] [info] RAZEL:   Version: 4.6.0 NVIDIA 546.30
+[13:25:44] [info] RAZEL: Create window Razel Editor (1600 , 900)
+[13:25:44] [info] RAZEL: OpenGL Info:
+[13:25:44] [info] RAZEL:   Vendor: NVIDIA Corporation
+[13:25:44] [info] RAZEL:   Renderer: NVIDIA GeForce RTX 3050 Laptop GPU/PCIe/SSE2
+[13:25:44] [info] RAZEL:   Version: 4.6.0 NVIDIA 546.30
+[13:25:46] [trace] RAZEL: Deserializing scene Untitled
+[13:25:46] [trace] RAZEL: Deserialized entity with ID = 1, name = CA
+[13:25:46] [trace] RAZEL: Deserialized entity with ID = 0, name = SQ

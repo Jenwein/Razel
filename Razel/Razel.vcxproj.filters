@@ -201,6 +201,9 @@
     <ClInclude Include="src\Razel\Scene\SceneCamera.h">
       <Filter>src\Razel\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Razel\Scene\SceneSerializer.h">
+      <Filter>src\Razel\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\Razel\Scene\ScriptableEntity.h">
       <Filter>src\Razel\Scene</Filter>
     </ClInclude>
@@ -1464,7 +1467,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Razel\Scene\SceneSerializer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1560,12 +1562,14 @@
     <ClCompile Include="src\Razel\Scene\SceneCamera.cpp">
       <Filter>src\Razel\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\Razel\Scene\SceneSerializer.cpp">
+      <Filter>src\Razel\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\rzpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Razel\Scene\SceneSerializer.cpp" />
   </ItemGroup>
 </Project>

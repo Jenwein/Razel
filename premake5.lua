@@ -32,7 +32,6 @@ workspace "Razel"
 	IncludeDir["stb_image"] = "%{wks.location}/Razel/vendor/stb_image"
 	IncludeDir["entt"] = "%{wks.location}/Razel/vendor/entt/include"
 	IncludeDir["yaml_cpp"] = "%{wks.location}/Razel/vendor/yaml-cpp/include"
-
 	filter "action:vs*"
         buildoptions { "/utf-8" , "/wd4828" }
     filter {}

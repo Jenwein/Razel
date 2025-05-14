@@ -92,7 +92,7 @@ namespace Razel
 	static void SerializerEntity(YAML::Emitter& out, Entity entity)
 	{
 		out << YAML::BeginMap;	// Entity
-		out << YAML::Key << "Entity" << YAML::Value << "12123123123123";	//TODO:DELETE
+		out << YAML::Key << "Entity" << YAML::Value << (uint64_t)(uint32_t)entity;	//TODO:DELETE
 		
 
 		if (entity.HasComponent<TagComponent>())
@@ -107,7 +107,7 @@ namespace Razel
 		}
 		if (entity.HasComponent<TransformComponent>())
 		{
-			out << YAML::Key << "TramsformComponent";
+			out << YAML::Key << "TransformComponent";
 			out << YAML::BeginMap; // TransformComponent
 
 			auto& tc = entity.GetComponent<TransformComponent>();
@@ -233,12 +233,13 @@ namespace Razel
 					tc.Scale = transformComponent["Scale"].as<glm::vec3>();
 				}
 
+				// 相机组件
 				auto cameraComponent = entity["CameraComponent"];
 				if (cameraComponent)
 				{
 					auto& cc = deserializedEntity.AddComponent<CameraComponent>();
 					auto& cameraProps = cameraComponent["Camera"];
-					cc.Camera.SetProjectionType((SceneCamera::ProjectionType)cameraComponent["ProjectionType"].as<int>());
+					cc.Camera.SetProjectionType((SceneCamera::ProjectionType)cameraProps["ProjectionType"].as<int>());
 					
 					cc.Camera.SetPerspectiveVerticalFOV(cameraProps["PerspectiveFOV"].as<float>());
 					cc.Camera.SetPerspectiveNearClip(cameraProps["PerspectiveNear"].as<float>());
@@ -252,6 +253,7 @@ namespace Razel
 					cc.FixedAspectRatio = cameraComponent["FixedAspectRatio"].as<bool>();
 				}
 
+				// 精灵图集组件
 				auto spriteRendererComponent = entity["SpriteRendererComponent"];
 				if (spriteRendererComponent)
 				{
@@ -265,6 +267,7 @@ namespace Razel
 		return true;
 	}
 
+	// 运行时反序列化
 	bool SceneSerializer::DeserializeRuntime(const std::string& filepath)
 	{
 		// Not implemented
