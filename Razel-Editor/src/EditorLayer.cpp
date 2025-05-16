@@ -322,24 +322,24 @@ namespace Razel {
 	}
 	void EditorLayer::OpenScene()
 	{
-		std::string filepath = FileDialogs::OpenFile("Razel Scene (*.razel)\0*.razel\0");
-		if (!filepath.empty())
+		std::optional<std::string> filepath = FileDialogs::OpenFile("Razel Scene (*.razel)\0*.razel\0");
+		if (filepath)
 		{
 			m_ActiveScene = CreateRef<Scene>();
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 
 			SceneSerializer sceneSerializer(m_ActiveScene);
-			sceneSerializer.Deserialize(filepath);
+			sceneSerializer.Deserialize(*filepath);
 		}
 	}
 	void EditorLayer::SaveSceneAs()
 	{
-		std::string filepath = FileDialogs::SaveFile("Razel Scene (*.razel)\0*.razel\0");
-		if (!filepath.empty())
+		std::optional<std::string> filepath = FileDialogs::SaveFile("Razel Scene (*.razel)\0*.razel\0");
+		if (filepath)
 		{
 			SceneSerializer sceneSerializer(m_ActiveScene);
-			sceneSerializer.Serialize(filepath);
+			sceneSerializer.Serialize(*filepath);
 		}
 	}
 }
