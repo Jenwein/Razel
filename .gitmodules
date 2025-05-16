@@ -17,3 +17,6 @@
 	path = Razel/vendor/yaml-cpp
 	url = https://github.com/jenwein/yaml-cpp
 	branch = master
+[submodule "Razel/vendor/ImGuizmo"]
+	path = Razel/vendor/ImGuizmo
+	url = https://github.com/jenwein/ImGuizmo

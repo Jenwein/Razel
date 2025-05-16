@@ -17,6 +17,9 @@ namespace Razel
 		void OnUpdate(Timestep ts);
 		void OnViewportResize(uint32_t width, uint32_t height);
 
+		// 获取主相机实体
+		Entity GetPrimaryCameraEntity();
+
 		entt::registry m_Registry;
 
 	private:

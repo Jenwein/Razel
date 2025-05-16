@@ -19,7 +19,9 @@
 			"%{wks.location}/Razel/src",
 			"%{wks.location}/Razel/vendor",
 			"%{IncludeDir.glm}",
-			"%{IncludeDir.entt}"
+			"%{IncludeDir.entt}",
+			"%{IncludeDir.ImGuizmo}"
+
 		}
 
 		links

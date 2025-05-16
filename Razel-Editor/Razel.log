@@ -1,10 +1,8 @@
-[16:37:11] [info] RAZEL: Create window Razel Editor (1600 , 900)
-[16:37:11] [info] RAZEL: OpenGL Info:
-[16:37:11] [info] RAZEL:   Vendor: NVIDIA Corporation
-[16:37:11] [info] RAZEL:   Renderer: NVIDIA GeForce RTX 3050 Laptop GPU/PCIe/SSE2
-[16:37:11] [info] RAZEL:   Version: 4.6.0 NVIDIA 546.30
-[16:37:19] [trace] RAZEL: Deserializing scene Untitled
-[16:37:19] [trace] RAZEL: Deserialized entity with ID = 1, name = Empty Entity
-[16:37:19] [trace] RAZEL: Deserialized entity with ID = 0, name = Empty Entity
-[16:37:35] [warning] RAZEL: This entity already has the Camera Component!
-[16:37:46] [warning] RAZEL: This entity already has the Camera Component!
+[17:58:36] [info] RAZEL: Create window Razel Editor (1600 , 900)
+[17:58:36] [info] RAZEL: OpenGL Info:
+[17:58:36] [info] RAZEL:   Vendor: NVIDIA Corporation
+[17:58:36] [info] RAZEL:   Renderer: NVIDIA GeForce RTX 3050 Laptop GPU/PCIe/SSE2
+[17:58:36] [info] RAZEL:   Version: 4.6.0 NVIDIA 546.30
+[17:58:40] [trace] RAZEL: Deserializing scene Untitled
+[17:58:40] [trace] RAZEL: Deserialized entity with ID = 1, name = Empty Entity
+[17:58:40] [trace] RAZEL: Deserialized entity with ID = 0, name = Empty Entity
