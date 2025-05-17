@@ -1,8 +1,9 @@
-[17:58:36] [info] RAZEL: Create window Razel Editor (1600 , 900)
-[17:58:36] [info] RAZEL: OpenGL Info:
-[17:58:36] [info] RAZEL:   Vendor: NVIDIA Corporation
-[17:58:36] [info] RAZEL:   Renderer: NVIDIA GeForce RTX 3050 Laptop GPU/PCIe/SSE2
-[17:58:36] [info] RAZEL:   Version: 4.6.0 NVIDIA 546.30
-[17:58:40] [trace] RAZEL: Deserializing scene Untitled
-[17:58:40] [trace] RAZEL: Deserialized entity with ID = 1, name = Empty Entity
-[17:58:40] [trace] RAZEL: Deserialized entity with ID = 0, name = Empty Entity
+[13:54:55] [info] RAZEL: Create window Razel Editor (1600 , 900)
+[13:54:55] [info] RAZEL: OpenGL Info:
+[13:54:55] [info] RAZEL:   Vendor: NVIDIA Corporation
+[13:54:55] [info] RAZEL:   Renderer: NVIDIA GeForce RTX 3050 Laptop GPU/PCIe/SSE2
+[13:54:55] [info] RAZEL:   Version: 4.6.0 NVIDIA 546.30
+[13:55:00] [trace] RAZEL: Deserializing scene Untitled
+[13:55:00] [trace] RAZEL: Deserialized entity with ID = 2, name = SQ2
+[13:55:00] [trace] RAZEL: Deserialized entity with ID = 1, name = CA
+[13:55:00] [trace] RAZEL: Deserialized entity with ID = 0, name = SQ
