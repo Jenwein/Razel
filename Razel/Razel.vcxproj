@@ -150,7 +150,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Razel\Math\Math.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
@@ -181,8 +180,10 @@
     <ClInclude Include="src\Razel\Events\KeyEvent.h" />
     <ClInclude Include="src\Razel\Events\MouseEvent.h" />
     <ClInclude Include="src\Razel\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Razel\Math\Math.h" />
     <ClInclude Include="src\Razel\Renderer\Buffer.h" />
     <ClInclude Include="src\Razel\Renderer\Camera.h" />
+    <ClInclude Include="src\Razel\Renderer\EditorCamera.h" />
     <ClInclude Include="src\Razel\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Razel\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Razel\Renderer\OrthographicCamera.h" />
@@ -624,7 +625,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Razel\Math\Math.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />
@@ -642,7 +642,9 @@
     <ClCompile Include="src\Razel\Core\Window.cpp" />
     <ClCompile Include="src\Razel\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Razel\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Razel\Math\Math.cpp" />
     <ClCompile Include="src\Razel\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Razel\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\Razel\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\Razel\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Razel\Renderer\OrthographicCamera.cpp" />

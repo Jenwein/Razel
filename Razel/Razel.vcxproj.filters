@@ -28,6 +28,9 @@
     <Filter Include="src\Razel\ImGui">
       <UniqueIdentifier>{A4F5D7E8-1081-45AD-1992-C8A1859CA1AD}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Razel\Math">
+      <UniqueIdentifier>{13BEC2D0-FF8B-B6D6-E81F-27FDD48C923B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Razel\Renderer">
       <UniqueIdentifier>{E0A96D94-CC8D-2EEA-35EE-283D21F1186C}</UniqueIdentifier>
     </Filter>
@@ -156,10 +159,16 @@
     <ClInclude Include="src\Razel\ImGui\ImGuiLayer.h">
       <Filter>src\Razel\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\Razel\Math\Math.h">
+      <Filter>src\Razel\Math</Filter>
+    </ClInclude>
     <ClInclude Include="src\Razel\Renderer\Buffer.h">
       <Filter>src\Razel\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Razel\Renderer\Camera.h">
+      <Filter>src\Razel\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Razel\Renderer\EditorCamera.h">
       <Filter>src\Razel\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Razel\Renderer\Framebuffer.h">
@@ -1479,7 +1488,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Razel\Math\Math.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1533,7 +1541,13 @@
     <ClCompile Include="src\Razel\ImGui\ImGuiLayer.cpp">
       <Filter>src\Razel\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\Razel\Math\Math.cpp">
+      <Filter>src\Razel\Math</Filter>
+    </ClCompile>
     <ClCompile Include="src\Razel\Renderer\Buffer.cpp">
+      <Filter>src\Razel\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Razel\Renderer\EditorCamera.cpp">
       <Filter>src\Razel\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Razel\Renderer\Framebuffer.cpp">
@@ -1590,6 +1604,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Razel\Math\Math.cpp" />
   </ItemGroup>
 </Project>

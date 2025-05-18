@@ -2,6 +2,7 @@
 
 #include "Razel.h"
 #include "Panels/SceneHierarchyPanel.h"
+#include "Razel/Renderer/EditorCamera.h"
 namespace Razel {
 
 	class EditorLayer : public Layer
@@ -37,7 +38,7 @@ namespace Razel {
 		Entity m_CameraEntity;
 		Entity m_SecondCamera;
 		bool m_PrimaryCamera = true;
-
+		EditorCamera m_EditorCamera;	// ±à¼­Æ÷Ïà»ú
 		glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 		glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
 		
