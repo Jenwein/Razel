@@ -138,6 +138,20 @@ namespace Razel
 
 	}
 
+	void Renderer2D::BeginScene(const EditorCamera& camera)
+	{
+		RZ_PROFILE_FUNCTION();
+
+		glm::mat4 viewProj = camera.GetViewProjection();
+
+		// 设置相机参数
+		s_Data.TextureShader->Bind();
+		s_Data.TextureShader->SetMat4("u_ViewProjection", viewProj);
+
+		StartBatch();
+
+	}
+
 	void Renderer2D::EndScene()
 	{
 		RZ_PROFILE_FUNCTION();

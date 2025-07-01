@@ -3,7 +3,7 @@
 #include "Razel/Renderer/Texture.h"
 
 #include "Razel/Renderer/Camera.h"
-
+#include "Razel/Renderer/EditorCamera.h"
 #include "Razel/Renderer/OrthographicCameraController.h"
 namespace Razel
 {
@@ -16,6 +16,7 @@ namespace Razel
 
 		// ≥°æ∞‰÷»æ
 		static void BeginScene(const Camera& camera, const glm::mat4& transform);
+		static void BeginScene(const EditorCamera& camera);	//TODO:Remove
 		static void BeginScene(const OrthographicCamera& camera);	//TODO:Remove
 		static void EndScene();
 		static void Flush();

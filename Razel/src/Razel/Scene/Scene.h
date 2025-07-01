@@ -1,6 +1,9 @@
 #pragma once
-#include "entt.hpp"
+
 #include "Razel/Core/Timestep.h"
+
+#include "Razel/Renderer/EditorCamera.h"
+#include "entt.hpp"
 
 namespace Razel
 {
@@ -14,7 +17,8 @@ namespace Razel
 		Entity CreateEntity(const std::string& name = std::string());
 		void DestroyEntity(Entity entity);
 
-		void OnUpdate(Timestep ts);
+		void OnUpdateRuntime(Timestep ts);
+		void OnUpdateEditor(Timestep ts,EditorCamera& camera);
 		void OnViewportResize(uint32_t width, uint32_t height);
 
 		// 获取主相机实体

@@ -2,6 +2,7 @@
 
 #include "Event.h"
 #include "Razel/Core/MouseCodes.h"
+#include <sstream>
 namespace Razel {
 
 	// 鼠标移动事件类

@@ -1,9 +1,14 @@
-[13:54:55] [info] RAZEL: Create window Razel Editor (1600 , 900)
-[13:54:55] [info] RAZEL: OpenGL Info:
-[13:54:55] [info] RAZEL:   Vendor: NVIDIA Corporation
-[13:54:55] [info] RAZEL:   Renderer: NVIDIA GeForce RTX 3050 Laptop GPU/PCIe/SSE2
-[13:54:55] [info] RAZEL:   Version: 4.6.0 NVIDIA 546.30
-[13:55:00] [trace] RAZEL: Deserializing scene Untitled
-[13:55:00] [trace] RAZEL: Deserialized entity with ID = 2, name = SQ2
-[13:55:00] [trace] RAZEL: Deserialized entity with ID = 1, name = CA
-[13:55:00] [trace] RAZEL: Deserialized entity with ID = 0, name = SQ
+[16:48:30] [info] RAZEL: Create window Razel Editor (1600 , 900)
+[16:48:30] [info] RAZEL: OpenGL Info:
+[16:48:30] [info] RAZEL:   Vendor: NVIDIA Corporation
+[16:48:30] [info] RAZEL:   Renderer: NVIDIA GeForce RTX 3050/PCIe/SSE2
+[16:48:30] [info] RAZEL:   Version: 4.6.0 NVIDIA 566.14
+[16:48:35] [trace] RAZEL: Deserializing scene Untitled
+[16:48:35] [trace] RAZEL: Deserialized entity with ID = 2, name = SQ2
+[16:48:35] [trace] RAZEL: Deserialized entity with ID = 1, name = CA
+[16:48:35] [trace] RAZEL: Deserialized entity with ID = 0, name = SQ
+[16:48:41] [trace] RAZEL: Deserializing scene Untitled
+[16:48:41] [trace] RAZEL: Deserialized entity with ID = 12837192831273, name = Top
+[16:48:41] [trace] RAZEL: Deserialized entity with ID = 12837192831273, name = Camera
+[16:48:41] [trace] RAZEL: Deserialized entity with ID = 12837192831273, name = Right
+[16:48:41] [trace] RAZEL: Deserialized entity with ID = 12837192831273, name = Left
