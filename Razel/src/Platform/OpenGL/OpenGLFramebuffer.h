@@ -28,6 +28,6 @@ namespace Razel
 		FramebufferTextureSpecification m_DepthAttachmentSpecification = FramebufferTextureFormat::None;
 		
 		std::vector<uint32_t> m_ColorAttachments;
-		uint32_t m_DepthAttachment;
+		uint32_t m_DepthAttachment = 0;
 	};
 }
