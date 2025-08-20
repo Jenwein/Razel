@@ -65,7 +65,9 @@ namespace Razel
 		s_Data.QuadVertexBufferBase = new QuadVertex[s_Data.MaxVertices];	
 		uint32_t* quadIndices = new uint32_t[s_Data.MaxIndices];		// 用于存储索引数据
 		
-		uint32_t offset = 0;	// 追踪当前处理的四边形的起始顶点索引
+		// 追踪当前处理的四边形的起始顶点索引
+		uint32_t offset = 0;	
+
 		// 预先生成所有可能的索引,每次循环会设置一个四边形,也就是两个三角形六个顶点的索引顺序
 		for (uint32_t i = 0; i < s_Data.MaxIndices; i += 6)
 		{
@@ -76,8 +78,9 @@ namespace Razel
 			quadIndices[i + 3] = offset + 2;
 			quadIndices[i + 4] = offset + 3;
 			quadIndices[i + 5] = offset + 0;
-
-			offset += 4;		// 追踪四边形的顶点起始索引
+			
+			// 追踪四边形的顶点起始索引
+			offset += 4;		
 		}
 
 		Ref<IndexBuffer> quadIB = IndexBuffer::Create(quadIndices, s_Data.MaxIndices);
