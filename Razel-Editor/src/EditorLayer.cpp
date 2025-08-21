@@ -421,15 +421,12 @@ namespace Razel {
 
 	bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
 	{
-		switch (e.GetMouseButton())
+		if (e.GetMouseButton() == Mouse::ButtonLeft)
 		{
-		case Mouse::ButtonLeft:
-			if (m_HoveredEntity)
+			if (m_ViewportHovered && !ImGuizmo::IsOver() && !Input::IsKeyPressed(Key::LeftAlt))
 				m_SceneHierarchyPanel.SetSelectedEntity(m_HoveredEntity);
-		default:
-			break;
-		} 
-		return true;
+		}
+		return false;
 	}
 
 	void EditorLayer::NewScene()
