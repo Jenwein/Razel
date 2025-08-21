@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Razel.h"
+#include <Razel.h>
 #include "Panels/SceneHierarchyPanel.h"
 
 #include "Razel/Renderer/EditorCamera.h"
@@ -21,6 +21,7 @@ namespace Razel {
 		void OnEvent(Event& e) override;
 	private:
 		bool OnKeyPressed(KeyPressedEvent& e);
+		bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
 		void NewScene();
 		void OpenScene();
 		void SaveSceneAs();

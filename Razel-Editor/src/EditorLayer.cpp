@@ -355,6 +355,7 @@ namespace Razel {
 		m_EditorCamera.OnEvent(e);
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+		dispatcher.Dispatch<MouseButtonPressedEvent>(BIND_EVENT_FN(EditorLayer::OnMouseButtonPressed));
 
 	}
 
@@ -419,6 +420,20 @@ namespace Razel {
 		}
 		return true;
 	}
+
+	bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
+	{
+		switch (e.GetMouseButton())
+		{
+		case Mouse::ButtonLeft:
+			if (m_HoveredEntity)
+				m_SceneHierarchyPanel.SetSelectedEntity(m_HoveredEntity);
+		default:
+			break;
+		} 
+		return true;
+	}
+
 	void EditorLayer::NewScene()
 	{
 		m_ActiveScene = CreateRef<Scene>();
