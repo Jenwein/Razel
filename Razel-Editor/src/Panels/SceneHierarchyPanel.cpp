@@ -269,7 +269,7 @@ namespace Razel
 			DrawVec3Control("Scale", component.Scale, 1.0f);
 		});
 
-		// 如果有Transform组件，绘制相关内容
+		// 如果有CameraComponent组件，绘制相关内容
 		DrawComponent<CameraComponent>("Camera", entity, [](auto& component) {
 
 			auto& camera = component.Camera;
@@ -330,7 +330,7 @@ namespace Razel
 			}
 		});
 
-		// 如果有Transform组件，绘制相关内容
+		// 如果有SpriteRendererComponent组件，绘制相关内容
 		DrawComponent<SpriteRendererComponent>("SpriteRenderer", entity, [](auto& component) {
 			
 			ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));

@@ -76,7 +76,7 @@ namespace Razel
 			for (auto entity : group)
 			{
 				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-				Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
+				Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
 			}
 			Renderer2D::EndScene();
 		}
@@ -91,7 +91,7 @@ namespace Razel
 		{
 			auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 
-			Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
+			Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
 		}
 
 		Renderer2D::EndScene();
