@@ -20,6 +20,8 @@ namespace Razel
 
 		virtual int ReadPixel(uint32_t attachmentIndex, int x, int y) override;
 
+		virtual void ClearAttachment(uint32_t attachmentIndex, int value) override;
+
 		virtual uint32_t GetColorAttachmentRendererID(uint32_t index = 0) const override { RZ_CORE_ASSERT(index < m_ColorAttachments.size());return m_ColorAttachments[index]; }
 		virtual const FramebufferSpecification& GetSpecification() const override { return m_Specification; }
 	private:

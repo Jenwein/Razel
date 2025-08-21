@@ -133,6 +133,8 @@ namespace Razel {
 			RZ_PROFILE_SCOPE("Renderer Draw");
 			//Renderer2D::BeginScene(m_CameraController.GetCamera());
 
+			m_Framebuffer->ClearAttachment(1, -1);
+
 			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
 			auto [mx, my] = ImGui::GetMousePos();
@@ -305,7 +307,6 @@ namespace Razel {
 			
 			const glm::mat4& cameraProjection = m_EditorCamera.GetProjection();
 			glm::mat4 cameraView = m_EditorCamera.GetViewMatrix();
-
 
 			// 实体变换
 			auto& tc = selectedEntity.GetComponent<TransformComponent>();
