@@ -2,6 +2,7 @@
 
 #include <Razel.h>
 #include "Panels/SceneHierarchyPanel.h"
+#include "Panels/ContentBrowserPanel.h"
 
 #include "Razel/Renderer/EditorCamera.h"
 
@@ -53,6 +54,7 @@ namespace Razel {
 
 		// Panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
+		ContentBrowserPanel m_ContentBrowserPanel;
 
 		bool m_ViewportFocused = false;
 		bool m_ViewportHovered = false;

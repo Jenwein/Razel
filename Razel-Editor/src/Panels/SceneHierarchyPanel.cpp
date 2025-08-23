@@ -1,3 +1,4 @@
+#include "rzpch.h"
 #include "SceneHierarchyPanel.h"
 
 #include "Razel/Scene/Components.h"
