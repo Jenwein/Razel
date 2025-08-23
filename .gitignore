@@ -15,3 +15,4 @@ bin-int/
 **.vcxproj.filters
 **.vcxproj.user
 SandBox/RazelProfile*
+/Razel-Editor/Razel.log
