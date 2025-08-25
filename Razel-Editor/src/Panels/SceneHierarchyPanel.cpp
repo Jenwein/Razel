@@ -333,7 +333,7 @@ namespace Razel
 		});
 
 		// 如果有SpriteRendererComponent组件，绘制相关内容
-		DrawComponent<SpriteRendererComponent>("SpriteRenderer", entity, [](auto& component) {
+		DrawComponent<SpriteRendererComponent>("Sprite Renderer", entity, [](auto& component) {
 			ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
 
 			ImGui::Button("Texture", ImVec2(100.0f, 0.0f));
@@ -347,7 +347,7 @@ namespace Razel
 				}
 				ImGui::EndDragDropTarget();
 			}
-			ImGui::DragFloat("Tiling Factor", &component.TillingFactor, 0.1f, 0.0f, 100.0f);
+			ImGui::DragFloat("Tiling Factor", &component.TilingFactor, 0.1f, 0.0f, 100.0f);
 		});
 	}
 }

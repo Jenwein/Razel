@@ -21,7 +21,7 @@ namespace Razel
 
 		static float padding = 16.0f;
 		static float thumbnailSize = 128.0f;
-		float cellSize = thumbnailSize - padding;
+		float cellSize = thumbnailSize + padding;
 
 		ImGui::BeginDisabled(m_CurrentDirectory != std::filesystem::path(g_AssetPath) ? false : true);
 		if (ImGui::Button("<-"))

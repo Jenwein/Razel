@@ -237,7 +237,7 @@ namespace Razel
 	void Renderer2D::DrawSprite(const glm::mat4& transform, SpriteRendererComponent& src, int entityID)
 	{
 		if (src.Texture)
-			DrawQuad(transform, src.Texture,src.TillingFactor,src.Color,entityID);
+			DrawQuad(transform, src.Texture,src.TilingFactor,src.Color,entityID);
 		else
 			DrawQuad(transform, src.Color, entityID);
 	}
