@@ -23,6 +23,8 @@ namespace Razel {
 		RZ_PROFILE_FUNCTION();
 
 		m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
+		m_IconPlay = Texture2D::Create("Resources/Icons/PlayButton.png");
+		m_IconStop = Texture2D::Create("Resources/Icons/StopButton.png");
 
 		FramebufferSpecification fbSpec;
 		fbSpec.Width = 1280;
@@ -97,7 +99,7 @@ namespace Razel {
 	void EditorLayer::OnUpdate(Timestep ts)
 	{
 		RZ_PROFILE_FUNCTION();
-		
+
 		// 当帧缓冲大小与视口大小不同时,且视口大小不为0
 		// 因为当前的流程中,先OnUpdate,渲染,填充帧缓冲,解绑,然后在OnImGuiRenderer中去调整视口大小,此时会导致纹理为空,所以有一个黑色的闪烁
 		if (FramebufferSpecification spec = m_Framebuffer->GetSpecification();
@@ -113,49 +115,65 @@ namespace Razel {
 		}
 
 
-		// Update
-		if (m_ViewportFocused)
-			m_CameraController.OnUpdate(ts);
 
-		m_EditorCamera.OnUpdate(ts);
 
 
 		// Render
 		Renderer2D::ResetStats();
-		
+
 		m_Framebuffer->Bind();
 
 		RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 		RenderCommand::Clear();
+
+
+		static float rotation = 0.0f;
+		rotation += ts * 50.0f;
+
+		RZ_PROFILE_SCOPE("Renderer Draw");
+		//Renderer2D::BeginScene(m_CameraController.GetCamera());
+
+		m_Framebuffer->ClearAttachment(1, -1);
+
+		switch (m_SceneState)
 		{
-			static float rotation = 0.0f;
-			rotation += ts * 50.0f;
-
-			RZ_PROFILE_SCOPE("Renderer Draw");
-			//Renderer2D::BeginScene(m_CameraController.GetCamera());
-
-			m_Framebuffer->ClearAttachment(1, -1);
-
-			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
-
-			auto [mx, my] = ImGui::GetMousePos();
-			mx -= m_ViewportBounds[0].x;
-			my -= m_ViewportBounds[0].y;
-			glm::vec2 viewportSize = m_ViewportBounds[1] - m_ViewportBounds[0];
-			my = viewportSize.y - my;
-			int mouseX = (int)mx;
-			int mouseY = (int)my;
-
-			if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
+			case Razel::EditorLayer::SceneState::Edit:
 			{
-				int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
-				m_HoveredEntity = pixelData == -1 ? Entity() : Entity((entt::entity)pixelData, m_ActiveScene.get());
-				RZ_CORE_WARN("Pixel data = {0}", pixelData);
-			}
+				if (m_ViewportFocused)
+					m_CameraController.OnUpdate(ts);
 
-			m_Framebuffer->UnBind();
+				m_EditorCamera.OnUpdate(ts);
+				m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+				break;
+			}
+			case Razel::EditorLayer::SceneState::Play:
+			{
+				m_ActiveScene->OnUpdateRuntime(ts);
+				break;
+			}
+			default:
+				break;
 		}
+
+		auto [mx, my] = ImGui::GetMousePos();
+		mx -= m_ViewportBounds[0].x;
+		my -= m_ViewportBounds[0].y;
+		glm::vec2 viewportSize = m_ViewportBounds[1] - m_ViewportBounds[0];
+		my = viewportSize.y - my;
+		int mouseX = (int)mx;
+		int mouseY = (int)my;
+
+		if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
+		{
+			int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
+			m_HoveredEntity = pixelData == -1 ? Entity() : Entity((entt::entity)pixelData, m_ActiveScene.get());
+			RZ_CORE_WARN("Pixel data = {0}", pixelData);
+		}
+
+		m_Framebuffer->UnBind();
+
 	}
+
 	void EditorLayer::OnImGuiRender()
 	{
 		RZ_PROFILE_FUNCTION();
@@ -298,6 +316,7 @@ namespace Razel {
 				const wchar_t* path = (const wchar_t*)payload->Data;
 				OpenScene(std::filesystem::path(g_AssetPath / path));
 			}
+			ImGui::EndDragDropTarget();
 		}
 
 		// Gizmos
@@ -355,6 +374,36 @@ namespace Razel {
 		ImGui::End();
 		ImGui::PopStyleVar();
 
+		UI_ToolBars();
+
+		ImGui::End();
+	}
+
+	void EditorLayer::UI_ToolBars()
+	{
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 2 });
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2{ 0, 0 });
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0, 0, 0, 0 });
+		auto& colors = ImGui::GetStyle().Colors;
+		const auto& buttonHovered = colors[ImGuiCol_ButtonHovered];
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { buttonHovered.x,buttonHovered.y,buttonHovered.z,0.0f });
+		const auto& buttonActive = colors[ImGuiCol_ButtonActive];
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, { buttonActive.x,buttonActive.y,buttonActive.z,0.0f });
+
+		ImGui::Begin("##toolbar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+
+		float size = ImGui::GetWindowHeight() - 4.0f;
+		Ref<Texture2D> icon = m_SceneState == SceneState::Edit ? m_IconPlay : m_IconStop;
+		ImGui::SetCursorPosX(ImGui::GetContentRegionMax().x * 0.5f - (size * 0.5f));
+		if (ImGui::ImageButton("PlayButton", (ImTextureID)icon->GetRendererID(), ImVec2(size, size), { 0,0 }, { 1,1 }))
+		{
+			if (m_SceneState == SceneState::Edit)
+				OnScenePlay();
+			else if (m_SceneState == SceneState::Play)
+				OnSceneStop();
+		}
+		ImGui::PopStyleVar(2);
+		ImGui::PopStyleColor(3);
 		ImGui::End();
 	}
 
@@ -474,5 +523,15 @@ namespace Razel {
 			SceneSerializer sceneSerializer(m_ActiveScene);
 			sceneSerializer.Serialize(*filepath);
 		}
+	}
+
+	void EditorLayer::OnScenePlay()
+	{
+		m_SceneState = SceneState::Play;
+	}
+
+	void EditorLayer::OnSceneStop()
+	{
+		m_SceneState = SceneState::Edit;
 	}
 }

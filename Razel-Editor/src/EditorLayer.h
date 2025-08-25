@@ -28,6 +28,12 @@ namespace Razel {
 		void OpenScene(const std::filesystem::path& path);
 		void SaveSceneAs();
 
+		void OnScenePlay();
+		void OnSceneStop();
+
+		// UI Panels
+		void UI_ToolBars();
+
 	private:
 		Razel::OrthographicCameraController m_CameraController;
 
@@ -53,12 +59,20 @@ namespace Razel {
 		
 		int m_GizmoType = -1;
 
+		enum class SceneState
+		{
+			Edit = 0, Play = 1
+		};
+		SceneState m_SceneState = SceneState::Edit;
+		
 		// Panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
 		ContentBrowserPanel m_ContentBrowserPanel;
 
 		bool m_ViewportFocused = false;
 		bool m_ViewportHovered = false;
+	
+		// Editor resources
+		Ref<Texture2D> m_IconPlay, m_IconStop;
 	};
-
 }
