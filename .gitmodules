@@ -20,3 +20,6 @@
 [submodule "Razel/vendor/ImGuizmo"]
 	path = Razel/vendor/ImGuizmo
 	url = https://github.com/jenwein/ImGuizmo
+[submodule "Razel/vendor/Box2D"]
+	path = Razel/vendor/Box2D
+	url = https://github.com/Jenwein/box2d.git

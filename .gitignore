@@ -16,3 +16,4 @@ bin-int/
 **.vcxproj.user
 SandBox/RazelProfile*
 /Razel-Editor/Razel.log
+/scripts/__pycache__

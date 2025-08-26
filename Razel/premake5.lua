@@ -43,11 +43,13 @@
 			"%{IncludeDir.entt}",
 			"%{IncludeDir.yaml_cpp}",
 			"%{IncludeDir.ImGuizmo}",
+			"%{IncludeDir.Box2D}",
 
 		}
 
 		links
 		{
+			"Box2D",
 			"GLFW",
 			"Glad",
 			"ImGui",

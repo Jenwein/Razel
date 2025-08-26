@@ -33,6 +33,7 @@ workspace "Razel"
 	IncludeDir["entt"] = "%{wks.location}/Razel/vendor/entt/include"
 	IncludeDir["yaml_cpp"] = "%{wks.location}/Razel/vendor/yaml-cpp/include"
 	IncludeDir["ImGuizmo"] = "%{wks.location}/Razel/vendor/ImGuizmo"
+	IncludeDir["Box2D"] = "%{wks.location}/Razel/vendor/Box2D"
 	filter "action:vs*"
         buildoptions { "/utf-8" , "/wd4828" }
     filter {}
@@ -40,6 +41,7 @@ workspace "Razel"
 	--查找并执行另一个脚本文件，也就是查找路径下的premake文件并将内容拷贝到此处(如果之前尚未运行过)
 group "Dependencies"
 	include "vendor/premake"
+	include "Razel/vendor/Box2D"
 	include "Razel/vendor/GLFW"
 	include "Razel/vendor/Glad"
 	include "Razel/vendor/imgui"
