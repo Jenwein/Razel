@@ -88,4 +88,42 @@ namespace Razel
 		}
 
 	};
+	
+	// 刚体
+	struct Rigidbody2DComponent
+	{
+		enum class BodyType { Static = 0, Dynamic, Kinematic };
+
+		BodyType Type = BodyType::Static;
+		bool FixedRotation = false;	// 旋转固定
+
+		// Storage for runtime
+		void* RuntimeBody = nullptr;
+
+		Rigidbody2DComponent() = default;
+		Rigidbody2DComponent(const Rigidbody2DComponent&) = default;
+	};
+
+	// 碰撞体
+	struct BoxCollider2DComponent
+	{
+		glm::vec2 Offset = { 0.0f,0.0f };
+		glm::vec2 Size = { 0.5f,0.5f };
+
+		// TODO:作为物理材质
+		float Density = 1.0f;				// 密度
+		float Friction = 0.5f;				// 摩擦力
+		float Restitution = 0.0f;			// 恢复力
+		float RestitutionThreshold = 0.5f;	// 恢复阈值
+
+		// Storage for runtime
+		void* RuntimeFixture = nullptr;
+
+		BoxCollider2DComponent() = default;
+		BoxCollider2DComponent(const BoxCollider2DComponent&) = default;
+	};
+
+
+
+
 }
