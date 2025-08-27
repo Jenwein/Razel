@@ -7,6 +7,12 @@
 
 namespace Razel
 {
+	struct PhysicsWorldSettings
+	{
+		glm::vec2 Gravity = { 0.0f, -9.8f };	// 重力
+		float RestitutionThreshold = 0.5f;		// 恢复阈值(触发弹力的阈值) 
+	};
+
 	class Entity;
 	class Scene
 	{
@@ -35,7 +41,8 @@ namespace Razel
 	private:
 		uint32_t m_ViewportWidth = 0, m_ViewportHeight = 0;
 
-		b2WorldId m_PhysicsWorldId = b2_nullWorldId;
+		uint32_t m_PhysicsWorldId;
+		PhysicsWorldSettings m_PhysicsWorldSettings;
 
 		friend class Entity;
 		friend class SceneSerializer;

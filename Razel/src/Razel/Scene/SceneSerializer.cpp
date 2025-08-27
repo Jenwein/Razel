@@ -166,7 +166,7 @@ namespace Razel
 		out << YAML::Key << "Entities" << YAML::Value << YAML::BeginSeq;
 
 		//如今的m_Scene->m_Registry.each()已不再支持使用
-		//替换为m_Scene->m_Registry.storage<entt::entity>()？
+		//替换为m_Scene->m_Registry.storage<entt::entity>()
 		auto view = m_Scene->m_Registry.view<entt::entity>();
 		for (const auto ent : view)
 		{

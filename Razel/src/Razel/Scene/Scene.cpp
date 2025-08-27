@@ -14,11 +14,11 @@ namespace Razel
 	{
 		switch (bodyType)
 		{
-		case Razel::Rigidbody2DComponent::BodyType::Static:		return b2_staticBody;
-		case Razel::Rigidbody2DComponent::BodyType::Dynamic:	return b2_dynamicBody;
-		case Razel::Rigidbody2DComponent::BodyType::Kinematic:	return b2_kinematicBody;
-		default:
-			break;
+			case Razel::Rigidbody2DComponent::BodyType::Static:		return b2_staticBody;
+			case Razel::Rigidbody2DComponent::BodyType::Dynamic:	return b2_dynamicBody;
+			case Razel::Rigidbody2DComponent::BodyType::Kinematic:	return b2_kinematicBody;
+			default:
+				break;
 		}
 	}
 
@@ -48,56 +48,50 @@ namespace Razel
 	void Scene::OnRuntimeStart()
 	{
 		b2WorldDef worldDef = b2DefaultWorldDef();
-		worldDef.gravity = { 0.0f,-9.8f };
-		m_PhysicsWorldID =std::_Bit_cast<uint32_t>(b2CreateWorld(&worldDef));
-		
-		
-		
-		
-		
-		
-		
-		m_PhysicsWorld = new b2World({ 0.0f, -9.8f });
-
+		worldDef.gravity = { m_PhysicsWorldSettings.Gravity.x, m_PhysicsWorldSettings.Gravity.y };
+		worldDef.restitutionThreshold = m_PhysicsWorldSettings.RestitutionThreshold;
+		b2WorldId worldID = b2CreateWorld(&worldDef);
+		m_PhysicsWorldId = b2StoreWorldId(worldID);
 		auto view = m_Registry.view<Rigidbody2DComponent>();
 		for (auto e : view)
 		{
-			Entity entity = { e, this };
+			Entity entity = { e,this };
 			auto& transform = entity.GetComponent<TransformComponent>();
 			auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
 
-			b2BodyDef bodyDef;
+			b2BodyDef bodyDef = b2DefaultBodyDef();
 			bodyDef.type = Rigidbody2DTypeToBox2DBody(rb2d.Type);
-			bodyDef.position.Set(transform.Translation.x, transform.Translation.y);
-			bodyDef.angle = transform.Rotation.z;
-
-			b2Body* body = m_PhysicsWorld->CreateBody(&bodyDef);
-			body->SetFixedRotation(rb2d.FixedRotation);
-			rb2d.RuntimeBody = body;
+			bodyDef.position = { transform.Translation.x,transform.Translation.y };
+			bodyDef.rotation = b2MakeRot(transform.Rotation.z);
+			bodyDef.motionLocks.angularZ = rb2d.FixedRotation;
+			
+			b2BodyId bodyID = b2CreateBody(worldID,&bodyDef);
+			rb2d.RuntimeBody = b2StoreBodyId(bodyID);
 
 			if (entity.HasComponent<BoxCollider2DComponent>())
 			{
 				auto& bc2d = entity.GetComponent<BoxCollider2DComponent>();
 
-				b2PolygonShape boxShape;
-				boxShape.SetAsBox(bc2d.Size.x * transform.Scale.x, bc2d.Size.y * transform.Scale.y);
+				b2Polygon boxShape = b2MakeBox(bc2d.Size.x * transform.Scale.x, bc2d.Size.y * transform.Scale.y);
 
-				b2FixtureDef fixtureDef;
-				fixtureDef.shape = &boxShape;
-				fixtureDef.density = bc2d.Density;
-				fixtureDef.friction = bc2d.Friction;
-				fixtureDef.restitution = bc2d.Restitution;
-				fixtureDef.restitutionThreshold = bc2d.RestitutionThreshold;
-				body->CreateFixture(&fixtureDef);
+				b2ShapeDef shapeDef = b2DefaultShapeDef();
+				shapeDef.density = bc2d.Density;
+				shapeDef.material.friction = bc2d.Friction;
+				shapeDef.material.restitution = bc2d.Restitution;
+				shapeDef.material.rollingResistance = bc2d.RollingResistance;
+				shapeDef.material.tangentSpeed = bc2d.TangentSpeed;
+
+				b2ShapeId shapeID = b2CreatePolygonShape(bodyID, &shapeDef, &boxShape);
+				bc2d.RuntimeShapeID = b2StoreShapeId(shapeID);
 			}
 		}
 	}
 
 	void Scene::OnRuntimeStop()
 	{
-		delete m_PhysicsWorld;
-		m_PhysicsWorld = nullptr;
-
+		b2WorldId ID = b2LoadWorldId(m_PhysicsWorldId);
+		b2DestroyWorld(ID);
+		ID = b2_nullWorldId;
 	}
 
 	void Scene::OnUpdateRuntime(Timestep ts)
@@ -120,26 +114,26 @@ namespace Razel
 
 		// Physics
 		{
-			const int32_t velocityIterations = 6;
-			const int32_t positionIterations = 2;
-			m_PhysicsWorld->Step(ts, velocityIterations, positionIterations);
-
-			// Retrieve transform from Box2D
+			const int32_t subStepCount = 4;
+			b2WorldId worldID = b2LoadWorldId(m_PhysicsWorldId);
+			b2World_Step(worldID, ts, subStepCount);
+	
 			auto view = m_Registry.view<Rigidbody2DComponent>();
 			for (auto e : view)
 			{
-				Entity entity = { e, this };
+				Entity entity = { e,this };
 				auto& transform = entity.GetComponent<TransformComponent>();
 				auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
 
-				b2Body* body = (b2Body*)rb2d.RuntimeBody;
-				const auto& position = body->GetPosition();
+				b2BodyId body = b2LoadBodyId(rb2d.RuntimeBody);
+				const auto& position = b2Body_GetPosition(body);
+				const auto& rotation = b2Body_GetRotation(body);
+
 				transform.Translation.x = position.x;
 				transform.Translation.y = position.y;
-				transform.Rotation.z = body->GetAngle();
+				transform.Rotation.z = b2Rot_GetAngle(rotation);
 			}
 		}
-
 
 		// Render 2D
 		Camera* mainCamera = nullptr;
@@ -151,7 +145,7 @@ namespace Razel
 			{
 				auto [tc, camera] = view.get<TransformComponent, CameraComponent>(entity);
 
-				// Èç¹ûÊÇÖ÷Ïà»ú
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				if (camera.Primary)
 				{
 					mainCamera = &camera.Camera;
@@ -194,12 +188,12 @@ namespace Razel
 		m_ViewportWidth = width;
 		m_ViewportHeight = height;
 
-		// µ÷Õû·Ç¹Ì¶¨¿í¸ß±ÈÏà»ú
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ç¹Ì¶ï¿½ï¿½ï¿½ï¿½ß±ï¿½ï¿½ï¿½ï¿½
 		auto view = m_Registry.view<CameraComponent>();
 		for (auto entity : view)
 		{
 			auto& cameraComponent = view.get<CameraComponent>(entity);
-			if (!cameraComponent.FixedAspectRatio)	//Èç¹ûÊÇ·Ç¹Ì¶¨¿í¸ß±ÈÏà»ú
+			if (!cameraComponent.FixedAspectRatio)	//ï¿½ï¿½ï¿½ï¿½Ç·Ç¹Ì¶ï¿½ï¿½ï¿½ï¿½ß±ï¿½ï¿½ï¿½ï¿½
 			{
 				cameraComponent.Camera.SetViewportSize(width, height);
 			}

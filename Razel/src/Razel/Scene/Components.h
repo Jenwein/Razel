@@ -98,7 +98,7 @@ namespace Razel
 		bool FixedRotation = false;	// 旋转固定
 
 		// Storage for runtime
-		void* RuntimeBody = nullptr;
+		uint64_t RuntimeBody;
 
 		Rigidbody2DComponent() = default;
 		Rigidbody2DComponent(const Rigidbody2DComponent&) = default;
@@ -111,13 +111,14 @@ namespace Razel
 		glm::vec2 Size = { 0.5f,0.5f };
 
 		// TODO:作为物理材质
-		float Density = 1.0f;				// 密度
-		float Friction = 0.5f;				// 摩擦力
-		float Restitution = 0.0f;			// 恢复力
-		float RestitutionThreshold = 0.5f;	// 恢复阈值
+		float Density = 1.0f;		// 密度
+		float Friction;				// 摩擦系数
+		float Restitution;			// 弹跳/恢复系数
+		float RollingResistance;	// 滚动阻力
+		float TangentSpeed;			// 传送带切线速度
 
 		// Storage for runtime
-		void* RuntimeFixture = nullptr;
+		uint64_t RuntimeShapeID;
 
 		BoxCollider2DComponent() = default;
 		BoxCollider2DComponent(const BoxCollider2DComponent&) = default;
