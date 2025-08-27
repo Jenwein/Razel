@@ -9,6 +9,34 @@
 
 namespace YAML 
 {
+	template<>
+	struct convert<glm::vec2>
+	{
+		// 编码 rhs-将被编码的对象
+		static Node encode(const glm::vec2& rhs)
+		{
+			Node node;
+			node.push_back(rhs.x);
+			node.push_back(rhs.y);
+			node.SetStyle(EmitterStyle::Flow);
+			return node;
+		}
+
+		// 解码
+		static bool decode(const Node& node, glm::vec2& rhs)
+		{
+			// 如果节点不是序列，或者序列的大小不是 2 
+			if (!node.IsSequence() || node.size() != 2)
+			{
+				return false;
+			}
+			rhs.x = node[0].as<float>();
+			rhs.y = node[1].as<float>();
+			return true;
+		}
+	};
+
+
 	// 对glm::vec3 数据的处理需要编码和解码
 	template<>
 	struct convert<glm::vec3>
@@ -72,6 +100,12 @@ namespace YAML
 
 namespace Razel
 {
+	YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec2& v)
+	{
+		out << YAML::Flow;
+		out << YAML::BeginSeq << v.x << v.y << YAML::EndSeq;
+		return out;
+	}
 	YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec3& v)
 	{
 		out << YAML::Flow;
@@ -85,10 +119,31 @@ namespace Razel
 		return out;
 	}
 
+	static std::string RigidBody2DBodyTypeToString(Rigidbody2DComponent::BodyType bodyType)
+	{
+		switch (bodyType)
+		{
+			case Razel::Rigidbody2DComponent::BodyType::Static:		return "Static";
+			case Razel::Rigidbody2DComponent::BodyType::Dynamic:	return "Dynamic";
+			case Razel::Rigidbody2DComponent::BodyType::Kinematic:	return "Kinematic";
+			default:
+				break;
+		}
+		RZ_CORE_ASSERT(false, "Unknown body type");
+	}
+	static Rigidbody2DComponent::BodyType RigidBody2DBodyTypeFromString(const std::string& bodyTypeString)
+	{
+		if (bodyTypeString == "Static") return Razel::Rigidbody2DComponent::BodyType::Static;
+		if (bodyTypeString == "Dynamic") return Razel::Rigidbody2DComponent::BodyType::Dynamic;
+		if (bodyTypeString == "Kinematic") return Razel::Rigidbody2DComponent::BodyType::Kinematic;
+		
+		RZ_CORE_ASSERT(false, "Unknown body type");
+		return Rigidbody2DComponent::BodyType::Static;
+	}
+
 	SceneSerializer::SceneSerializer(const Ref<Scene>& scene)
 		:m_Scene(scene)
 	{
-
 	}
 
 	static void SerializerEntity(YAML::Emitter& out, Entity entity)
@@ -154,6 +209,34 @@ namespace Razel
 
 			out << YAML::EndMap; // SpriteRendererComponent
 		}
+		if (entity.HasComponent<Rigidbody2DComponent>())
+		{
+			out << YAML::Key << "Rigidbody2DComponent";
+			out << YAML::BeginMap; // Rigidbody2DComponent
+
+			auto& rb2dComponent = entity.GetComponent<Rigidbody2DComponent>();
+			out << YAML::Key << "BodyType" << YAML::Value << RigidBody2DBodyTypeToString(rb2dComponent.Type);
+			out << YAML::Key << "FixedRotation" << YAML::Value << rb2dComponent.FixedRotation;
+
+			out << YAML::EndMap; // Rigidbody2DComponent
+		}
+		if (entity.HasComponent<BoxCollider2DComponent>())
+		{
+			out << YAML::Key << "BoxCollider2DComponent";
+			out << YAML::BeginMap; // BoxCollider2DComponent
+
+			auto& bc2dComponent = entity.GetComponent<BoxCollider2DComponent>();
+			out << YAML::Key << "Offset" << YAML::Value << bc2dComponent.Offset;
+			out << YAML::Key << "Density" << YAML::Value << bc2dComponent.Size;
+			out << YAML::Key << "Density" << YAML::Value << bc2dComponent.Density;
+			out << YAML::Key << "Friction" << YAML::Value << bc2dComponent.Friction;
+			out << YAML::Key << "Restitution" << YAML::Value << bc2dComponent.Restitution;
+			out << YAML::Key << "RollingResistance" << YAML::Value << bc2dComponent.RollingResistance;
+			out << YAML::Key << "TangentSpeed" << YAML::Value << bc2dComponent.TangentSpeed;
+
+			out << YAML::EndMap; // BoxCollider2DComponent
+		}
+
 
 		out << YAML::EndMap;	//Entity
 	}
@@ -163,6 +246,14 @@ namespace Razel
 		YAML::Emitter out;
 		out << YAML::BeginMap;
 		out << YAML::Key << "Scene" << YAML::Value << "Untitled";
+
+		const auto physicsWorldSettings = m_Scene->GetPhysicsWorldSettings();
+		out << YAML::Key << "PhysicsWorldSettings" << YAML::Value << YAML::BeginMap;
+
+		out << YAML::Key << "Gravity" << YAML::Value << physicsWorldSettings.Gravity;
+		out << YAML::Key << "RestitutionThreshold" << YAML::Value << physicsWorldSettings.RestitutionThreshold;
+		out << YAML::EndMap;
+
 		out << YAML::Key << "Entities" << YAML::Value << YAML::BeginSeq;
 
 		//如今的m_Scene->m_Registry.each()已不再支持使用
@@ -201,6 +292,14 @@ namespace Razel
 		std::string sceneName = data["Scene"].as<std::string>();
 		RZ_CORE_TRACE("Deserializing scene {0}", sceneName);
 
+
+		auto physicsWorldSettings = data["PhysicsWorldSettings"];
+		if (physicsWorldSettings)
+		{
+			m_Scene->SetPhysicsWorldSettings({ data["Gravity"].as<glm::vec2>(),
+											   data["RestitutionThreshold"].as<float>() 
+											});
+		}
 		// 获取实体数据
 		auto entities = data["Entities"];
 		if (entities)
@@ -259,6 +358,29 @@ namespace Razel
 					src.Color = spriteRendererComponent["Color"].as<glm::vec4>();
 				}
 
+				// 刚体组件
+				auto rigidbody2DComponent = entity["RigidBody2DComponent"];
+				if (rigidbody2DComponent)
+				{
+					auto& rb2d = deserializedEntity.AddComponent<Rigidbody2DComponent>();
+					rb2d.Type = RigidBody2DBodyTypeFromString(rigidbody2DComponent["Type"].as<std::string>());
+					rb2d.FixedRotation = rigidbody2DComponent["FixedRotation "].as<float>();
+				}
+
+				// 碰撞体组件
+				auto boxCollider2DComponent = entity["BoxCollider2DComponent"];
+				if (boxCollider2DComponent)
+				{
+					auto& bc2d = deserializedEntity.AddComponent<BoxCollider2DComponent>();
+					bc2d.Offset = boxCollider2DComponent["Offset"].as<glm::vec2>();
+					bc2d.Size = boxCollider2DComponent["Size"].as<glm::vec2>();
+					bc2d.Density = boxCollider2DComponent["Density"].as<float>();
+					bc2d.Friction = boxCollider2DComponent["Friction"].as<float>();
+					bc2d.Restitution = boxCollider2DComponent["Restitution"].as<float>();
+					bc2d.RollingResistance = boxCollider2DComponent["RollingResistance"].as<float>();
+					bc2d.TangentSpeed = boxCollider2DComponent["TangentSpeed"].as<float>();
+
+				}
 			}
 
 		}

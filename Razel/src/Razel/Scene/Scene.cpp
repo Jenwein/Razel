@@ -145,7 +145,7 @@ namespace Razel
 			{
 				auto [tc, camera] = view.get<TransformComponent, CameraComponent>(entity);
 
-				// ����������
+				// 如果是主相机
 				if (camera.Primary)
 				{
 					mainCamera = &camera.Camera;
@@ -188,12 +188,11 @@ namespace Razel
 		m_ViewportWidth = width;
 		m_ViewportHeight = height;
 
-		// �����ǹ̶����߱����
 		auto view = m_Registry.view<CameraComponent>();
 		for (auto entity : view)
 		{
 			auto& cameraComponent = view.get<CameraComponent>(entity);
-			if (!cameraComponent.FixedAspectRatio)	//����Ƿǹ̶����߱����
+			if (!cameraComponent.FixedAspectRatio)	// 非固定宽高比相机
 			{
 				cameraComponent.Camera.SetViewportSize(width, height);
 			}
@@ -211,6 +210,16 @@ namespace Razel
 				return Entity{ entity,this };
 		}
 		return {};
+	}
+
+	const Razel::PhysicsWorldSettings Scene::GetPhysicsWorldSettings() const
+	{
+		return m_PhysicsWorldSettings;
+	}
+
+	void Scene::SetPhysicsWorldSettings(PhysicsWorldSettings physicsWorldSettings)
+	{
+		m_PhysicsWorldSettings = physicsWorldSettings;
 	}
 
 	template<typename T>

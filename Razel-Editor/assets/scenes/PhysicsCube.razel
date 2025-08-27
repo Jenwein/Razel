@@ -1,0 +1,83 @@
+Scene: Untitled
+PhysicsWorldSettings:
+  Gravity: [0, -9.8]
+  RestitutionThreshold: 0.5
+Entities:
+  - Entity: 1048577
+    TagComponent:
+      Tag: Cube2
+    TransformComponent:
+      Translation: [-0.004591197, -2.6059103, -0.020053582]
+      Rotation: [0.011092814, -0.05223876, -0.7480945]
+      Scale: [0.42000005, 0.42000014, 0.42000005]
+    SpriteRendererComponent:
+      Color: [0.9501779, 0.24008054, 0.24008054, 1]
+    Rigidbody2DComponent:
+      BodyType: Dynamic
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Density: [0.5, 0.5]
+      Density: 1
+      Friction: 0
+      Restitution: 0
+      RollingResistance: 0
+      TangentSpeed: 0
+  - Entity: 2
+    TagComponent:
+      Tag: Floor
+    TransformComponent:
+      Translation: [-0.10575923, -4.8007846, -9.313226e-10]
+      Rotation: [0, 0, 0]
+      Scale: [45.19928, 0.68639624, 1]
+    SpriteRendererComponent:
+      Color: [0.29399356, 0.9252669, 0.24037184, 1]
+    Rigidbody2DComponent:
+      BodyType: Static
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Density: [0.5, 0.5]
+      Density: 1
+      Friction: 0
+      Restitution: 0
+      RollingResistance: 0
+      TangentSpeed: 0
+  - Entity: 3
+    TagComponent:
+      Tag: Cube1
+    TransformComponent:
+      Translation: [0.013430715, -0.65429497, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.45, 0.45, 0.45]
+    SpriteRendererComponent:
+      Color: [0.21409303, 0.37327415, 0.87188613, 1]
+    Rigidbody2DComponent:
+      BodyType: Dynamic
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Density: [0.5, 0.5]
+      Density: 1
+      Friction: 0
+      Restitution: 0
+      RollingResistance: 0
+      TangentSpeed: 0
+  - Entity: 0
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [0, 0, 5.510007]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 0
+        PerspectiveFOV: 0.7853982
+        PerspectiveNear: 0.01
+        PerspectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false

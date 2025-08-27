@@ -33,6 +33,10 @@ namespace Razel
 		// 获取主相机实体
 		Entity GetPrimaryCameraEntity();
 
+		const PhysicsWorldSettings GetPhysicsWorldSettings() const;
+		void SetPhysicsWorldSettings(PhysicsWorldSettings physicsWorldSettings);;
+		PhysicsWorldSettings m_PhysicsWorldSettings;
+
 		entt::registry m_Registry;
 
 	private:
@@ -42,7 +46,6 @@ namespace Razel
 		uint32_t m_ViewportWidth = 0, m_ViewportHeight = 0;
 
 		uint32_t m_PhysicsWorldId;
-		PhysicsWorldSettings m_PhysicsWorldSettings;
 
 		friend class Entity;
 		friend class SceneSerializer;
