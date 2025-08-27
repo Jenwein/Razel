@@ -218,11 +218,11 @@ namespace Razel
 			char buffer[256];
 			memset(buffer, 0, sizeof(buffer));
 			std::strncpy(buffer, tag.c_str(), sizeof(buffer));
-			
+
 			//const char* tagstr = tag.c_str();
 			//std::array<char, 256> buffer = { 0 };
 			//std::copy(tagstr, tagstr + strlen(tagstr), buffer.data());
-			if (ImGui::InputText("##Tag", buffer, sizeof(buffer))) 
+			if (ImGui::InputText("##Tag", buffer, sizeof(buffer)))
 			{
 				tag = std::string(buffer);
 			}
@@ -238,23 +238,37 @@ namespace Razel
 
 		if (ImGui::BeginPopup("AddComponent"))
 		{
-			if (ImGui::MenuItem("Camera"))
+			if (!m_SelectionContext.HasComponent<CameraComponent>()) 
 			{
-				if (!m_SelectionContext.HasComponent<CameraComponent>())
+				if (ImGui::MenuItem("Camera"))
+				{
 					m_SelectionContext.AddComponent<CameraComponent>();
-				else
-					RZ_CORE_WARN("This entity already has the Camera Component!");
-				
-				ImGui::CloseCurrentPopup();
+					ImGui::CloseCurrentPopup();
+				}
 			}
-			if (ImGui::MenuItem("Sprite Renderer"))
+			if (!m_SelectionContext.HasComponent<SpriteRendererComponent>())
 			{
-				if (!m_SelectionContext.HasComponent<SpriteRendererComponent>())
+				if (ImGui::MenuItem("Sprite Renderer"))
+				{
 					m_SelectionContext.AddComponent<SpriteRendererComponent>();
-				else
-					RZ_CORE_WARN("This entity already has the Sprite Renderer Component!");
-
-				ImGui::CloseCurrentPopup();
+					ImGui::CloseCurrentPopup();
+				}
+			}
+			if (!m_SelectionContext.HasComponent<Rigidbody2DComponent>())
+			{
+				if (ImGui::MenuItem("Rigidbody 2D"))
+				{
+					m_SelectionContext.AddComponent<Rigidbody2DComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+			}
+			if (!m_SelectionContext.HasComponent<BoxCollider2DComponent>())
+			{
+				if (ImGui::MenuItem("Box Collider 2D"))
+				{
+					m_SelectionContext.AddComponent<BoxCollider2DComponent>();
+					ImGui::CloseCurrentPopup();
+				}
 			}
 			ImGui::EndPopup();
 		}
@@ -348,6 +362,41 @@ namespace Razel
 				ImGui::EndDragDropTarget();
 			}
 			ImGui::DragFloat("Tiling Factor", &component.TilingFactor, 0.1f, 0.0f, 100.0f);
+		});
+
+		// 如果有Rigidbody2DComponent组件，绘制相关内容
+		DrawComponent<Rigidbody2DComponent>("Rigidbody 2D", entity, [](auto& component) {
+			const char* bodyTypeStrings[] = { "Static", "Dynamic", "Kinematic" };
+			const char* currentBodyTypeString = bodyTypeStrings[(int)component.Type];
+
+			if (ImGui::BeginCombo("Body Type", currentBodyTypeString))
+			{
+				for (int i = 0; i < 2; i++)
+				{
+					bool isSelected = currentBodyTypeString == bodyTypeStrings[i];
+					if (ImGui::Selectable(bodyTypeStrings[i], isSelected))
+					{
+						currentBodyTypeString = bodyTypeStrings[i];
+						component.Type = (Rigidbody2DComponent::BodyType)i;
+					}
+
+					if (isSelected)
+						ImGui::SetItemDefaultFocus();
+				}
+				ImGui::EndCombo();
+			}
+			ImGui::Checkbox("Fixed Rotation", &component.FixedRotation);
+
+		});
+
+		// 如果有BoxCollider2DComponent组件，绘制相关内容
+		DrawComponent<BoxCollider2DComponent>("Box Collider 2D", entity, [](auto& component) {
+			ImGui::DragFloat2("Offset", glm::value_ptr(component.Offset));
+			ImGui::DragFloat2("Size", glm::value_ptr(component.Offset));
+			ImGui::DragFloat("Density", &component.Density, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("Friction", &component.Friction, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("Restitution", &component.Restitution, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("Restitution Threshold", &component.RestitutionThreshold, 0.01f, 0.0f);
 		});
 	}
 }

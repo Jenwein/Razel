@@ -33,7 +33,7 @@ workspace "Razel"
 	IncludeDir["entt"] = "%{wks.location}/Razel/vendor/entt/include"
 	IncludeDir["yaml_cpp"] = "%{wks.location}/Razel/vendor/yaml-cpp/include"
 	IncludeDir["ImGuizmo"] = "%{wks.location}/Razel/vendor/ImGuizmo"
-	IncludeDir["Box2D"] = "%{wks.location}/Razel/vendor/Box2D"
+	IncludeDir["Box2D"] = "%{wks.location}/Razel/vendor/Box2D/include"
 	filter "action:vs*"
         buildoptions { "/utf-8" , "/wd4828" }
     filter {}
