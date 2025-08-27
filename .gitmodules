@@ -23,4 +23,4 @@
 [submodule "Razel/vendor/Box2D"]
 	path = Razel/vendor/Box2D
 	url = https://github.com/Jenwein/box2d.git
-	branch = Box2D_2.4
+	branch = Box2D_cpp
