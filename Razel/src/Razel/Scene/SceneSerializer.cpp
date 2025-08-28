@@ -227,7 +227,7 @@ namespace Razel
 
 			auto& bc2dComponent = entity.GetComponent<BoxCollider2DComponent>();
 			out << YAML::Key << "Offset" << YAML::Value << bc2dComponent.Offset;
-			out << YAML::Key << "Density" << YAML::Value << bc2dComponent.Size;
+			out << YAML::Key << "Size" << YAML::Value << bc2dComponent.Size;
 			out << YAML::Key << "Density" << YAML::Value << bc2dComponent.Density;
 			out << YAML::Key << "Friction" << YAML::Value << bc2dComponent.Friction;
 			out << YAML::Key << "Restitution" << YAML::Value << bc2dComponent.Restitution;
@@ -247,8 +247,8 @@ namespace Razel
 		out << YAML::BeginMap;
 		out << YAML::Key << "Scene" << YAML::Value << "Untitled";
 
-		const auto physicsWorldSettings = m_Scene->GetPhysicsWorldSettings();
-		out << YAML::Key << "PhysicsWorldSettings" << YAML::Value << YAML::BeginMap;
+		const auto physicsWorldSettings = m_Scene->m_PhysicsWorldSettings;
+		out << YAML::Key << "PhysicsWorld" << YAML::Value << YAML::BeginMap;
 
 		out << YAML::Key << "Gravity" << YAML::Value << physicsWorldSettings.Gravity;
 		out << YAML::Key << "RestitutionThreshold" << YAML::Value << physicsWorldSettings.RestitutionThreshold;
@@ -293,12 +293,11 @@ namespace Razel
 		RZ_CORE_TRACE("Deserializing scene {0}", sceneName);
 
 
-		auto physicsWorldSettings = data["PhysicsWorldSettings"];
-		if (physicsWorldSettings)
+		auto physicsWorldData = data["PhysicsWorld"];
+		if (physicsWorldData)
 		{
-			m_Scene->SetPhysicsWorldSettings({ data["Gravity"].as<glm::vec2>(),
-											   data["RestitutionThreshold"].as<float>() 
-											});
+			m_Scene->m_PhysicsWorldSettings = { physicsWorldData["Gravity"].as<glm::vec2>(),
+												physicsWorldData["RestitutionThreshold"].as<float>() };
 		}
 		// 获取实体数据
 		auto entities = data["Entities"];
@@ -359,12 +358,12 @@ namespace Razel
 				}
 
 				// 刚体组件
-				auto rigidbody2DComponent = entity["RigidBody2DComponent"];
+				auto rigidbody2DComponent = entity["Rigidbody2DComponent"];
 				if (rigidbody2DComponent)
 				{
 					auto& rb2d = deserializedEntity.AddComponent<Rigidbody2DComponent>();
-					rb2d.Type = RigidBody2DBodyTypeFromString(rigidbody2DComponent["Type"].as<std::string>());
-					rb2d.FixedRotation = rigidbody2DComponent["FixedRotation "].as<float>();
+					rb2d.Type = RigidBody2DBodyTypeFromString(rigidbody2DComponent["BodyType"].as<std::string>());
+					rb2d.FixedRotation = rigidbody2DComponent["FixedRotation"].as<bool>();
 				}
 
 				// 碰撞体组件

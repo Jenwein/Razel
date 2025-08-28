@@ -212,16 +212,6 @@ namespace Razel
 		return {};
 	}
 
-	const Razel::PhysicsWorldSettings Scene::GetPhysicsWorldSettings() const
-	{
-		return m_PhysicsWorldSettings;
-	}
-
-	void Scene::SetPhysicsWorldSettings(PhysicsWorldSettings physicsWorldSettings)
-	{
-		m_PhysicsWorldSettings = physicsWorldSettings;
-	}
-
 	template<typename T>
 	void Scene::OnComponentAdded(Entity entity, T& component)
 	{

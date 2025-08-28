@@ -1,73 +1,13 @@
 Scene: Untitled
-PhysicsWorldSettings:
+PhysicsWorld:
   Gravity: [0, -9.8]
   RestitutionThreshold: 0.5
 Entities:
-  - Entity: 1048577
-    TagComponent:
-      Tag: Cube2
-    TransformComponent:
-      Translation: [-0.004591197, -2.6059103, -0.020053582]
-      Rotation: [0.011092814, -0.05223876, -0.7480945]
-      Scale: [0.42000005, 0.42000014, 0.42000005]
-    SpriteRendererComponent:
-      Color: [0.9501779, 0.24008054, 0.24008054, 1]
-    Rigidbody2DComponent:
-      BodyType: Dynamic
-      FixedRotation: false
-    BoxCollider2DComponent:
-      Offset: [0, 0]
-      Density: [0.5, 0.5]
-      Density: 1
-      Friction: 0
-      Restitution: 0
-      RollingResistance: 0
-      TangentSpeed: 0
-  - Entity: 2
-    TagComponent:
-      Tag: Floor
-    TransformComponent:
-      Translation: [-0.10575923, -4.8007846, -9.313226e-10]
-      Rotation: [0, 0, 0]
-      Scale: [45.19928, 0.68639624, 1]
-    SpriteRendererComponent:
-      Color: [0.29399356, 0.9252669, 0.24037184, 1]
-    Rigidbody2DComponent:
-      BodyType: Static
-      FixedRotation: false
-    BoxCollider2DComponent:
-      Offset: [0, 0]
-      Density: [0.5, 0.5]
-      Density: 1
-      Friction: 0
-      Restitution: 0
-      RollingResistance: 0
-      TangentSpeed: 0
   - Entity: 3
-    TagComponent:
-      Tag: Cube1
-    TransformComponent:
-      Translation: [0.013430715, -0.65429497, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.45, 0.45, 0.45]
-    SpriteRendererComponent:
-      Color: [0.21409303, 0.37327415, 0.87188613, 1]
-    Rigidbody2DComponent:
-      BodyType: Dynamic
-      FixedRotation: false
-    BoxCollider2DComponent:
-      Offset: [0, 0]
-      Density: [0.5, 0.5]
-      Density: 1
-      Friction: 0
-      Restitution: 0
-      RollingResistance: 0
-      TangentSpeed: 0
-  - Entity: 0
     TagComponent:
       Tag: Camera
     TransformComponent:
-      Translation: [0, 0, 5.510007]
+      Translation: [0, 0, 4.860397]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     CameraComponent:
@@ -81,3 +21,63 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
+  - Entity: 2
+    TagComponent:
+      Tag: Floor
+    TransformComponent:
+      Translation: [-0.01999855, -1.7696724, 0]
+      Rotation: [0, 0, 0]
+      Scale: [17.4051, 0.3823348, 1]
+    SpriteRendererComponent:
+      Color: [0.98932385, 0.28517875, 0.28517875, 1]
+    Rigidbody2DComponent:
+      BodyType: Static
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.53
+      Restitution: 0
+      RollingResistance: 0
+      TangentSpeed: 0
+  - Entity: 1
+    TagComponent:
+      Tag: Cube2
+    TransformComponent:
+      Translation: [-0.15553409, 2.8673387, 2.3047285]
+      Rotation: [0.25036722, -0.27560672, 1.5707976]
+      Scale: [1.2055589, 1.0724797, 0.44999993]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+    Rigidbody2DComponent:
+      BodyType: Dynamic
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.63
+      Restitution: 0
+      RollingResistance: 0
+      TangentSpeed: 0
+  - Entity: 0
+    TagComponent:
+      Tag: Cube1
+    TransformComponent:
+      Translation: [-1.217554, 1.120601, 0.60431004]
+      Rotation: [0.08403275, -0.11687867, -1.8800822e-05]
+      Scale: [1.1485146, 1.245757, 0.44999993]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+    Rigidbody2DComponent:
+      BodyType: Dynamic
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.55
+      Restitution: 0
+      RollingResistance: 0
+      TangentSpeed: 0
