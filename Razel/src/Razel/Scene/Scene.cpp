@@ -3,6 +3,7 @@
 #include "Entity.h"
 
 #include "Components.h"
+#include "ScriptableEntity.h"
 #include "Razel/Renderer/Renderer2D.h"
 
 // Box2D
@@ -33,7 +34,13 @@ namespace Razel
 
 	Entity Scene::CreateEntity(const std::string& name)
 	{
+		return CreateEntity(UUID(), name);
+	}
+
+	Entity Scene::CreateEntity(UUID uuid, const std::string& name /*= std::string()*/)
+	{
 		Entity entity = { m_Registry.create(),this };
+		entity.AddComponent<IDComponent>(uuid);
 		entity.AddComponent<TransformComponent>();
 		auto& tag = entity.AddComponent<TagComponent>(name);
 		tag.Tag = name.empty() ? "Entity" : name;
@@ -199,7 +206,6 @@ namespace Razel
 		}
 	}
 
-
 	Entity Scene::GetPrimaryCameraEntity()
 	{
 		auto view = m_Registry.view<CameraComponent>();
@@ -215,7 +221,10 @@ namespace Razel
 	template<typename T>
 	void Scene::OnComponentAdded(Entity entity, T& component)
 	{
-		static_assert(false);
+	}
+	template<>
+	void Scene::OnComponentAdded<IDComponent>(Entity entity, IDComponent& component)
+	{
 	}
 	template<>
 	void Scene::OnComponentAdded<TransformComponent>(Entity entity, TransformComponent& component)

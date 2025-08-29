@@ -3,7 +3,7 @@ PhysicsWorld:
   Gravity: [0, -9.8]
   RestitutionThreshold: 0.5
 Entities:
-  - Entity: 3
+  - Entity: 0
     TagComponent:
       Tag: Camera
     TransformComponent:
@@ -21,7 +21,7 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
-  - Entity: 2
+  - Entity: 1
     TagComponent:
       Tag: Floor
     TransformComponent:
@@ -41,13 +41,13 @@ Entities:
       Restitution: 0
       RollingResistance: 0
       TangentSpeed: 0
-  - Entity: 1
+  - Entity: 2
     TagComponent:
       Tag: Cube2
     TransformComponent:
-      Translation: [-0.15553409, 2.8673387, 2.3047285]
-      Rotation: [0.25036722, -0.27560672, 1.5707976]
-      Scale: [1.2055589, 1.0724797, 0.44999993]
+      Translation: [0.793174, 3.3604565, 0]
+      Rotation: [0, 0, 3.422987e-06]
+      Scale: [0.9999962, 0.9999962, 1]
     SpriteRendererComponent:
       Color: [1, 1, 1, 1]
     Rigidbody2DComponent:
@@ -61,13 +61,13 @@ Entities:
       Restitution: 0
       RollingResistance: 0
       TangentSpeed: 0
-  - Entity: 0
+  - Entity: 3
     TagComponent:
       Tag: Cube1
     TransformComponent:
-      Translation: [-1.217554, 1.120601, 0.60431004]
-      Rotation: [0.08403275, -0.11687867, -1.8800822e-05]
-      Scale: [1.1485146, 1.245757, 0.44999993]
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.99999976, 0.9999996, 0.9999994]
     SpriteRendererComponent:
       Color: [1, 1, 1, 1]
     Rigidbody2DComponent:

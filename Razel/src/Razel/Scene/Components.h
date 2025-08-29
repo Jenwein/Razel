@@ -1,5 +1,9 @@
 #pragma once
 
+#include "SceneCamera.h"
+#include "Razel/Core/UUID.h"
+#include "Razel/Renderer/Texture.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -7,12 +11,16 @@
 #include <glm/gtx/quaternion.hpp>
 
 
-#include "SceneCamera.h"
-#include "ScriptableEntity.h"
-#include "Razel/Renderer/Texture.h"
-
 namespace Razel
 {
+	struct IDComponent
+	{
+		UUID ID;
+
+		IDComponent() = default;
+		IDComponent(const IDComponent&) = default;
+	};
+
 	struct TagComponent
 	{
 		std::string Tag;
@@ -69,11 +77,11 @@ namespace Razel
 		bool Primary = true;			//TODO: 考虑移动到Scene中
 		bool FixedAspectRatio = false;	//固定宽高比
 
-
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
 	};
 
+	class ScriptableEntity;
 	struct NativeScriptComponent
 	{
 		ScriptableEntity* Instance = nullptr;
@@ -123,8 +131,4 @@ namespace Razel
 		BoxCollider2DComponent() = default;
 		BoxCollider2DComponent(const BoxCollider2DComponent&) = default;
 	};
-
-
-
-
 }

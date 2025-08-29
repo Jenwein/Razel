@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Razel/Core/Timestep.h"
-
+#include "Razel/Core/UUID.h"
 #include "Razel/Renderer/EditorCamera.h"
+
 #include "entt.hpp"
 
 namespace Razel
@@ -21,6 +22,7 @@ namespace Razel
 		~Scene();
 
 		Entity CreateEntity(const std::string& name = std::string());
+		Entity CreateEntity(UUID uuid,const std::string& name = std::string());
 		void DestroyEntity(Entity entity);
 
 		void OnRuntimeStart();

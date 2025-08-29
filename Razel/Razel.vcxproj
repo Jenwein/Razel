@@ -173,6 +173,7 @@
     <ClInclude Include="src\Razel\Core\MouseCodes.h" />
     <ClInclude Include="src\Razel\Core\PlatformDetection.h" />
     <ClInclude Include="src\Razel\Core\Timestep.h" />
+    <ClInclude Include="src\Razel\Core\UUID.h" />
     <ClInclude Include="src\Razel\Core\Window.h" />
     <ClInclude Include="src\Razel\Debug\Instrumentor.h" />
     <ClInclude Include="src\Razel\Events\ApplicationEvent.h" />
@@ -639,6 +640,7 @@
     <ClCompile Include="src\Razel\Core\Layer.cpp" />
     <ClCompile Include="src\Razel\Core\LayerStack.cpp" />
     <ClCompile Include="src\Razel\Core\Log.cpp" />
+    <ClCompile Include="src\Razel\Core\UUID.cpp" />
     <ClCompile Include="src\Razel\Core\Window.cpp" />
     <ClCompile Include="src\Razel\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Razel\ImGui\ImGuiLayer.cpp" />

@@ -148,8 +148,10 @@ namespace Razel
 
 	static void SerializerEntity(YAML::Emitter& out, Entity entity)
 	{
+		RZ_CORE_ASSERT(entity.HasComponent<IDComponent>());
+
 		out << YAML::BeginMap;	// Entity
-		out << YAML::Key << "Entity" << YAML::Value << (uint64_t)(uint32_t)entity;	//TODO
+		out << YAML::Key << "Entity" << YAML::Value << entity.GetUUID();	//TODO
 		
 
 		if (entity.HasComponent<TagComponent>())
@@ -318,7 +320,7 @@ namespace Razel
 				
 				// 使用反序列化后得到的实体信息来创建实体,
 				// 并根据保存的实体组件信息设置该新实体的组件
-				Entity deserializedEntity = m_Scene->CreateEntity(name);
+				Entity deserializedEntity = m_Scene->CreateEntity(uuid, name);
 				auto transformComponent = entity["TransformComponent"];
 				if (transformComponent)
 				{
