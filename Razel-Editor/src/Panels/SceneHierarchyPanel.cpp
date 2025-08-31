@@ -32,25 +32,29 @@ namespace Razel
 	void SceneHierarchyPanel::OnImGuiRender()
 	{
 		ImGui::Begin("Scene Hierarchy");
-		m_Context->m_Registry.view<entt::entity>().each([&](auto entityID) {
-			Entity entity{ entityID, m_Context.get() };
-			DrawEntityNode(entity);
-		});
-		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
-			m_SelectionContext = {};	
-		// 右键空白处
-		if (ImGui::BeginPopupContextWindow(nullptr, ImGuiPopupFlags_MouseButtonRight| ImGuiPopupFlags_NoOpenOverItems))
-		{
-			if (ImGui::MenuItem("Create Empty Entity"))
-			{
-				m_Context->CreateEntity("Empty Entity");
-			}
 
-			ImGui::EndPopup();
+		if (m_Context)
+		{
+			m_Context->m_Registry.view<entt::entity>().each([&](auto entityID) {
+				Entity entity{ entityID, m_Context.get() };
+				DrawEntityNode(entity);
+				});
+
+			if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
+				m_SelectionContext = {};
+			// 右键空白处
+			if (ImGui::BeginPopupContextWindow(nullptr, ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems))
+			{
+				if (ImGui::MenuItem("Create Empty Entity"))
+				{
+					m_Context->CreateEntity("Empty Entity");
+				}
+
+				ImGui::EndPopup();
+			}
 		}
 
 		ImGui::End();
-			
 		ImGui::Begin("Properties");
 		if (m_SelectionContext)
 		{

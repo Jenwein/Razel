@@ -3,15 +3,15 @@ PhysicsWorld:
   Gravity: [0, -9.8]
   RestitutionThreshold: 0.5
 Entities:
-  - Entity: 0
+  - Entity: 2
     TagComponent:
-      Tag: SQ
+      Tag: SQ2
     TransformComponent:
       Translation: [0, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
-      Color: [1, 1, 1, 1]
+      Color: [1, 0.4627451, 1, 1]
   - Entity: 1
     TagComponent:
       Tag: CA
@@ -30,12 +30,12 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
-  - Entity: 2
+  - Entity: 0
     TagComponent:
-      Tag: SQ2
+      Tag: SQ
     TransformComponent:
       Translation: [0, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
-      Color: [1, 0.4627451, 1, 1]
+      Color: [1, 1, 1, 1]

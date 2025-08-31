@@ -7,7 +7,7 @@ Entities:
     TagComponent:
       Tag: Camera
     TransformComponent:
-      Translation: [0, 0, 4.860397]
+      Translation: [0, 0, 14.064725]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     CameraComponent:
@@ -25,9 +25,9 @@ Entities:
     TagComponent:
       Tag: Floor
     TransformComponent:
-      Translation: [-0.01999855, -1.7696724, 0]
-      Rotation: [0, 0, 0]
-      Scale: [17.4051, 0.3823348, 1]
+      Translation: [-0.6304128, -3.6344965, 0]
+      Rotation: [0, 0, -0.52366173]
+      Scale: [17.405102, 0.38233486, 1]
     SpriteRendererComponent:
       Color: [0.98932385, 0.28517875, 0.28517875, 1]
     Rigidbody2DComponent:
@@ -45,7 +45,7 @@ Entities:
     TagComponent:
       Tag: Cube2
     TransformComponent:
-      Translation: [0.793174, 3.3604565, 0]
+      Translation: [-1.3252218, 4.800126, 0]
       Rotation: [0, 0, 3.422987e-06]
       Scale: [0.9999962, 0.9999962, 1]
     SpriteRendererComponent:
@@ -58,14 +58,14 @@ Entities:
       Size: [0.5, 0.5]
       Density: 1
       Friction: 0.63
-      Restitution: 0
+      Restitution: 0.58
       RollingResistance: 0
       TangentSpeed: 0
   - Entity: 3
     TagComponent:
       Tag: Cube1
     TransformComponent:
-      Translation: [0, 0, 0]
+      Translation: [-3.959127, 3.532298, 7.450581e-09]
       Rotation: [0, 0, 0]
       Scale: [0.99999976, 0.9999996, 0.9999994]
     SpriteRendererComponent:
@@ -78,6 +78,26 @@ Entities:
       Size: [0.5, 0.5]
       Density: 1
       Friction: 0.55
+      Restitution: 0.5
+      RollingResistance: 0
+      TangentSpeed: 0
+  - Entity: 10898973763814275294
+    TagComponent:
+      Tag: Floor
+    TransformComponent:
+      Translation: [-0.17593336, -0.21192923, 0]
+      Rotation: [0, 0, 0.7456795]
+      Scale: [17.405088, 0.3823349, 1]
+    SpriteRendererComponent:
+      Color: [0.98932385, 0.28517875, 0.28517875, 1]
+    Rigidbody2DComponent:
+      BodyType: Static
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.53
       Restitution: 0
       RollingResistance: 0
       TangentSpeed: 0

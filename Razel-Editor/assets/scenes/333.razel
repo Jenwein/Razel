@@ -3,15 +3,6 @@ PhysicsWorld:
   Gravity: [0, -9.8]
   RestitutionThreshold: 0.5
 Entities:
-  - Entity: 0
-    TagComponent:
-      Tag: Empty Entity
-    TransformComponent:
-      Translation: [0, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    SpriteRendererComponent:
-      Color: [1, 1, 0.34117648, 1]
   - Entity: 1
     TagComponent:
       Tag: Empty Entity
@@ -30,3 +21,12 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
+  - Entity: 0
+    TagComponent:
+      Tag: Empty Entity
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 0.34117648, 1]
