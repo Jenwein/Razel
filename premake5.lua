@@ -1,8 +1,10 @@
 include "./vendor/premake/premake_customization/solution_items.lua"
+include "Dependencies.lua"
+
 workspace "Razel"
 	architecture "x86_64"
 	startproject "Razel-Editor"
-	--Ö¸¶¨¹¤×÷Çø»òÏîÄ¿µÄ¹¹½¨ÅäÖÃ¼¯£¬ÀıÈç¡°µ÷ÊÔ¡±ºÍ¡°·¢²¼¡±
+	--æŒ‡å®šå·¥ä½œåŒºæˆ–é¡¹ç›®çš„æ„å»ºé…ç½®é›†ï¼Œä¾‹å¦‚â€œè°ƒè¯•â€å’Œâ€œå‘å¸ƒâ€
 	configurations
 	{
 		"Debug",
@@ -20,25 +22,14 @@ workspace "Razel"
 		"MultiProcessorCompile"
 	}
 
-	--Êä³öÎ»ÖÃ	eg: build-Windows-x64
+	--è¾“å‡ºä½ç½®	eg: build-Windows-x64
 	outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 	
-	-- Include directories relative to root folder (solution directory)
-	IncludeDir = {}
-	IncludeDir["GLFW"] = "%{wks.location}/Razel/vendor/GLFW/include"
-	IncludeDir["Glad"] = "%{wks.location}/Razel/vendor/Glad/include"
-	IncludeDir["ImGui"] = "%{wks.location}/Razel/vendor/imgui"
-	IncludeDir["glm"] = "%{wks.location}/Razel/vendor/glm"
-	IncludeDir["stb_image"] = "%{wks.location}/Razel/vendor/stb_image"
-	IncludeDir["entt"] = "%{wks.location}/Razel/vendor/entt/include"
-	IncludeDir["yaml_cpp"] = "%{wks.location}/Razel/vendor/yaml-cpp/include"
-	IncludeDir["ImGuizmo"] = "%{wks.location}/Razel/vendor/ImGuizmo"
-	IncludeDir["Box2D"] = "%{wks.location}/Razel/vendor/Box2D/include"
 	filter "action:vs*"
         buildoptions { "/utf-8" , "/wd4828" }
     filter {}
 	externalwarnings "Off"
-	--²éÕÒ²¢Ö´ĞĞÁíÒ»¸ö½Å±¾ÎÄ¼ş£¬Ò²¾ÍÊÇ²éÕÒÂ·¾¶ÏÂµÄpremakeÎÄ¼ş²¢½«ÄÚÈİ¿½±´µ½´Ë´¦(Èç¹ûÖ®Ç°ÉĞÎ´ÔËĞĞ¹ı)
+	--æŸ¥æ‰¾å¹¶æ‰§è¡Œå¦ä¸€ä¸ªè„šæœ¬æ–‡ä»¶ï¼Œä¹Ÿå°±æ˜¯æŸ¥æ‰¾è·¯å¾„ä¸‹çš„premakeæ–‡ä»¶å¹¶å°†å†…å®¹æ‹·è´åˆ°æ­¤å¤„(å¦‚æœä¹‹å‰å°šæœªè¿è¡Œè¿‡)
 group "Dependencies"
 	include "vendor/premake"
 	include "Razel/vendor/Box2D"

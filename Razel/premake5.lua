@@ -2,7 +2,7 @@
 		kind "StaticLib"	--设置项目或配置创建的二进制对象的类型，例如控制台或窗口应用程序，或共享或静态库
 		language "C++"		--语言
 		cppdialect "C++17"
-		staticruntime "on"
+		staticruntime "off"
 
 		--设置编译的二进制目标文件的目标目录
 		targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
@@ -44,7 +44,7 @@
 			"%{IncludeDir.yaml_cpp}",
 			"%{IncludeDir.ImGuizmo}",
 			"%{IncludeDir.Box2D}",
-
+			"%{IncludeDir.VulkanSDK}",
 		}
 
 		links
@@ -75,12 +75,35 @@
 			runtime "Debug"
 			symbols "on"
 		
+			links
+			{
+				"%{Library.ShaderC_Debug}",
+				"%{Library.SPIRV_Cross_Debug}",
+				"%{Library.SPIRV_Cross_GLSL_Debug}"
+			}
+
+
 		filter "configurations:Release"
 			defines "RZ_RELEASE"
 			runtime "Release"
 			optimize "on"
 
+			links
+			{
+				"%{Library.ShaderC_Release}",
+				"%{Library.SPIRV_Cross_Release}",
+				"%{Library.SPIRV_Cross_GLSL_Release}"
+			}
+
+
 		filter "configurations:Dist"
 			defines "RZ_DIST"
 			runtime "Release"
 			optimize "on"
+			
+			links
+			{
+				"%{Library.ShaderC_Release}",
+				"%{Library.SPIRV_Cross_Release}",
+				"%{Library.SPIRV_Cross_GLSL_Release}"
+			}

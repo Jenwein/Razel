@@ -2,10 +2,11 @@
 #include "Razel/Renderer/Renderer2D.h"
 #include "Razel/Renderer/VertexArray.h"
 #include "Razel/Renderer/Shader.h"
+#include "Razel/Renderer/UniformBuffer.h"
 #include "Razel/Renderer/RenderCommand.h"
 
 #include <glm/gtc/matrix_transform.hpp>
-
+#include <glm/gtc/type_ptr.hpp>
 namespace Razel
 {
 	// 四边形顶点属性
@@ -45,6 +46,12 @@ namespace Razel
 		glm::vec4 QuadVertexPositions[4] = {};						// 四边形四个顶点位置
 		Renderer2D::Statistics Stats;								// 统计渲染
 
+		struct CameraData
+		{
+			glm::mat4 ViewProjection;
+		};
+		CameraData CameraBuffer;
+		Ref<UniformBuffer> CameraUniformBuffer;
 	};
 
 	static Renderer2DData s_Data;
@@ -103,8 +110,7 @@ namespace Razel
 		}
 
 		s_Data.TextureShader = Shader::Create("assets/shaders/Texture.glsl");
-		s_Data.TextureShader->Bind();
-		s_Data.TextureShader->SetIntArray("u_Textures", samplers,s_Data.MaxTextureSlots);
+		
 		// 设置第一个纹理槽为0
 		s_Data.TextureSlots[0] = s_Data.WhiteTexture;				
 
@@ -113,6 +119,7 @@ namespace Razel
 		s_Data.QuadVertexPositions[2] = {  0.5,  0.5, 0.0f, 1.0f };
 		s_Data.QuadVertexPositions[3] = { -0.5,  0.5, 0.0f, 1.0f };
 
+		s_Data.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer2DData::CameraData), 0);
 	}
 
 	void Renderer2D::Shutdown()
@@ -136,11 +143,9 @@ namespace Razel
 	{
 		RZ_PROFILE_FUNCTION();
 
-		glm::mat4 viewProj = camera.GetProjection() * glm::inverse(transform);
-
-		s_Data.TextureShader->Bind();
-		s_Data.TextureShader->SetMat4("u_ViewProjection", viewProj);
-
+		s_Data.CameraBuffer.ViewProjection = camera.GetProjection() * glm::inverse(transform);
+		s_Data.CameraUniformBuffer->SetData(&s_Data.CameraBuffer, sizeof(Renderer2DData::CameraData));		
+		
 		StartBatch();
 
 	}
@@ -149,11 +154,8 @@ namespace Razel
 	{
 		RZ_PROFILE_FUNCTION();
 
-		glm::mat4 viewProj = camera.GetViewProjection();
-
-		// 设置相机参数
-		s_Data.TextureShader->Bind();
-		s_Data.TextureShader->SetMat4("u_ViewProjection", viewProj);
+		s_Data.CameraBuffer.ViewProjection = camera.GetViewProjection();
+		s_Data.CameraUniformBuffer->SetData(&s_Data.CameraBuffer, sizeof(Renderer2DData::CameraData));
 
 		StartBatch();
 
@@ -177,9 +179,9 @@ namespace Razel
 
 		// 绑定纹理
 		for (uint32_t i = 0;i < s_Data.TextureSlotIndex;i++)
-		{
 			s_Data.TextureSlots[i]->Bind(i);
-		}
+
+		s_Data.TextureShader->Bind();
 
 		RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
 		s_Data.Stats.DrawCalls++;

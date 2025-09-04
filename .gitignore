@@ -17,3 +17,9 @@ bin-int/
 SandBox/RazelProfile*
 /Razel-Editor/Razel.log
 /scripts/__pycache__
+
+# Directories
+Razel/vendor/VulkanSDK
+Razel-Editor/assets/cache
+scripts/__pycache__
+/Razel/Razel.vcxproj.filters

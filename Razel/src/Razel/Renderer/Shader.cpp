@@ -14,10 +14,10 @@ namespace Razel
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::API::None: RZ_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-		case RendererAPI::API::OpenGL: return CreateRef<OpenGLShader>(filepath);
-		case RendererAPI::API::DirectX11: RZ_CORE_ASSERT(false, "RendererAPI::DirectX11 is currently not supported!"); return nullptr;
-		default: break;
+			case RendererAPI::API::None: RZ_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
+			case RendererAPI::API::OpenGL: return CreateRef<OpenGLShader>(filepath);
+			case RendererAPI::API::DirectX11: RZ_CORE_ASSERT(false, "RendererAPI::DirectX11 is currently not supported!"); return nullptr;
+			default: break;
 		}
 		RZ_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
