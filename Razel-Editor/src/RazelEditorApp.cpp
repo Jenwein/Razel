@@ -8,8 +8,8 @@ namespace Razel {
 	class RazelEditor : public Application
 	{
 	public:
-		RazelEditor()
-			: Application("Razel Editor")
+		RazelEditor(ApplicationCommandLineArgs args)
+			: Application("Razel Editor",args)
 		{
 			PushLayer(new EditorLayer());
 		}
@@ -19,9 +19,9 @@ namespace Razel {
 		}
 	};
 
-	Application* CreateApplication()
+	Application* CreateApplication(ApplicationCommandLineArgs args)
 	{
-		return new RazelEditor();
+		return new RazelEditor(args);
 	}
 
 }

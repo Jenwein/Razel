@@ -1,3 +1,3 @@
 @echo off
-python Setup.py
+.venv\Scripts\python Setup.py
 PAUSE

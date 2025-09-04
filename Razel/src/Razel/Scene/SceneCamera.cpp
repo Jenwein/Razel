@@ -27,6 +27,7 @@ namespace Razel
 	}
 	void SceneCamera::SetViewportSize(uint32_t width, uint32_t height)
 	{
+		RZ_CORE_ASSERT(width > 0 && width > 0);
 		m_AspectRatio = (float)width / (float)height;
 		RecalculateProjection();
 	}

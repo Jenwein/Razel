@@ -20,5 +20,6 @@ SandBox/RazelProfile*
 
 # Directories
 Razel/vendor/VulkanSDK
-Hazelnut/assets/cache
+Razel-Editor/assets/cache
 scripts/__pycache__
+/Razel/Razel.vcxproj.filters
