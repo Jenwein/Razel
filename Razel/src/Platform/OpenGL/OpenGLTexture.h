@@ -13,6 +13,8 @@ namespace Razel
 
 		virtual ~OpenGLTexture2D();
 
+		virtual bool IsLoaded() const override { return m_IsLoaded; }
+
 		virtual uint32_t GetWidth()const override { return m_Width; };
 		virtual uint32_t GetHeight()const override { return m_Height; };
 		virtual uint32_t GetRendererID() const override { return m_RendererID; }
@@ -29,7 +31,7 @@ namespace Razel
 		std::string m_Path;
 		uint32_t m_Width, m_Height;
 		uint32_t m_RendererID;
-
+		bool m_IsLoaded = false;
 		GLenum m_InternalFormat,m_DataFormat;
 	};
 }

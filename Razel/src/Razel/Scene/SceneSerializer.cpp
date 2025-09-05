@@ -286,7 +286,15 @@ namespace Razel
 	// 反序列化（将保存的场景数据从YAML中取出）
 	bool SceneSerializer::Deserialize(const std::string& filepath)
 	{
-		YAML::Node data = YAML::LoadFile(filepath);
+		YAML::Node data;
+		try
+		{
+			data = YAML::LoadFile(filepath);
+		}
+		catch (YAML::ParserException e)
+		{
+			return false;
+		}
 		if (!data["Scene"])
 			return false;
 

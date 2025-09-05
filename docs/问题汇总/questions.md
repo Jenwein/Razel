@@ -16,3 +16,12 @@ Razel	E:\dev\Razel\Razel\vendor\spdlog\include\spdlog\fmt\bundled\base.h	2194
 - old :	`RZ_CORE_INFO("  Vendor: {0}",glGetString(GL_VENDOR));`
 - new：    ` RZ_CORE_INFO("  Vendor: {0}",(const char*)glGetString(GL_VENDOR));`
 
+### 问题:SPIR-V流程及原理
+```cpp
+// TODO:待学习
+```
+
+### 问题:GLSub...,...Base,Name
+```cpp
+// TODO:待学习
+```
