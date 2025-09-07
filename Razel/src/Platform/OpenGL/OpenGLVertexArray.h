@@ -17,7 +17,8 @@ namespace Razel
 
 		virtual const std::vector<Ref<VertexBuffer>>& GetVertexBuffers()const override { return m_VertexBuffers; }
 		virtual const Ref<IndexBuffer>& GetIndexBuffer()const override { return m_IndexBuffer; }
-	
+		virtual const uint32_t GetRendererID()const override { return m_RendererID; }
+
 	private:
 		uint32_t m_RendererID;
 		uint32_t m_VertexBufferIndex = 0;

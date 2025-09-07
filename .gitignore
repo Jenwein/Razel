@@ -23,3 +23,4 @@ Razel/vendor/VulkanSDK
 Razel-Editor/assets/cache
 scripts/__pycache__
 /Razel/Razel.vcxproj.filters
+/Razel-Editor/imgui.ini

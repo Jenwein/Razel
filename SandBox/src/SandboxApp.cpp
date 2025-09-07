@@ -7,7 +7,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Platform/OpenGL/OpenGLShader.h"
-#include <Razel/Core/EntryPoint.h>
 #include "ExampleLayer.h"
 #include "Sandbox2D.h"
 
@@ -15,7 +14,8 @@
 class Sandbox : public Razel::Application
 {
 public:
-	Sandbox()
+	Sandbox(Razel::ApplicationCommandLineArgs args)
+		:Application("SandBox", args)
 	{
 		// PushLayer(new ExampleLayer());
 		PushLayer(new Sandbox2D());
@@ -27,7 +27,7 @@ public:
 
 };
 
-Razel::Application* Razel::CreateApplication()
+Razel::Application* Razel::CreateApplication(Razel::ApplicationCommandLineArgs args)
 {
-	return new Sandbox();
+	return new Sandbox(args);
 }

@@ -79,6 +79,7 @@ namespace Razel
 		// 复制组件
 		CopyComponent<TransformComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<SpriteRendererComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+		CopyComponent<CircleRendererComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<CameraComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<NativeScriptComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<Rigidbody2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
@@ -200,18 +201,16 @@ namespace Razel
 		// Render 2D
 		Camera* mainCamera = nullptr;
 		glm::mat4 cameraTransform;
-
 		{
-			auto view = m_Registry.view<TransformComponent,CameraComponent>();
-			for (auto e : view)
+			auto view = m_Registry.view<TransformComponent, CameraComponent>();
+			for (auto entity : view)
 			{
-				auto [tc, camera] = view.get<TransformComponent, CameraComponent>(e);
+				auto [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
 
-				// 如果是主相机
 				if (camera.Primary)
 				{
 					mainCamera = &camera.Camera;
-					cameraTransform = tc.GetTransform();
+					cameraTransform = transform.GetTransform();
 					break;
 				}
 			}
@@ -220,28 +219,59 @@ namespace Razel
 		if (mainCamera)
 		{
 			Renderer2D::BeginScene(*mainCamera, cameraTransform);
-			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-			for (auto entity : group)
+
+			// Draw sprites
 			{
-				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-				Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
+				auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+				for (auto entity : group)
+				{
+					auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+
+					Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
+				}
 			}
+
+			// Draw circles
+			{
+				auto view = m_Registry.view<TransformComponent, CircleRendererComponent>();
+				for (auto entity : view)
+				{
+					auto [transform, circle] = view.get<TransformComponent, CircleRendererComponent>(entity);
+
+					Renderer2D::DrawCircle(transform.GetTransform(), circle.Color, circle.Thickness, circle.Fade, (int)entity);
+				}
+			}
+
 			Renderer2D::EndScene();
 		}
+
 	}
 
 	void Scene::OnUpdateEditor(Timestep ts, EditorCamera& camera)
 	{
 		Renderer2D::BeginScene(camera);
 
-		auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-		for (auto entity : group)
+		// Draw sprites
 		{
-			auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+			for (auto entity : group)
+			{
+				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 
-			Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
+				Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
+			}
 		}
 
+		// Draw circles
+		{
+			auto view = m_Registry.view<TransformComponent, CircleRendererComponent>();
+			for (auto entity : view)
+			{
+				auto [transform, circle] = view.get<TransformComponent, CircleRendererComponent>(entity);
+
+				Renderer2D::DrawCircle(transform.GetTransform(), circle.Color, circle.Thickness, circle.Fade, (int)entity);
+			}
+		}
 		Renderer2D::EndScene();
 	}
 
@@ -268,6 +298,7 @@ namespace Razel
 
 		CopyComponentIfExists<TransformComponent>(newEntity, entity);
 		CopyComponentIfExists<SpriteRendererComponent>(newEntity, entity);
+		CopyComponentIfExists<CircleRendererComponent>(newEntity, entity);
 		CopyComponentIfExists<CameraComponent>(newEntity, entity);
 		CopyComponentIfExists<NativeScriptComponent>(newEntity, entity);
 		CopyComponentIfExists<Rigidbody2DComponent>(newEntity, entity);
@@ -307,6 +338,10 @@ namespace Razel
 	}
 	template<>
 	void Scene::OnComponentAdded<SpriteRendererComponent>(Entity entity, SpriteRendererComponent& component)
+	{
+	}
+	template<>
+	void Scene::OnComponentAdded<CircleRendererComponent>(Entity entity, CircleRendererComponent& component)
 	{
 	}
 	template<>

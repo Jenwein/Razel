@@ -1,5 +1,3 @@
-// Basic Texture Shader
-
 #type vertex
 #version 450 core
 
