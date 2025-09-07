@@ -549,11 +549,11 @@ namespace Razel {
 
 	void EditorLayer::SaveSceneAs()
 	{
-		std::optional<std::string> filepath= FileDialogs::SaveFile("Razel Scene (*.razel)\0*.razel\0");
-		if (filepath)
+		std::string filepath= FileDialogs::SaveFile("Razel Scene (*.razel)\0*.razel\0");
+		if (!filepath.empty())
 		{
-			SerializeScene(m_ActiveScene, *filepath);
-			m_EditorScenePath = *filepath;
+			SerializeScene(m_ActiveScene, filepath);
+			m_EditorScenePath = filepath;
 		}
 	}
 
