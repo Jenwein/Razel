@@ -516,6 +516,9 @@ namespace Razel {
 
 	void EditorLayer::OpenScene(const std::filesystem::path& path)
 	{
+		if (m_SceneState != SceneState::Edit)
+			OnSceneStop();
+
 		if (path.extension().string() != ".razel")
 		{
 			RZ_WARN("Could not load {0} - not a scene file", path.filename().string());
@@ -526,9 +529,12 @@ namespace Razel {
 		SceneSerializer serializer(newScene);
 		if (serializer.Deserialize(path.string()))
 		{
-			m_ActiveScene = newScene;
-			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+			m_EditorScene = newScene;
+			m_EditorScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_SceneHierarchyPanel.SetContext(m_EditorScene);
+
+			m_ActiveScene = m_EditorScene;
+			m_EditorScenePath = path;
 		}
 	}
 
@@ -542,11 +548,11 @@ namespace Razel {
 
 	void EditorLayer::SaveSceneAs()
 	{
-		std::optional<std::string> filepath= FileDialogs::SaveFile("Razel Scene (*.razel)\0*.razel\0");
-		if (filepath)
+		std::string filepath= FileDialogs::SaveFile("Razel Scene (*.razel)\0*.razel\0");
+		if (!filepath.empty())
 		{
-			SerializeScene(m_ActiveScene, *filepath);
-			m_EditorScenePath = *filepath;
+			SerializeScene(m_ActiveScene, filepath);
+			m_EditorScenePath = filepath;
 		}
 	}
 
