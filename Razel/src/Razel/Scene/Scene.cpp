@@ -151,7 +151,7 @@ namespace Razel
 			{
 				auto& cc2d = entity.GetComponent<CircleCollider2DComponent>();
 
-				b2Circle circleShape = { {cc2d.Offset.x, cc2d.Offset.y}, cc2d.Radius };
+				b2Circle circleShape = { {cc2d.Offset.x, cc2d.Offset.y}, transform.Scale.x * cc2d.Radius };
 
 				b2ShapeDef shapeDef = b2DefaultShapeDef();
 				shapeDef.density = cc2d.Density;

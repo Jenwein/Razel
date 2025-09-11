@@ -293,13 +293,6 @@ namespace Razel
 			ImGui::EndPopup();
 		}
 
-		auto& gravity = m_Context->m_PhysicsWorldSettings.Gravity;
-		auto& restitutionThreshold = m_Context->m_PhysicsWorldSettings.RestitutionThreshold;
-
-		ImGui::DragFloat2("gravity", glm::value_ptr(gravity), 0.01f, 0.0f);
-		ImGui::DragFloat("Restitution Threshold", &restitutionThreshold, 0.01f, 0.0f);
-
-
 		ImGui::PopItemWidth();
 
 		// 如果有Transform组件，绘制相关内容
