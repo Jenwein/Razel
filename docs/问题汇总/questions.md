@@ -16,3 +16,4 @@ Razel	E:\dev\Razel\Razel\vendor\spdlog\include\spdlog\fmt\bundled\base.h	2194
 - old :	`RZ_CORE_INFO("  Vendor: {0}",glGetString(GL_VENDOR));`
 - new：    ` RZ_CORE_INFO("  Vendor: {0}",(const char*)glGetString(GL_VENDOR));`
 
+### 物理系统是如何实现的,RunTime指针的作用

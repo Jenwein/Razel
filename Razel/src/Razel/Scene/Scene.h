@@ -36,6 +36,12 @@ namespace Razel
 
 		void DuplicateEntity(Entity entity);
 
+		template<typename...Components>
+		auto GetAllEntitiesWith()
+		{
+			return m_Registry.view<Components...>();
+		}
+
 		// 获取主相机实体
 		Entity GetPrimaryCameraEntity();
 

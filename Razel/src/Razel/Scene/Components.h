@@ -141,4 +141,23 @@ namespace Razel
 		BoxCollider2DComponent() = default;
 		BoxCollider2DComponent(const BoxCollider2DComponent&) = default;
 	};
+	// 圆形碰撞体
+	struct CircleCollider2DComponent
+	{
+		glm::vec2 Offset = { 0.0f,0.0f };
+		float Radius = 0.5f;
+
+		// TODO:作为物理材质
+		float Density = 1.0f;		// 密度
+		float Friction;				// 摩擦系数
+		float Restitution;			// 弹跳/恢复系数
+		float RollingResistance;	// 滚动阻力
+		float TangentSpeed;			// 传送带切线速度
+
+		// Storage for runtime
+		uint64_t RuntimeShapeID;
+
+		CircleCollider2DComponent() = default;
+		CircleCollider2DComponent(const CircleCollider2DComponent&) = default;
+	};
 }
