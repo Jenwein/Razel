@@ -1,0 +1,32 @@
+Scene: Untitled
+PhysicsWorld:
+  Gravity: [0, -9.8]
+  RestitutionThreshold: 0.5
+Entities:
+  - Entity: 0
+    TagComponent:
+      Tag: right
+    TransformComponent:
+      Translation: [0, 0.5, 0]
+      Rotation: [1.5707961, 0.78539824, -4.214685e-08]
+      Scale: [0.9999999, 0.9999993, 0.99999887]
+    SpriteRendererComponent:
+      Color: [0.8813257, 0.18257114, 0.9679715, 1]
+  - Entity: 1
+    TagComponent:
+      Tag: left
+    TransformComponent:
+      Translation: [0.35321105, 0, 0.35321096]
+      Rotation: [0, 0.78539824, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [0.6603288, 0.214359, 0.66192174, 1]
+  - Entity: 2
+    TagComponent:
+      Tag: top
+    TransformComponent:
+      Translation: [-0.35207698, 0, 0.352077]
+      Rotation: [0, -0.78539824, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [0.7824096, 0.34419522, 0.9039146, 1]
