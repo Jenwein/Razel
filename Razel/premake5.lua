@@ -44,7 +44,7 @@
 			"%{IncludeDir.yaml_cpp}",
 			"%{IncludeDir.ImGuizmo}",
 			"%{IncludeDir.Box2D}",
-
+			"%{IncludeDir.assimp}",
 		}
 
 		links
@@ -54,7 +54,7 @@
 			"Glad",
 			"ImGui",
 			"yaml-cpp",
-			"opengl32.lib"
+			"opengl32.lib",
 		}
 
 		filter "files:vendor/ImGuizmo/**.cpp"
@@ -74,13 +74,27 @@
 			defines "RZ_DEBUG"
 			runtime "Debug"
 			symbols "on"
+
+			-- Á´½Ó Assimp Debug ¿â
+			libdirs { "%{wks.location}/Razel/vendor/assimp/bin/Debug" }
+			links { "assimp-vc143-mtd.lib" }
 		
 		filter "configurations:Release"
 			defines "RZ_RELEASE"
 			runtime "Release"
 			optimize "on"
 
+			-- Á´½Ó Assimp Release ¿â
+			libdirs { "%{wks.location}/Razel/vendor/assimp/bin/Release" }
+			links { "assimp-vc143-mt.lib" }
+
+
 		filter "configurations:Dist"
 			defines "RZ_DIST"
 			runtime "Release"
 			optimize "on"
+
+			-- Á´½Ó Assimp Release ¿â
+			libdirs { "%{wks.location}/Razel/vendor/assimp/bin/Release" }
+			links { "assimp-vc143-mt.lib" }
+
