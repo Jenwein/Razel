@@ -21,8 +21,8 @@ from tencentcloud.ai3d.v20250513 import ai3d_client, models
 TENCENTCLOUD_REGION = "ap-guangzhou"
 # 轮询间隔时间（秒）
 POLLING_INTERVAL_SECONDS = 20
-# 最大等待时间（秒），例如30分钟
-MAX_WAIT_TIME_SECONDS = 1800
+# 最大等待时间（秒），例如60分钟
+MAX_WAIT_TIME_SECONDS = 3600
 
 def sanitize_filename(text):
     """清理文本，使其成为一个合法的文件名"""
@@ -125,9 +125,8 @@ def main():
             sys.exit(1)
 
         for model_info in resp_query.ResultFile3Ds:
-            # 假设 model_info 内部结构仍然包含 Url 和 FileType
             url = model_info.Url
-            file_type = model_info.FileType.lower()
+            file_type = model_info.Type.lower()
             
             base_name = sanitize_filename(args.prompt) if args.prompt else f"image_model_{job_id}"
             filename = f"{base_name}.{file_type}"
