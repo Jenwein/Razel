@@ -89,7 +89,7 @@ namespace Razel
 			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;;
 			bool opened = ImGui::TreeNodeEx((void*)12138, flags, tag.c_str());
 			if (opened)
-				ImGui::TreePop();			
+				ImGui::TreePop();
 			ImGui::TreePop();
 		}
 
@@ -108,7 +108,7 @@ namespace Razel
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		auto boldFont = io.Fonts->Fonts[0];
-		
+
 		ImGui::PushID(label.c_str());
 
 		// 启用两列布局
@@ -173,7 +173,7 @@ namespace Razel
 		ImGui::PopID();
 	}
 
-	template<typename T,typename UIFunction>
+	template<typename T, typename UIFunction>
 	static void DrawComponent(const std::string& name, Entity entity, UIFunction uiFUnction)
 	{
 		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
@@ -222,11 +222,11 @@ namespace Razel
 			char buffer[256];
 			memset(buffer, 0, sizeof(buffer));
 			std::strncpy(buffer, tag.c_str(), sizeof(buffer));
-			
+
 			//const char* tagstr = tag.c_str();
 			//std::array<char, 256> buffer = { 0 };
 			//std::copy(tagstr, tagstr + strlen(tagstr), buffer.data());
-			if (ImGui::InputText("##Tag", buffer, sizeof(buffer))) 
+			if (ImGui::InputText("##Tag", buffer, sizeof(buffer)))
 			{
 				tag = std::string(buffer);
 			}
@@ -242,7 +242,7 @@ namespace Razel
 
 		if (ImGui::BeginPopup("AddComponent"))
 		{
-			if (!m_SelectionContext.HasComponent<CameraComponent>()) 
+			if (!m_SelectionContext.HasComponent<CameraComponent>())
 			{
 				if (ImGui::MenuItem("Camera"))
 				{
@@ -250,7 +250,7 @@ namespace Razel
 					ImGui::CloseCurrentPopup();
 				}
 			}
-			if (!m_SelectionContext.HasComponent<SpriteRendererComponent>()) 
+			if (!m_SelectionContext.HasComponent<SpriteRendererComponent>())
 			{
 				if (ImGui::MenuItem("Sprite Renderer"))
 				{
@@ -290,26 +290,34 @@ namespace Razel
 					ImGui::CloseCurrentPopup();
 				}
 			}
+			if (!m_SelectionContext.HasComponent<ModelComponent>())
+			{
+				if (ImGui::MenuItem("Model Renderer"))
+				{
+					m_SelectionContext.AddComponent<ModelComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+			}
 			ImGui::EndPopup();
 		}
 
 		ImGui::PopItemWidth();
 
 		// 如果有Transform组件，绘制相关内容
-		DrawComponent<TransformComponent>("Transform", entity, [](auto& component){
-			
+		DrawComponent<TransformComponent>("Transform", entity, [](auto& component) {
+
 			DrawVec3Control("Translation", component.Translation);
 			glm::vec3 rotation = glm::degrees(component.Rotation);
 			DrawVec3Control("Rotation", rotation);
 			component.Rotation = glm::radians(rotation);
 			DrawVec3Control("Scale", component.Scale, 1.0f);
-		});
+			});
 
 		// 如果有CameraComponent组件，绘制相关内容
 		DrawComponent<CameraComponent>("Camera", entity, [](auto& component) {
 
 			auto& camera = component.Camera;
-			
+
 			ImGui::Checkbox("Primary", &component.Primary);
 
 			const char* projectionTypeStrings[] = { "Perspective","Orthographic" };
@@ -364,7 +372,7 @@ namespace Razel
 
 				ImGui::Checkbox("Fixed Aspect Ratio", &component.FixedAspectRatio);
 			}
-		});
+			});
 
 		// 如果有SpriteRendererComponent组件，绘制相关内容
 		DrawComponent<SpriteRendererComponent>("Sprite Renderer", entity, [](auto& component) {
@@ -382,13 +390,13 @@ namespace Razel
 				ImGui::EndDragDropTarget();
 			}
 			ImGui::DragFloat("Tiling Factor", &component.TilingFactor, 0.1f, 0.0f, 100.0f);
-		});
+			});
 
 		DrawComponent<CircleRendererComponent>("Circle Renderer", entity, [](auto& component) {
 			ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
 			ImGui::DragFloat("Thickness", &component.Thickness, 0.025f, 0.0f, 1.0f);
 			ImGui::DragFloat("Fade", &component.Fade, 0.00025f, 0.0f, 1.0f);
-		});
+			});
 
 		DrawComponent<Rigidbody2DComponent>("Rigid body 2D", entity, [](auto& component) {
 			const char* bodyTypeStrings[] = { "Static", "Dynamic", "Kinematic" };
@@ -411,7 +419,7 @@ namespace Razel
 				ImGui::EndCombo();
 			}
 			ImGui::Checkbox("Fixed Rotation", &component.FixedRotation);
-		});
+			});
 
 		DrawComponent<BoxCollider2DComponent>("Box Collider 2D", entity, [](auto& component) {
 			ImGui::DragFloat2("Offset", glm::value_ptr(component.Offset));
@@ -421,7 +429,7 @@ namespace Razel
 			ImGui::DragFloat("Restitution", &component.Restitution, 0.01f, 0.0f, 1.0f);
 			ImGui::DragFloat("RollingResistance", &component.RollingResistance, 0.01f, 0.0f, 1.0f);
 			ImGui::DragFloat("TangentSpeed", &component.TangentSpeed, 0.01f, 0.0f, 1.0f);
-		});
+			});
 		DrawComponent<CircleCollider2DComponent>("Circle Collider 2D", entity, [](auto& component) {
 			ImGui::DragFloat2("Offset", glm::value_ptr(component.Offset));
 			ImGui::DragFloat("Radius", &component.Radius, 0.01f, 0.0f, 1.0f);
@@ -430,6 +438,25 @@ namespace Razel
 			ImGui::DragFloat("Restitution", &component.Restitution, 0.01f, 0.0f, 1.0f);
 			ImGui::DragFloat("RollingResistance", &component.RollingResistance, 0.01f, 0.0f, 1.0f);
 			ImGui::DragFloat("TangentSpeed", &component.TangentSpeed, 0.01f, 0.0f, 1.0f);
-		});
+			});
+		DrawComponent<ModelComponent>("Model Renderer", entity, [](auto& component) {;
+		ImGui::Checkbox("Flip UVs", &component.FlipUVs);
+		ImGui::Button("Asset Path", ImVec2(100.0f, 0.0f));
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+			{
+				const wchar_t* path = (const wchar_t*)payload->Data;
+				std::filesystem::path modelPath = std::filesystem::path(g_AssetPath) / path;
+				component.FilePath = modelPath.string();
+				component.Model = CreateRef<Model>(component.FilePath, component.FlipUVs);
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+		ImGui::SameLine();
+		// 显示当前文件路径
+		ImGui::Text(component.FilePath.c_str());
+			});
 	}
 }

@@ -2,6 +2,7 @@
 
 #include "Razel/Renderer/Renderer.h"
 #include "Razel/Renderer/Renderer2D.h"
+#include "Razel/Renderer/Renderer3D.h"
 namespace Razel
 {
 	Renderer::SceneData* Renderer::s_SceneData = new Renderer::SceneData;
@@ -12,11 +13,13 @@ namespace Razel
 
 		RenderCommand::Init();
 		Renderer2D::Init();
+		Renderer3D::Init();
 	}
 
 	void Renderer::Shutdown()
 	{
 		Renderer2D::Shutdown();
+		Renderer3D::Shutdown();
 	}
 
 	void Renderer::OnWindowResize(uint32_t width, uint32_t height)
@@ -28,7 +31,7 @@ namespace Razel
 	{
 		// 设置场景信息
 		s_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
-		
+
 	}
 
 	void Renderer::EndScene()

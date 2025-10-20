@@ -29,7 +29,7 @@ namespace Razel {
 		FramebufferSpecification fbSpec;
 		fbSpec.Width = 1280;
 		fbSpec.Height = 720;
-		fbSpec.Attachments = { 
+		fbSpec.Attachments = {
 			FramebufferTextureFormat::RGBA8,
 			FramebufferTextureFormat::RED_INTEGER,
 			FramebufferTextureFormat::Depth
@@ -45,7 +45,7 @@ namespace Razel {
 		// Entity
 		auto square = m_ActiveScene->CreateEntity("Green Square");
 		square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
-		
+
 		auto redSquare = m_ActiveScene->CreateEntity("Red Square");
 		redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
 
@@ -88,7 +88,6 @@ namespace Razel {
 		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 #endif
-
 	}
 
 	void EditorLayer::OnDetach()
@@ -133,22 +132,22 @@ namespace Razel {
 
 		switch (m_SceneState)
 		{
-			case Razel::EditorLayer::SceneState::Edit:
-			{
-				if (m_ViewportFocused)
-					m_CameraController.OnUpdate(ts);
+		case Razel::EditorLayer::SceneState::Edit:
+		{
+			if (m_ViewportFocused)
+				m_CameraController.OnUpdate(ts);
 
-				m_EditorCamera.OnUpdate(ts);
-				m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
-				break;
-			}
-			case Razel::EditorLayer::SceneState::Play:
-			{
-				m_ActiveScene->OnUpdateRuntime(ts);
-				break;
-			}
-			default:
-				break;
+			m_EditorCamera.OnUpdate(ts);
+			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+			break;
+		}
+		case Razel::EditorLayer::SceneState::Play:
+		{
+			m_ActiveScene->OnUpdateRuntime(ts);
+			break;
+		}
+		default:
+			break;
 		}
 
 		auto [mx, my] = ImGui::GetMousePos();
@@ -246,7 +245,7 @@ namespace Razel {
 			{
 				// Disabling fullscreen would allow the window to be moved to the front of other windows,
 				// which we can't undo at the moment without finer window depth/z control.
-				
+
 				if (ImGui::MenuItem("New", "Ctrl+N"))
 				{
 					NewScene();
@@ -268,38 +267,37 @@ namespace Razel {
 			ImGui::EndMenuBar();
 		}
 
-		m_SceneHierarchyPanel.OnImGuiRender();
-		m_ContentBrowserPanel.OnImGuiRender();
 
-		ImGui::Begin("Stats");
+		ImGui::Begin("Model Generation");
 
-		std::string name = "None";
-		if (m_HoveredEntity)
-			name = m_HoveredEntity.GetComponent<TagComponent>().Tag;
-		ImGui::Text("Hovered Entity: %s", name.c_str());
+		static char textBuffer[256] = "";
+		ImGui::InputText("Prompt", textBuffer, sizeof(textBuffer));
 
-		auto stats = Renderer2D::GetStats();
-		ImGui::Text("Renderer2D Stats:");
-		ImGui::Text("Draw Calls: %d", stats.DrawCalls);
-		ImGui::Text("Quads: %d", stats.QuadCount);
-		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
-		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+		if (ImGui::Button("Select Image"))
+		{
+			std::optional<std::string> filepath = FileDialogs::OpenFile("Image Files (*.png;*.jpg)\0*.png;*.jpg\0");
+			if (filepath)
+			{
+				m_SelectedImagePath = *filepath;
+			}
+		}
 
-		ImGui::End();
+		if (!m_SelectedImagePath.empty())
+		{
+			ImGui::Text("Selected Image: %s", m_SelectedImagePath.c_str());
+		}
 
-		ImGui::Begin("Settings");
-		auto& gravity = m_ActiveScene->m_PhysicsWorldSettings.Gravity;
-		auto& restitutionThreshold = m_ActiveScene->m_PhysicsWorldSettings.RestitutionThreshold;
+		if (ImGui::Button("Generate 3D Model"))
+		{
+			// Call the Tencent Hunyuan 3D API with the text prompt and/or image
+			Generate3DModel(textBuffer, m_SelectedImagePath);
+		}
 
-		ImGui::DragFloat2("gravity", glm::value_ptr(gravity), 0.01f, 0.0f);
-		ImGui::DragFloat("Restitution Threshold", &restitutionThreshold, 0.01f, 0.0f);
-
-		ImGui::Checkbox("Show Physics Colliders", &m_ShowPhysicsColliders);
 		ImGui::End();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
 		ImGui::Begin("Viewport");
-		
+
 		auto viewportMinRegion = ImGui::GetWindowContentRegionMin();
 		auto viewportMaxRegion = ImGui::GetWindowContentRegionMax();
 		auto viewportOffset = ImGui::GetWindowPos();
@@ -316,7 +314,7 @@ namespace Razel {
 
 		uint64_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
 		ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
-		
+
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
@@ -326,63 +324,10 @@ namespace Razel {
 			}
 			ImGui::EndDragDropTarget();
 		}
-
-		// Gizmos
-		Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
-		if (selectedEntity && m_GizmoType != -1)
-		{
-			ImGuizmo::SetOrthographic(false);
-			ImGuizmo::SetDrawlist();
-
-			float windowWidth = (float)ImGui::GetWindowWidth();
-			float windowHeight = (float)ImGui::GetWindowHeight();
-
-			// 设置Gizmo视口
-			ImGuizmo::SetRect(m_ViewportBounds[0].x,  m_ViewportBounds[0].y, 
-							  m_ViewportBounds[1].x - m_ViewportBounds[0].x, 
-							  m_ViewportBounds[1].y - m_ViewportBounds[0].y);
-			// 相机
-			//auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
-			//const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
-			//const glm::mat4& cameraProjection = camera.GetProjection();
-			//glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
-			
-			const glm::mat4& cameraProjection = m_EditorCamera.GetProjection();
-			glm::mat4 cameraView = m_EditorCamera.GetViewMatrix();
-
-			// 实体变换
-			auto& tc = selectedEntity.GetComponent<TransformComponent>();
-			glm::mat4 transform = tc.GetTransform();
-
-			// Snapping
-			bool snap = Input::IsKeyPressed(Key::LeftControl);
-			float snapValue = 0.5f; // Snap to 0.5m for translation/scale
-			// Snap to 45 degrees for rotation
-			if (m_GizmoType == ImGuizmo::OPERATION::ROTATE)
-				snapValue = 45.0f;
-
-			float snapValues[3] = { snapValue,snapValue ,snapValue };
-
-			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
-				(ImGuizmo::OPERATION)m_GizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform),
-				nullptr, snap ? snapValues : nullptr);
-
-			if (ImGuizmo::IsUsing())
-			{
-				glm::vec3 translation, rotation, scale;
-				Math::DecomposeTransform(transform, translation, rotation, scale);
-
-				glm::vec3 deltaRotation = rotation - tc.Rotation;
-				tc.Translation = translation;
-				tc.Rotation += deltaRotation;
-				tc.Scale = scale;
-			}
-		}
-
 		ImGui::End();
 		ImGui::PopStyleVar();
 
-		UI_ToolBars();
+		//UI_ToolBars();
 
 		ImGui::End();
 	}
@@ -415,6 +360,11 @@ namespace Razel {
 		ImGui::End();
 	}
 
+	void EditorLayer::Generate3DModel(const std::string& prompt, const std::string& imagePath)
+	{
+
+	}
+
 	void EditorLayer::OnEvent(Event& e)
 	{
 		m_CameraController.OnEvent(e);
@@ -435,65 +385,65 @@ namespace Razel {
 
 		bool control = Input::IsKeyPressed(Key::LeftControl) || Input::IsKeyPressed(Key::RightControl);
 		bool shift = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
-		
+
 		switch (e.GetKeyCode())
 		{
-			case Key::N:
-			{
-				if (control)
-					NewScene();
-				break;
+		case Key::N:
+		{
+			if (control)
+				NewScene();
+			break;
+		}
+		case Key::O:
+		{
+			if (control)
+				OpenScene();
+			break;
+		}
+		case Key::S:
+		{
+			if (control) {
+				if (shift)
+					SaveSceneAs();
+				else
+					SaveScene();
 			}
-			case Key::O:
-			{
-				if (control)
-					OpenScene();
-				break;
-			}
-			case Key::S:
-			{
-				if (control) {
-					if (shift)
-						SaveSceneAs();
-					else
-						SaveScene();
-				}
-				break;
-			}
-			case Key::D:
-			{
-				if (control)
-					OnDuplicateEntity();
-				break;
-			}
+			break;
+		}
+		case Key::D:
+		{
+			if (control)
+				OnDuplicateEntity();
+			break;
+		}
 
-			// Gizmos
-			case Key::Q:
-			{
-				if (!ImGuizmo::IsUsing())
-					m_GizmoType = -1;
-				break;
-			}
-			case Key::W:
-			{
-				if (!ImGuizmo::IsUsing())
-					m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
-				break;
-			}
-			case Key::E:
-			{
-				if (!ImGuizmo::IsUsing())
-					m_GizmoType = ImGuizmo::OPERATION::ROTATE;
-				break;
-			}
-			case Key::R:
-			{
-				if (!ImGuizmo::IsUsing())
-					m_GizmoType = ImGuizmo::OPERATION::SCALE;
-				break;
-			}			
-			default:
-				break;
+		// Gizmos
+		case Key::Q:
+		{
+			if (!ImGuizmo::IsUsing())
+				m_GizmoType = -1;
+			break;
+		}
+		case Key::W:
+		{
+			if (!ImGuizmo::IsUsing())
+				m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+			break;
+		}
+		case Key::E:
+		{
+			if (!ImGuizmo::IsUsing())
+				m_GizmoType = ImGuizmo::OPERATION::ROTATE;
+			break;
+		}
+		case Key::R:
+		{
+			if (!ImGuizmo::IsUsing())
+				m_GizmoType = ImGuizmo::OPERATION::SCALE;
+			break;
+		}
+		default:
+			break;
 		}
 		return false;
 	}
@@ -502,8 +452,6 @@ namespace Razel {
 	{
 		if (e.GetMouseButton() == Mouse::ButtonLeft)
 		{
-			if (m_ViewportHovered && !ImGuizmo::IsOver() && !Input::IsKeyPressed(Key::LeftAlt))
-				m_SceneHierarchyPanel.SetSelectedEntity(m_HoveredEntity);
 		}
 		return false;
 	}
@@ -527,12 +475,12 @@ namespace Razel {
 				for (auto entity : view)
 				{
 					auto [tc, bc2d] = view.get<TransformComponent, BoxCollider2DComponent>(entity);
-					glm::vec3 translation = tc.Translation + glm::vec3{bc2d.Offset, 0.001f};
+					glm::vec3 translation = tc.Translation + glm::vec3{ bc2d.Offset, 0.001f };
 					glm::vec3 scale = tc.Scale * glm::vec3(bc2d.Size * 2.0f, 1.0f);
-					
+
 					glm::mat4 transform = glm::translate(glm::mat4(1.0f), translation)
-										* glm::rotate(glm::mat4(1.0f), tc.Rotation.z, glm::vec3(0.0f, 0.0f, 1.0f))
-										* glm::scale(glm::mat4(1.0f), scale);
+						* glm::rotate(glm::mat4(1.0f), tc.Rotation.z, glm::vec3(0.0f, 0.0f, 1.0f))
+						* glm::scale(glm::mat4(1.0f), scale);
 
 					Renderer2D::DrawRect(transform, glm::vec4(0, 1, 0, 1));
 				}
@@ -560,7 +508,6 @@ namespace Razel {
 	{
 		m_ActiveScene = CreateRef<Scene>();
 		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 		m_EditorScenePath = std::filesystem::path();
 	}
 	void EditorLayer::OpenScene()
@@ -580,6 +527,7 @@ namespace Razel {
 		if (path.extension().string() != ".razel")
 		{
 			RZ_WARN("Could not load {0} - not a scene file", path.filename().string());
+			return;
 		}
 		Ref<Scene> newScene = CreateRef<Scene>();
 		SceneSerializer serializer(newScene);
@@ -587,7 +535,6 @@ namespace Razel {
 		{
 			m_EditorScene = newScene;
 			m_EditorScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-			m_SceneHierarchyPanel.SetContext(m_EditorScene);
 
 			m_ActiveScene = m_EditorScene;
 			m_EditorScenePath = path;
@@ -605,7 +552,7 @@ namespace Razel {
 
 	void EditorLayer::SaveSceneAs()
 	{
-		std::string filepath= FileDialogs::SaveFile("Razel Scene (*.razel)\0*.razel\0");
+		std::string filepath = FileDialogs::SaveFile("Razel Scene (*.razel)\0*.razel\0");
 		if (!filepath.empty())
 		{
 			SerializeScene(m_ActiveScene, filepath);
@@ -624,7 +571,6 @@ namespace Razel {
 		m_SceneState = SceneState::Play;
 		m_ActiveScene = Scene::Copy(m_EditorScene);
 		m_ActiveScene->OnRuntimeStart();
-		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
 	void EditorLayer::OnSceneStop()
@@ -632,17 +578,12 @@ namespace Razel {
 		m_SceneState = SceneState::Edit;
 		m_ActiveScene->OnRuntimeStop();
 		m_ActiveScene = m_EditorScene;
-		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
 	void EditorLayer::OnDuplicateEntity()
 	{
 		if (m_SceneState != SceneState::Edit)
 			return;
-	
-		Entity selectEntity = m_SceneHierarchyPanel.GetSelectedEntity();
-		if (selectEntity)
-			m_ActiveScene->DuplicateEntity(selectEntity);
 	}
 
 }

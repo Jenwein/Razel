@@ -5,6 +5,7 @@
 #include "Components.h"
 #include "ScriptableEntity.h"
 #include "Razel/Renderer/Renderer2D.h"
+#include "Razel/Renderer/Renderer3D.h"
 
 // Box2D
 #include "box2d/box2d.h"
@@ -14,11 +15,11 @@ namespace Razel
 	{
 		switch (bodyType)
 		{
-			case Razel::Rigidbody2DComponent::BodyType::Static:		return b2_staticBody;
-			case Razel::Rigidbody2DComponent::BodyType::Dynamic:	return b2_dynamicBody;
-			case Razel::Rigidbody2DComponent::BodyType::Kinematic:	return b2_kinematicBody;
-			default:
-				break;
+		case Razel::Rigidbody2DComponent::BodyType::Static:		return b2_staticBody;
+		case Razel::Rigidbody2DComponent::BodyType::Dynamic:	return b2_dynamicBody;
+		case Razel::Rigidbody2DComponent::BodyType::Kinematic:	return b2_kinematicBody;
+		default:
+			break;
 		}
 	}
 
@@ -59,10 +60,10 @@ namespace Razel
 		Ref<Scene> newScene = CreateRef<Scene>();
 		newScene->m_ViewportWidth = other->m_ViewportWidth;
 		newScene->m_ViewportHeight = other->m_ViewportHeight;
-	
+
 		auto& srcSceneRegistry = other->m_Registry;
 		auto& dstSceneRegistry = newScene->m_Registry;
-	
+
 		std::unordered_map<UUID, entt::entity> enttMap;
 
 		// 在新场景中创建实体
@@ -127,8 +128,8 @@ namespace Razel
 			bodyDef.position = { transform.Translation.x,transform.Translation.y };
 			bodyDef.rotation = b2MakeRot(transform.Rotation.z);
 			bodyDef.motionLocks.angularZ = rb2d.FixedRotation;
-			
-			b2BodyId bodyID = b2CreateBody(worldID,&bodyDef);
+
+			b2BodyId bodyID = b2CreateBody(worldID, &bodyDef);
 			rb2d.RuntimeBody = b2StoreBodyId(bodyID);
 
 			if (entity.HasComponent<BoxCollider2DComponent>())
@@ -187,7 +188,7 @@ namespace Razel
 				}
 
 				nsc.Instance->OnUpdate(ts);
-			});
+				});
 
 		}
 
@@ -196,7 +197,7 @@ namespace Razel
 			const int32_t subStepCount = 4;
 			b2WorldId worldID = b2LoadWorldId(m_PhysicsWorldId);
 			b2World_Step(worldID, ts, subStepCount);
-	
+
 			auto view = m_Registry.view<Rigidbody2DComponent>();
 			for (auto e : view)
 			{
@@ -219,7 +220,7 @@ namespace Razel
 		glm::mat4 cameraTransform;
 
 		{
-			auto view = m_Registry.view<TransformComponent,CameraComponent>();
+			auto view = m_Registry.view<TransformComponent, CameraComponent>();
 			for (auto e : view)
 			{
 				auto [tc, camera] = view.get<TransformComponent, CameraComponent>(e);
@@ -236,6 +237,19 @@ namespace Razel
 
 		if (mainCamera)
 		{
+			Renderer3D::BeginScene(*mainCamera, cameraTransform);
+			{
+				auto view = m_Registry.view<TransformComponent, ModelComponent>();
+				for (auto entity : view)
+				{
+					auto [transform, model] = view.get<TransformComponent, ModelComponent>(entity);
+					if (model.Model)
+					{
+						Renderer3D::DrawModel(model.Model, transform.GetTransform());
+					}
+				}
+			}
+
 			Renderer2D::BeginScene(*mainCamera, cameraTransform);
 			// Draw Sprite
 			{
@@ -248,7 +262,7 @@ namespace Razel
 			}
 			// Draw Circle
 			{
-				auto view = m_Registry.view<TransformComponent,CircleRendererComponent>();
+				auto view = m_Registry.view<TransformComponent, CircleRendererComponent>();
 				for (auto entity : view)
 				{
 					auto [transform, circle] = view.get<TransformComponent, CircleRendererComponent>(entity);
@@ -261,8 +275,20 @@ namespace Razel
 
 	void Scene::OnUpdateEditor(Timestep ts, EditorCamera& camera)
 	{
-		Renderer2D::BeginScene(camera);
+		Renderer3D::BeginScene(camera);
+		{
+			auto view = m_Registry.view<TransformComponent, ModelComponent>();
+			for (auto entity : view)
+			{
+				auto [transform, model] = view.get<TransformComponent, ModelComponent>(entity);
+				if (model.Model)
+				{
+					Renderer3D::DrawModel(model.Model, transform.GetTransform());
+				}
+			}
+		}
 
+		Renderer2D::BeginScene(camera);
 		{
 			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
 			for (auto entity : group)
@@ -271,17 +297,16 @@ namespace Razel
 
 				Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
 			}
-		}		
+		}
 		{
 			auto view = m_Registry.view <TransformComponent, CircleRendererComponent>();
 			for (auto entity : view)
 			{
 				auto [transform, circle] = view.get<TransformComponent, CircleRendererComponent>(entity);
 
-				Renderer2D::DrawCircle(transform.GetTransform(), circle.Color, circle.Thickness, circle.Fade,  (int)entity);
+				Renderer2D::DrawCircle(transform.GetTransform(), circle.Color, circle.Thickness, circle.Fade, (int)entity);
 			}
 		}
-
 		Renderer2D::EndScene();
 	}
 
@@ -373,6 +398,10 @@ namespace Razel
 	}
 	template<>
 	void Scene::OnComponentAdded<CircleCollider2DComponent>(Entity entity, CircleCollider2DComponent& component)
+	{
+	}
+	template<>
+	void Scene::OnComponentAdded<ModelComponent>(Entity entity, ModelComponent& component)
 	{
 	}
 }

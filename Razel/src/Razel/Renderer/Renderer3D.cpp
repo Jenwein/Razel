@@ -1,19 +1,16 @@
 #include "rzpch.h"
 #include "Razel/Renderer/Renderer3D.h"
-#include "Razel/Renderer/VertexArray.h"
-#include "Razel/Renderer/Shader.h"
-#include "Razel/Renderer/RenderCommand.h"
 
-#include <glm/gtc/matrix_transform.hpp>
+#include "Razel/Renderer/RenderCommand.h"
+#include "Razel/Renderer/Shader.h"
+#include "Model.h"
 
 namespace Razel
 {
-	// TODO:Render3D
-
-	// 渲染数据
 	struct Renderer3DData
 	{
-
+		Ref<Shader> ModelShader;
+		glm::mat4 ViewProjectionMatrix;
 	};
 
 	static Renderer3DData s_Data;
@@ -21,68 +18,47 @@ namespace Razel
 	void Renderer3D::Init()
 	{
 		RZ_PROFILE_FUNCTION();
-
+		s_Data.ModelShader = Shader::Create("assets/shaders/Renderer3D.glsl");
 	}
 
 	void Renderer3D::Shutdown()
 	{
 		RZ_PROFILE_FUNCTION();
-
-	}
-
-	void Renderer3D::BeginScene(const OrthographicCamera& camera)
-	{
-		RZ_PROFILE_FUNCTION();
-
-		StartBatch();
-	}
-
-	void Renderer3D::BeginScene(const Camera& camera, const glm::mat4& transform)
-	{
-		RZ_PROFILE_FUNCTION();
-
-
-		StartBatch();
-
 	}
 
 	void Renderer3D::BeginScene(const EditorCamera& camera)
 	{
 		RZ_PROFILE_FUNCTION();
+		s_Data.ViewProjectionMatrix = camera.GetViewProjection();
+	}
 
-		StartBatch();
-
+	void Renderer3D::BeginScene(const Camera& camera, const glm::mat4& transform)
+	{
+		RZ_PROFILE_FUNCTION();
+		s_Data.ViewProjectionMatrix = camera.GetProjection() * glm::inverse(transform);
 	}
 
 	void Renderer3D::EndScene()
 	{
 		RZ_PROFILE_FUNCTION();
-
-		Flush();	//实际调用DrawCall
+		// 目前没有批处理，所以这里为空
 	}
 
-	void Renderer3D::Flush()
+	void Renderer3D::DrawModel(const Ref<Model>& model, const glm::mat4& transform)
 	{
+		s_Data.ModelShader->Bind();
+		s_Data.ModelShader->SetMat4("u_ViewProjection", s_Data.ViewProjectionMatrix);
+		s_Data.ModelShader->SetMat4("u_Transform", transform);
+
+		model->Draw(s_Data.ModelShader);
 	}
 
-	void Renderer3D::StartBatch()
-	{
-	}
 
-	void Renderer3D::NextBatch()
-	{
-		Flush();
-		StartBatch();
-	}
-
-	void Renderer3D::ResetStats()
-	{
-	}
-
-	Renderer3D::Statistics Renderer3D::GetStats()
-	{
-		// TODO:tmp
-		return Renderer3D::Statistics();
-	}
+	// 其他函数暂时保持为空
+	void Renderer3D::Flush() {}
+	void Renderer3D::StartBatch() {}
+	void Renderer3D::NextBatch() {}
+	void Renderer3D::ResetStats() {}
+	Renderer3D::Statistics Renderer3D::GetStats() { return {}; }
 
 }

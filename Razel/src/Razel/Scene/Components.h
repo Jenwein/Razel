@@ -3,6 +3,7 @@
 #include "SceneCamera.h"
 #include "Razel/Core/UUID.h"
 #include "Razel/Renderer/Texture.h"
+#include "Razel/Renderer/Model.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -66,7 +67,8 @@ namespace Razel
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;
 		SpriteRendererComponent(const glm::vec4& color)
 			:Color(color)
-		{}
+		{
+		}
 	};
 	struct CircleRendererComponent
 	{
@@ -106,7 +108,7 @@ namespace Razel
 		}
 
 	};
-	
+
 	// 刚体
 	struct Rigidbody2DComponent
 	{
@@ -159,5 +161,20 @@ namespace Razel
 
 		CircleCollider2DComponent() = default;
 		CircleCollider2DComponent(const CircleCollider2DComponent&) = default;
+	};
+	struct ModelComponent
+	{
+		Ref<Model> Model;
+		// 存储文件路径，用于序列化和在编辑器中显示
+		std::string FilePath;
+		bool FlipUVs = true;
+		ModelComponent() = default;
+		ModelComponent(const ModelComponent&) = default;
+		ModelComponent(const std::string& path)
+			: FilePath(path)
+		{
+			if (!path.empty())
+				Model = CreateRef<Razel::Model>(path);
+		}
 	};
 }

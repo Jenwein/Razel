@@ -1,14 +1,15 @@
 #pragma once
 
-#include "Razel/Renderer/Texture.h"
-
 #include "Razel/Renderer/Camera.h"
 #include "Razel/Renderer/EditorCamera.h"
-#include "Razel/Renderer/OrthographicCameraController.h"
-#include "Razel/Scene/Components.h"
+
+// Forward declaration
+namespace Razel {
+	class Model;
+}
+
 namespace Razel
 {
-	// 2D渲染静态类,封装一些渲染指令,管理场景数据,隐藏底层渲染API
 	class Renderer3D
 	{
 	public:
@@ -17,27 +18,25 @@ namespace Razel
 
 		// 场景渲染
 		static void BeginScene(const Camera& camera, const glm::mat4& transform);
-		static void BeginScene(const EditorCamera& camera);	//TODO:Remove
-		static void BeginScene(const OrthographicCamera& camera);	//TODO:Remove
-		//static void BeginScene(const PerspectiveCamera& camera);
-
+		static void BeginScene(const EditorCamera& camera);
 		static void EndScene();
-		static void Flush();
 
-		static float GetLineWidth();
-		static void SetLineWidth(float width);
+		// 绘制函数
+		static void DrawModel(const Ref<Model>& model, const glm::mat4& transform);
 
-		// 统计
+		// 统计 (暂时不实现)
 		struct Statistics
 		{
+			uint32_t DrawCalls = 0;
+			uint32_t ModelCount = 0;
 		};
-		static void ResetStats();		// 重置统计数据
-		static Statistics GetStats();	// 获取当前的统计数据
+		static void ResetStats();
+		static Statistics GetStats();
 
 	private:
-
+		// 批处理函数 (暂时不实现)
 		static void StartBatch();
 		static void NextBatch();
+		static void Flush();
 	};
 }
-

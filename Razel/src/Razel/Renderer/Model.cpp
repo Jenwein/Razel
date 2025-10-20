@@ -3,12 +3,14 @@
 #include "Model.h"
 #include "Renderer.h"
 
+#include <filesystem> 
+
 namespace Razel
 {
-	Model::Model(const std::string& path, bool gamma)
+	Model::Model(const std::string& path, bool flipUVs, bool gamma)
 		: m_GammaCorrection(gamma)
 	{
-		LoadModel(path);
+		LoadModel(path, flipUVs);
 	}
 
 	void Model::Draw(Ref<Shader> shader)
@@ -19,18 +21,25 @@ namespace Razel
 		}
 	}
 
-	void Model::LoadModel(const std::string& path)
+	void Model::LoadModel(const std::string& path, bool flipUVs)
 	{
 		Assimp::Importer importer;
-		const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
-
+		unsigned int processFlags =
+			aiProcess_Triangulate |
+			aiProcess_GenSmoothNormals |
+			aiProcess_CalcTangentSpace;
+		if (flipUVs)
+		{
+			processFlags |= aiProcess_FlipUVs;
+		}
+		const aiScene* scene = importer.ReadFile(path, processFlags);
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
 			RZ_CORE_ERROR("ASSIMP ERROR: {0}", importer.GetErrorString());
 			return;
 		}
 
-		m_Directory = path.substr(0, path.find_last_of('/'));
+		m_Directory = std::filesystem::path(path).parent_path().string();
 		processNode(scene->mRootNode, scene);
 	}
 
@@ -135,11 +144,10 @@ namespace Razel
 			if (!skip)
 			{
 				// If texture hasn't been loaded already, load it
-				std::string filename = std::string(str.C_Str());
-				std::string fullPath = m_Directory + '/' + filename;
+				std::filesystem::path fullPath = std::filesystem::path(m_Directory) / std::filesystem::path(str.C_Str());
 
 				TextureData textureData;
-				textureData.Texture = Texture2D::Create(fullPath);
+				textureData.Texture = Texture2D::Create(fullPath.string());
 				textureData.Type = typeName;
 				textureData.Path = str.C_Str();
 				textures.push_back(textureData);

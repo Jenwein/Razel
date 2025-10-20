@@ -15,7 +15,7 @@ namespace Razel
 	class Model
 	{
 	public:
-		Model(const std::string& path, bool gamma = false);
+		Model(const std::string& path, bool flipUVs = true, bool gamma = false);
 		void Draw(Ref<Shader> shader);
 
 	private:
@@ -25,7 +25,7 @@ namespace Razel
 		bool m_GammaCorrection;                     // 是否进行gamma矫正
 
 	private:
-		void LoadModel(const std::string& path);
+		void LoadModel(const std::string& path, bool flipUVs);
 		void processNode(aiNode* node, const aiScene* scene);
 		Mesh processMesh(aiMesh* mesh, const aiScene* scene);
 		std::vector<TextureData> loadMaterialTextures(aiMaterial* mat, aiTextureType type, const std::string& typeName);
