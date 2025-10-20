@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2024, assimp team
+Copyright (c) 2006-2025, assimp team
 
 All rights reserved.
 
@@ -161,13 +161,13 @@ AI_FORCE_INLINE bool GetNextLine(const char_t *&buffer, char_t out[BufferSize]) 
     }
 
     char *_out = out;
-    char *const end = _out + BufferSize;
+    char *const end = _out + BufferSize - 1;
     while (!IsLineEnd(*buffer) && _out < end) {
         *_out++ = *buffer++;
     }
     *_out = (char_t)'\0';
 
-    while (IsLineEnd(*buffer) && '\0' != *buffer) {
+    while (IsLineEnd(*buffer) && '\0' != *buffer && buffer != end) {
         ++buffer;
     }
 

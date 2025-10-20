@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2024, assimp team
+Copyright (c) 2006-2025, assimp team
 
 All rights reserved.
 
@@ -318,7 +318,10 @@ AI_FORCE_INLINE bool IOStreamBuffer<T>::getNextLine(std::vector<T> &buffer) {
         }
     }
     buffer[i] = '\n';
-    while (m_cachePos < m_cacheSize && (m_cache[m_cachePos] == '\r' || m_cache[m_cachePos] == '\n')) {
+    if (m_cachePos < m_cacheSize && (m_cache[m_cachePos] == '\r')) {
+        ++m_cachePos;
+    }
+    if (m_cachePos < m_cacheSize && (m_cache[m_cachePos] == '\n')) {
         ++m_cachePos;
     }
 

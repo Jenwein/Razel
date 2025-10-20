@@ -20,7 +20,8 @@
 			"%{wks.location}/Razel/vendor",
 			"%{IncludeDir.glm}",
 			"%{IncludeDir.entt}",
-			"%{IncludeDir.ImGuizmo}"
+			"%{IncludeDir.ImGuizmo}",
+			"%{IncludeDir.assimp}"
 
 		}
 
@@ -31,6 +32,13 @@
 
 		filter "system:windows"
 			systemversion "latest"
+
+			postbuildcommands
+			{
+				("{COPY} \"%{wks.location}/Razel/vendor/assimp/bin/Debug/assimp-vc143-mtd.dll\" \"%{cfg.targetdir}\""),
+				("{COPY} \"%{wks.location}/Razel/vendor/assimp/bin/Release/assimp-vc143-mt.dll\" \"%{cfg.targetdir}\"")
+			}
+
 
 		filter "configurations:Debug"
 			defines "RZ_DEBUG"
