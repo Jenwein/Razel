@@ -249,6 +249,7 @@ namespace Razel
 					}
 				}
 			}
+			Renderer3D::EndScene();
 
 			Renderer2D::BeginScene(*mainCamera, cameraTransform);
 			// Draw Sprite

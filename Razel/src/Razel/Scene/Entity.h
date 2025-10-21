@@ -49,6 +49,10 @@ namespace Razel
 			m_Scene->m_Registry.remove<T>(m_EntityHandle);
 		}
 
+		bool IsValid()
+		{
+			return m_Scene && m_Scene->m_Registry.valid(m_EntityHandle);
+		}
 
 		operator bool()const { return m_EntityHandle != entt::null; }
 		operator entt::entity()const { return m_EntityHandle; }
