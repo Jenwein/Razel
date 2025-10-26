@@ -51,9 +51,5 @@ group "Dependencies"
 group ""
 
 include "Razel"
-include "Sandbox"
-include "Razel-Editor"
-include "Razel3DShow"
-include "VoicePilot"
 
 
